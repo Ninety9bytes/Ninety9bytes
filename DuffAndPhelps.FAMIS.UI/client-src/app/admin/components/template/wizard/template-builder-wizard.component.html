@@ -1,0 +1,48 @@
+﻿
+<div [class.container]="!isEditingForGroup">
+
+  <h1 appTooltip="test">{{i18n.templateManagement + name | dynamicTranslate }}</h1>
+
+  <ngb-tabset (tabChange)="beforeChange($event)" type="pills" #tabs>
+    <ngb-tab id="step-1">
+      <ng-template ngbTabTitle><span>{{i18n.templateManagement + 'Step 1' | dynamicTranslate }}</span><em>{{i18n.templateManagement + 'Setup & Choose Modules' | dynamicTranslate }}</em></ng-template>
+      <ng-template ngbTabContent>
+        
+        <app-template-builder-step1 [template]='template' [templates]='templates' [modules]='modules' [offices]='offices' [selectedModules]='selectedModules' (templateUpdated)='onTemplateUpdated($event)' ></app-template-builder-step1>
+
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab id="step-2" [disabled]="isActive('step-2')">
+      <ng-template ngbTabTitle ><span>{{i18n.templateManagement + 'Step 2' | dynamicTranslate }}</span><em>{{i18n.templateManagement + 'Choose Fields Per Module' | dynamicTranslate }}</em></ng-template>
+      <ng-template ngbTabContent>
+      
+        <app-template-builder-step2   [template]='template' [modules]='modules' [selectedModules]='selectedModules' (templateUpdated)='onTemplateUpdated($event)'></app-template-builder-step2>
+
+      </ng-template>
+    </ngb-tab>
+
+    <ngb-tab id="step-3" [disabled]="isActive('step-3')">
+      <ng-template ngbTabTitle><span>{{i18n.templateManagement + 'Step 3' | dynamicTranslate }}</span><em>{{i18n.templateManagement + 'Create Form Layout' | dynamicTranslate }}</em></ng-template>
+      <ng-template ngbTabContent>
+        
+        <app-template-builder-step3 [template]='template' [modules]='modules' [selectedModules]='selectedModules'></app-template-builder-step3>
+
+
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab id="step-4" [disabled]="isActive('step-4')">
+      <ng-template ngbTabTitle><span>{{i18n.templateManagement + 'Step 4' | dynamicTranslate }}</span><em>{{i18n.templateManagement + 'Review & Finish' | dynamicTranslate }}</em></ng-template>
+      <ng-template ngbTabContent>
+        
+        <app-template-builder-step4 [template]='template' [modules]='modules' [selectedModules]='selectedModules'></app-template-builder-step4>
+
+      </ng-template>
+    </ngb-tab>
+ 
+
+  </ngb-tabset>
+  
+
+
+
+</div>

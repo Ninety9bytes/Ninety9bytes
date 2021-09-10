@@ -1,0 +1,35 @@
+<ng-template #content let-c="close" let-d="dismiss">
+  <form #restoreModal="ngForm">
+    <div>
+      <div class="modal-body">
+          <strong  *ngIf="!restoreInitiated">{{i18n.admin + 'Restore To Savepoint' | dynamicTranslate}}</strong> <br/>
+        <div class="ml-3" *ngIf="!restoreInitiated">
+          <div>
+             {{i18n.admin + 'You are about to restore to the previous saved point' | dynamicTranslate}} <b> <i> {{restoreGroupSave.description}} </i>. </b>
+          </div>
+          <br/>
+          <div>
+             {{i18n.admin + 'This may take some time and cannot be cancelled once it has started' | dynamicTranslate}}
+          </div>
+        </div>
+        <div *ngIf="!restoreComplete && restoreInitiated">
+          <div style="text-align: center;">
+              <strong>{{i18n.admin + 'Restoring...' | dynamicTranslate}}</strong> <br/> <br/> 
+          </div>
+          <div style="text-align: center;">
+            <b> <i> {{i18n.admin + 'Please refrain accessing this group until the restoration is complete' | dynamicTranslate}} </i> </b>
+          </div>
+          <div>
+            <span style="margin-left: 45%;"><i class="fa fa-spinner fa-spin" style="font-size: 5em;" aria-hidden="true"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" *ngIf="!restoreInitiated">
+        <button type="button" class="btn btn-default" (click)="cancel()" style="padding: 0.5rem 0.75rem;" >{{i18n.common + 'Cancel' | dynamicTranslate}}</button>                    
+        <button type="submit" class="btn btn-primary" (click)="restore()" style="padding: 0.5rem 0.75rem;" >{{i18n.common + 'Restore' | dynamicTranslate}}</button>                    
+      </div>
+    </div>
+  </form>
+
+  
+</ng-template>

@@ -1,0 +1,9 @@
+<ol class="breadcrumb">
+  <li *ngFor="let breadCrumb of breadCrumbs" class="breadcrumb-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+    true}">
+    <a [class.disabled]="!!breadCrumb.isDisabled && breadCrumb.isDisabled" [routerLink]="breadCrumb.routerLink">{{i18n.qualityControl + breadCrumb.name | dynamicTranslate}}</a>
+  </li>
+</ol>
+
+<!-- TODO: Map to UI Form Field-->
+<asset-form *ngIf="fields.length > 0" [imageEntityType]="imageEntityType" [fieldMetaData]="fields" [savingForm]="savingForm" (formActionEvent)="onFormActionEvent($event)"></asset-form>

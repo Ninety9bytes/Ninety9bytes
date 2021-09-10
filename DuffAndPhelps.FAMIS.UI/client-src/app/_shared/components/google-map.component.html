@@ -1,0 +1,19 @@
+<ng-container class="google-map-action-container">
+
+  <agm-map class="col-md-12" [latitude]="latitude" [longitude]="longitude" [zoom]="googleMapZoom" [disableDefaultUI]="false" [zoomControl]="true"
+   [mapTypeId]="'hybrid'" [styles]="mapStyles">
+
+    <agm-marker *ngFor="let m of mapMarkers; let i = index" [latitude]="m.lat" [longitude]="m.lng"
+      [title]="m.label" [markerDraggable]="m.draggable" (dragEnd)="markerDragEnd(m, $event)">
+
+      <agm-info-window>
+        <strong>{{m.label}}</strong>
+      </agm-info-window>
+
+    </agm-marker>
+
+
+
+  </agm-map>
+
+</ng-container>

@@ -1,0 +1,39 @@
+<form (ngOnSubmit)="onSubmit(groupSaveForm)" #groupSaveForm="ngForm">
+  <div class="form-group row">
+    <div class="row col-md-6">
+        <table>
+          <label for="savePointNameText">{{i18n.common + 'Name' | dynamicTranslate}}</label>
+          <tr>
+            <td>
+                <input type="text" class="form-control" id="savePointNameText" name="savePointNameText" required [(ngModel)]="savePointName">
+            </td>
+            <td>
+                <button type="submit" class="btn btn-primary" (click)="onSubmit(groupSaveForm)"  style="padding: 0.5rem 0.75rem;"> {{i18n.groupSave + 'Save' | dynamicTranslate}} </button>
+            </td>
+           
+          </tr>
+          <tr>
+            <td>
+              <div *ngIf="isDuplicateName" class="alert alert-danger">
+                <div>
+                   {{i18n.admin + 'Save point name already exists under this group. Please enter a unique name.' | dynamicTranslate}}
+                </div>
+              </div>
+              <div *ngIf="saveClicked && !savePointName" class="alert alert-danger">
+                <div>
+                   {{i18n.admin + 'A valid unique name is required to create a save point. Please enter a unique name.' | dynamicTranslate}}
+                </div>
+              </div>
+            </td>
+          </tr>
+        </table>
+    </div>
+  </div>
+ 
+  <div class="form-group row">
+    <div class="col-md-12">
+      <famis-grid *ngIf="true" [famisGrid]="savePointGrid" (actionEvent)="handleActionEvent($event)" (updateCacheEvent)="updateCache($event)"></famis-grid>
+    </div>
+  </div>
+  <restore-milestone (onAddOrUpdate)="handleAddOrUpdate($event)" (onAction)="handleAction($event)" ></restore-milestone>
+</form>

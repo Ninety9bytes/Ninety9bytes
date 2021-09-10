@@ -1,0 +1,3 @@
+  <famis-grid *ngIf="!additionalEquipmentGrid.loading" [famisGrid]="additionalEquipmentGrid" (sortChanged)="updateGrid($event)"
+    (actionEvent)="handleActionEvent($event)">
+  </famis-grid>

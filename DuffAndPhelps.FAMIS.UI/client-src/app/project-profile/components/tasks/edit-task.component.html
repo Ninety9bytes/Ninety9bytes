@@ -1,0 +1,78 @@
+<ng-template #modalContent let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Edit Task</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #editTaskFormForm="ngForm">
+
+
+      <div class="form-group">
+        <label for="selectAssignedTo">Assigned To</label>
+        <select class="form-control" id="selectAssignedTo" [(ngModel)]="dto.assignedUserId" name="assignedUserId" required #selectAssignedTo="ngModel">
+          <option></option>
+          <option *ngFor="let opt of users" [value]="opt.id">{{opt.name}}</option>
+        </select>
+
+
+        <div *ngIf="selectAssignedTo.invalid && (selectAssignedTo.dirty || selectAssignedTo.touched)" class="alert alert-danger">
+
+          <div *ngIf="selectAssignedTo.errors.required">
+            Assigned to is required
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="form-group">
+        <label for="selectEscalationUser">Escalation User</label>
+        <select class="form-control" id="selectEscalationUser" [(ngModel)]="dto.escalationUserId" name="selectEscalationUser" #selectEscalationUser="ngModel">
+          <option></option>
+          <option *ngFor="let opt of users" [value]="opt.id">{{opt.name}}</option>
+        </select>
+
+      </div>
+
+
+      <div class="form-group">
+        <label for="selectEscalationTeam">Escalation Team</label>
+        <select class="form-control" [(ngModel)]="dto.escalationTeamId" name="escalationTeam" id="selectEscalationTeam">
+          <option></option>
+          <option value="FAA">FAA</option>
+          <option value="ProjectManagement">Project Management</option>
+          <option value="Admin">Admin</option>
+        </select>
+      </div>
+
+      <div class="form-group" *ngIf="dto.escalationUserId || dto.escalationTeamId">
+
+        <label for="selectEscalationDays">Escalation Days</label>
+        <select class="form-control" [(ngModel)]="dto.escalationDays" name="escalationDays" id="selectEscalationDays" [required]="dto.escalationUserId || dto.escalationTeamId"
+          #selectEscalationDays="ngModel">
+          <option></option>
+          <option value="10">10 Days</option>
+          <option value="20">20 Days</option>
+          <option value="30">30 Days</option>
+        </select>
+
+        <div *ngIf="selectEscalationDays.invalid && (selectEscalationDays.dirty || selectEscalationDays.touched)" class="alert alert-danger">
+
+          <div *ngIf="selectEscalationDays.errors.required">
+            Escalation days is required
+          </div>
+
+        </div>
+
+      </div>
+
+    </form>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" (click)="c('Close click')">Cancel</button>
+    <button type="submit" class="btn btn-primary" (click)="onSubmit(editTaskFormForm)">Save</button>
+  </div>
+</ng-template>

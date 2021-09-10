@@ -1,0 +1,55 @@
+﻿<form (ngSubmit)="onSubmit(dataImportForm)" #dataImportForm="ngForm" (keydown)="handleKeyDown($event)">
+
+  <div class="form-group row" *ngFor="let module of selectedModules | orderBy: 'order'">
+
+    <ng-container *ngIf="!isModuleOnly(module)">
+      <div class="col-8">
+
+        <h2>{{i18n.common + module.name | dynamicTranslate }}</h2>
+        <label for="multiSelectModule">{{i18n.templateManagement + 'Available Fields for Template' | dynamicTranslate }}</label>
+        <select multiple class="form-control" [(ngModel)]="selectedModuleFieldIds[module.id]" name="selectedModuleFieldIds{{module.id}}">
+          <option *ngFor="let item of module.moduleFields | orderBy: 'order'" [value]="item.id">
+             {{i18n.projectProfile + item.name | dynamicTranslate }}
+          </option>
+        </select>
+        <small class="text-muted">
+          {{i18n.templateManagement + 'Ctrl + click to select all fields that apply' | dynamicTranslate }}
+        </small>
+
+      </div>
+
+
+
+      <div class="col-12">
+        <app-custom-field [moduleId]="module.id" (customFieldAdded)='addCustomField($event)' (customFieldRemoved)='removeCustomField($event)'
+          [customFields]='customFields' [invalidFieldTypeIndexes]='invalidCustomFieldDataTypes' [invalidFieldNameIndexes]='invalidCustomFieldNames'
+          [isEditTemplate]="isEdit">
+        </app-custom-field>
+      </div>
+
+    </ng-container>
+
+    <ng-container *ngIf="isModuleOnly(module)">
+
+        <div class="col-8">
+
+          <h2>{{i18n.common + module.name | dynamicTranslate }}</h2>
+          <label for="multiSelectModule">{{i18n.templateManagement + 'Enabled for Template' | dynamicTranslate }}</label>
+        </div>
+    </ng-container>
+
+  </div>
+
+
+
+  <div class="wizard-actions">
+
+    <button class="btn btn-default" (click)="navigateBack($event)">{{i18n.common + 'Back' | dynamicTranslate }}</button>
+
+    <button type="submit" class="btn btn-primary">{{i18n.common + 'Continue' | dynamicTranslate }}</button>
+
+  </div>
+
+
+
+</form>

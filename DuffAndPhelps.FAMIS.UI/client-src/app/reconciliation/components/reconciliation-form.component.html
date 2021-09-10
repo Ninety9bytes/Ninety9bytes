@@ -1,0 +1,18 @@
+﻿<div id="Reconciliation-Module">
+<h1>{{i18n.common + moduleName | dynamicTranslate}}</h1>
+
+
+      <div class="module-heading">
+ 
+      <ol class="breadcrumb">
+        <li *ngFor="let breadCrumb of activeBreadcrumbs" class="breadcrumb-item" routerLinkActive="active">
+          <a [class.disabled]="!!breadCrumb.isDisabled && breadCrumb.isDisabled" [routerLink]="breadCrumb.routerLink" >{{i18n.common + breadCrumb.name | dynamicTranslate }}</a>
+        </li>
+      </ol>
+    </div>
+
+  
+    <router-outlet></router-outlet>
+    
+  
+    </div>

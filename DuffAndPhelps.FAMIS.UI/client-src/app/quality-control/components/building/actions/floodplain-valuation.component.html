@@ -1,0 +1,56 @@
+<ng-template #content let-c="close" let-d="dismiss">
+
+  <form #floodplainValuationForm="ngForm">
+    <div class="modal-body">
+      <div *ngIf="!valuationRequestSubmitted">
+         {{i18n.qualityControl + 'You are about to submit' | dynamicTranslate}}
+          <b> {{selectedBuildings.length}} </b> 
+         {{i18n.qualityControl + 'buildings to CoreLogic for Flood Plain valuation. Please confirm to proceed.' | dynamicTranslate}}
+        </div>
+        <div *ngIf="valuationRequestSubmitted && !responseArrived">
+          {{i18n.qualityControl + 'Processing Submission' | dynamicTranslate}}
+          <br><br>
+        </div>
+        <div *ngIf="valuationRequestSubmitted && responseArrived && !hasValuationErrors">
+          {{i18n.qualityControl + 'All records sent successfully for valuation' | dynamicTranslate}}
+          <br><br>
+        </div>
+        <div *ngIf="valuationRequestSubmitted && responseArrived && hasValuationErrors">
+          <b>
+            {{i18n.qualityControl + 'Please resolve the following errors and resubmit' | dynamicTranslate}}
+          </b>
+          <br>
+        </div>
+        <div class="row" *ngIf="!valuationRequestSubmitted && !responseArrived">
+          <div class="col-md-12">
+            <div style="position: relative;">
+                <kendo-grid [resizable]="true"  [data]="selectedBuildings">
+                    <kendo-grid-column field="buildingName" title="{{ i18n.building + 'Building Name' | dynamicTranslate}}" width="25%">  </kendo-grid-column>
+                    <kendo-grid-column field="siteName" title="{{ i18n.building + 'Site Name' | dynamicTranslate}}" width="25%"></kendo-grid-column>
+                    <kendo-grid-column field="memberName" title="{{ i18n.building + 'Member Name' | dynamicTranslate}}" width="25%"></kendo-grid-column>
+                  </kendo-grid>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="responseArrived && hasValuationErrors" style="position: relative;padding:3rem;padding-top:0.5rem; padding-bottom:0.5rem">
+          <div style="overflow-y:scroll;height:25rem;width:80%;padding-left: 20px;border: 1px solid black;">
+            <table style="height: 70%; width:100%;">
+                <tr *ngFor="let building of apiErrorResponse"> <b> {{building.buildingName}} </b>
+                    <table>
+                        <tr *ngFor="let buildingError of building.errorsAssociated">
+                          <td>{{ i18n.qualityControl + getEnumDisplayName(buildingError) | dynamicTranslate }}</td>
+                        </tr>
+                    </table>
+                    <br>
+                </tr>
+              </table>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="padding:2rem;padding-top:0.5rem">
+        <button *ngIf="!valuationRequestSubmitted" type="button" class="btn btn-default" (click)="cancel()">{{i18n.common + 'Cancel' | dynamicTranslate}}</button>  
+        <button *ngIf="valuationRequestSubmitted" type="submit" class="btn btn-primary" (click)="cancel()" > {{i18n.common + 'Close' | dynamicTranslate}}</button>                     
+        <button *ngIf="!valuationRequestSubmitted" type="submit" class="btn btn-primary" (click)="confirm()" >{{i18n.common + 'Confirm' | dynamicTranslate}}</button>                    
+    </div>
+  </form>
+</ng-template>

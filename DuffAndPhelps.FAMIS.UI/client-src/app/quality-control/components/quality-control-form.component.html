@@ -1,0 +1,156 @@
+<div class="row pt-3 pb-3 actions">
+  <div class="col-md-3 btn-group">
+    <button
+      (click)="toggleQualityControlMode(qualityControlModes.Content)"
+      type="button"
+      [class.btn-default]="mode !== qualityControlModes.Content"
+      [class.btn-primary]="mode === qualityControlModes.Content"
+      class="btn btn-primary"
+    >
+      {{ i18n.qualityControl + 'Content' | dynamicTranslate }}
+    </button>
+    <button
+      (click)="toggleQualityControlMode(qualityControlModes.Buildings)"
+      type="button"
+      [class.btn-default]="mode !== qualityControlModes.Buildings"
+      [class.btn-primary]="mode === qualityControlModes.Buildings"
+      class="btn btn-default"
+    >
+      {{ i18n.qualityControl + 'Buildings' | dynamicTranslate }}
+    </button>
+    <button
+      (click)="openModal()"
+      type="button"
+      *ngIf="mode === qualityControlModes.Buildings && showValuationErrorsButton"
+      class="btn btn-action"
+    >
+      {{ i18n.qualityControl + 'Valuation Errors' | dynamicTranslate }}
+    </button>
+  </div>
+
+  <div class="col-md-4">
+    <button
+      [showIfCanAccess]="permissions.canWriteData"
+      *ngIf="buildingReferenceDataLoaded()"
+      type="button"
+      class="btn btn-primary"
+      [disabled]="!contentReferenceDataLoaded()"
+      (click)="massUpdate()"
+    >
+      {{ i18n.qualityControl + 'Mass Update' | dynamicTranslate }}
+    </button>
+    <button
+      [showIfCanAccess]="permissions.canWriteData"
+      [disabled]="!contentReferenceDataLoaded() || mode === qualityControlModes.Buildings"
+      type="button"
+      class="btn btn-primary"
+      (click)="duplicateCheck()"
+    >
+      {{ i18n.qualityControl + 'Duplicate Check' | dynamicTranslate }}
+    </button>
+  </div>
+  <div class="col-md-2"></div>
+  <div [showIfCanAccess]="permissions.canWriteData" class="col-md-3 text-right">
+    <button
+      *ngIf="mode === qualityControlModes.Content"
+      type="button"
+      class="btn btn-primary"
+      (click)="duplicate()"
+      [disabled]="selectedAssets.length !== 1"
+    >
+      {{ i18n.common + 'Duplicate Record' | dynamicTranslate }}
+    </button>
+
+    <div ngbDropdown class="d-inline-block">
+      <button
+        class="btn btn-primary"
+        *ngIf="mode === qualityControlModes.Content"
+        [disabled]="!contentReferenceDataLoaded()"
+        id="Action"
+        ngbDropdownToggle
+      >
+        {{ i18n.qualityControl + 'Actions' | dynamicTranslate }}
+      </button>
+      <button
+        class="btn btn-primary"
+        *ngIf="mode === qualityControlModes.Buildings"
+        [disabled]="!buildingReferenceDataLoaded()"
+        id="Action"
+        ngbDropdownToggle
+      >
+        {{ i18n.qualityControl + 'Actions' | dynamicTranslate }}
+      </button>
+
+      <div class="dropdown-menu bottom-right" ngbDropdownMenu aria-labelledby="SelectAction">
+        <ng-container *ngIf="mode === qualityControlModes.Content">
+          <button class="dropdown-item" (click)="selectAction(modalActions.RetireAsset)" [disabled]="selectedAssets.length === 0">
+            {{ i18n.qualityControl + 'Retire Asset(s)' | dynamicTranslate }}
+          </button>
+          <button class="dropdown-item" (click)="selectAction(modalActions.TransferAsset)" [disabled]="selectedAssets.length === 0">
+            {{ i18n.qualityControl + 'Transfer Asset(s)' | dynamicTranslate }}
+          </button>
+          <button class="dropdown-item" (click)="selectAction(modalActions.CostAdjustment)" [disabled]="selectedAssets.length !== 1">
+            {{ i18n.qualityControl + 'Cost Adjustment' | dynamicTranslate }}
+          </button>
+        </ng-container>
+        <ng-container *ngIf="mode === qualityControlModes.Buildings">
+          <button class="dropdown-item" (click)="selectAction(modalActions.BuildingValuation)">
+            {{ i18n.qualityControl + 'Building Valuation' | dynamicTranslate }}
+          </button>
+          <button class="dropdown-item" (click)="selectAction(modalActions.FloodPlanValuation)">
+            {{ i18n.qualityControl + 'Flood Zone Request' | dynamicTranslate }}
+          </button>
+        </ng-container>
+      </div>
+    </div>
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      *ngIf="mode === qualityControlModes.Buildings"
+      [disabled]="!buildingReferenceDataLoaded()"
+      (click)="add()"
+    >
+      {{ i18n.common + 'Add' | dynamicTranslate }}
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      *ngIf="mode === qualityControlModes.Content"
+      [disabled]="!contentReferenceDataLoaded()"
+      (click)="add()"
+    >
+      {{ i18n.common + 'Add' | dynamicTranslate }}
+    </button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <quality-control-content-grid
+      [isReadOnly]="!userCanWriteData()"
+      (gridSelections)="selectedAssets = $event"
+      *ngIf="mode === qualityControlModes.Content && contentReferenceDataLoaded()"
+    ></quality-control-content-grid>
+
+    <quality-control-building-grid
+      [isReadOnly]="!userCanWriteData()"
+      (gridSelections)="selectedBuildings = $event"
+      *ngIf="mode === qualityControlModes.Buildings && buildingReferenceDataLoaded()"
+    ></quality-control-building-grid>
+
+    <div
+      *ngIf="(mode === qualityControlModes.Content && !statusExists) || (mode === qualityControlModes.Buildings && !buildingReferenceDataLoaded())"
+      class="empty-grid text-center"
+    >
+      <div class="action-link ">
+        {{ i18n.common + 'No data loaded - ' | dynamicTranslate }}&nbsp;
+        <a href="" (click)="navigateToImportData($event)">{{ i18n.common + 'Import Data' | dynamicTranslate }}</a>
+      </div>
+    </div>
+  </div>
+  <div>
+    <building-valuation (onAction)="handleAction($event)"></building-valuation>
+    <floodplain-valuation (onAction)="handleAction($event)"></floodplain-valuation>
+  </div>
+</div>

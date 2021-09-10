@@ -1,0 +1,33 @@
+<form [formGroup]="form">
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+
+          <ng-container *ngFor="let field of defaultFormFields | orderBy: 'order'; let i=index; let odd=odd; let even=even;">
+            <div class="col-md-6" *ngIf="even">
+              <div class="form-group">
+                <label [attr.for]="field.id">{{i18n.recipients + field.displayName | dynamicTranslate}}</label>
+                <input class="form-control" type="text" disabled value="{{field.value}}">
+              </div>
+            </div>
+            
+            <div class="col-md-6" *ngIf="odd">
+              <div class="form-group">
+                <label [attr.for]="field.id">{{i18n.recipients + field.displayName | dynamicTranslate}}</label>
+                <input class="form-control" type="text" disabled value="{{field.value}}">
+              </div>
+            </div>
+          </ng-container>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn btn-default" (click)="cancel()">{{i18n.common + 'Cancel' | dynamicTranslate}}</button>
+    <button type="submit" class="btn btn-primary" (click)="remove()" [ladda]="isSaving">{{i18n.common + 'Remove' | dynamicTranslate}}</button>
+  </div>
+</form>

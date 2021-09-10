@@ -1,0 +1,29 @@
+<modal-form [modalTitle]="modalTitle" (modalEvent)="handleModalEvent($event)">
+  <form (ngSubmit)="addPortalGroup(portalGroupForm)" #portalGroupForm="ngForm">
+    <div class="form-group">
+        <label>{{i18n.common + 'Select Contract' | dynamicTranslate}}</label>
+        <type-ahead 
+                    [searching]="searching" 
+                    [model]="model" 
+                    [search]="search" 
+                    (selectItem)="onSelectItem($event)"
+                    [resultFormatter]="getResultFormatter" 
+                    [inputFormatter]="getInputFormatter"></type-ahead>
+    </div>
+    <div class="form-group">
+      <label for="accountNameInput">{{i18n.common + 'Account Description' | dynamicTranslate}}</label>
+      <select class="form-control" [(ngModel)]="selectedAccountId" id="accountNameInput" name="account" required>
+        <option value="">
+          <span>Select Account</span>
+        </option>
+        <option *ngFor="let account of accounts" [value]="account.id">{{account.groupName}}</option>
+      </select>
+    </div>
+    <div class="alert alert-danger" *ngIf="displayErrors">
+      {{i18n.common + 'Select a contract and assign portal account description.' | dynamicTranslate}}
+    </div>
+    <div class="alert alert-danger" *ngIf="contractExists">
+      {{i18n.common + apiError | dynamicTranslate}}
+    </div>
+  </form>
+</modal-form>

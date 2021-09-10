@@ -1,0 +1,9 @@
+<famis-grid *ngIf="!!dataGrid.loading && !!dataGrid.selectedHeaders" 
+    [famisGrid]="dataGrid"
+    (updateCacheEvent)="updateCache($event)"
+    (actionEvent)="handleActionEvent($event)"
+    (sortChanged)="handleSortChanged($event)"
+    (selectionChanged)="handleSelectionChanged($event)"
+    (cellValueChanged)="handleCellValueChanged($event)"
+    [showAddCustomColumn]="true">
+</famis-grid>

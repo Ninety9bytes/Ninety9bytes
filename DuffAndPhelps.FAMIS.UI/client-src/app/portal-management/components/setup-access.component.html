@@ -1,0 +1,28 @@
+<div class="row pt-5">
+  <div class="col-md-12">
+      <h3>{{i18n.common + 'Account Portal Access' | dynamicTranslate}}</h3>
+  </div>
+   
+</div>
+<div class="row pt-2 pl-3">
+  <div class="col-md-2">
+      <div class="form-check form-check-inline">
+          <input class="form-check-input" (change)="toggleStatus()" [checked]="!group.isDisabled" type="radio" name="enabledOption" id="enabledOption" value="enabled">
+          <label class="form-check-label" for="enabledOption">{{i18n.common + 'Enabled' | dynamicTranslate}}</label>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" (change)="toggleStatus()" [checked]="group.isDisabled" type="radio" name="disabledOption" id="disabledOption" value="disabled">
+            <label class="form-check-label" for="disabledOption">{{i18n.common + 'Disabled' | dynamicTranslate}}</label>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="group.isDisabled">
+  <div class="col-md-8">
+      <h5>{{i18n.common + 'Portal Access for this contract has been disabled.' | dynamicTranslate}}</h5>
+  </div>
+</div>
+
+

@@ -1,0 +1,75 @@
+<div class="container">
+
+  <div>
+    <div class="row">
+      <div class="col-md-10">
+        <h1>{{i18n.templateManagement + 'Template Management' | dynamicTranslate }}</h1>
+      </div>
+      <div class="col-md-2 text-right">
+        <button type="button" routerLink="/admin/templates/builder" class="btn btn-primary">{{i18n.templateManagement + 'Create New' | dynamicTranslate }}</button>
+      </div>
+    </div>
+  </div>
+
+  <br />
+
+  <div class="row">
+    <div class="col-md-12">
+      <div>
+        <kendo-grid [resizable]="true" [data]="gridData" [pageSize]="state.take" [skip]="state.skip" [sort]="state.sort" [filter]="state.filter" [sortable]="true"
+                    [pageable]="true" [filterable]="true" (dataStateChange)="dataStateChange($event)" [rowClass]="isDisabled" (filterChange)="handleFilterChange($event)">
+          <kendo-grid-column field="name" title="{{i18n.templateManagement + 'Template Name' | dynamicTranslate }}" width="20%">
+              <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
+                  <kendo-grid-string-filter-cell
+                    [column]="column"
+                    [filter]="filter">
+                      <kendo-filter-eq-operator></kendo-filter-eq-operator>
+                      <kendo-filter-neq-operator></kendo-filter-neq-operator>
+                      <kendo-filter-startswith-operator></kendo-filter-startswith-operator>
+                      <kendo-filter-contains-operator></kendo-filter-contains-operator>
+                      <kendo-filter-not-contains-operator></kendo-filter-not-contains-operator>
+                      <kendo-filter-isnull-operator></kendo-filter-isnull-operator>
+                      <kendo-filter-isnotnull-operator></kendo-filter-isnotnull-operator>
+                  </kendo-grid-string-filter-cell>
+              </ng-template>
+          </kendo-grid-column>
+          <!--Todo: Get CountryName, DateCreate and LastUsed added to GetTemplateDTO -->
+          <kendo-grid-column field="officeName" title="{{i18n.templateManagement + 'Office' | dynamicTranslate }}" width="20%">
+              <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
+                  <kendo-grid-string-filter-cell
+                    [column]="column"
+                    [filter]="filter">
+                      <kendo-filter-eq-operator></kendo-filter-eq-operator>
+                      <kendo-filter-neq-operator></kendo-filter-neq-operator>
+                      <kendo-filter-startswith-operator></kendo-filter-startswith-operator>
+                      <kendo-filter-contains-operator></kendo-filter-contains-operator>
+                      <kendo-filter-not-contains-operator></kendo-filter-not-contains-operator>
+                      <kendo-filter-isnull-operator></kendo-filter-isnull-operator>
+                      <kendo-filter-isnotnull-operator></kendo-filter-isnotnull-operator>
+                  </kendo-grid-string-filter-cell>
+              </ng-template>
+          </kendo-grid-column>
+          <kendo-grid-column field="lastUsed" [filterable]="false" title="{{i18n.templateManagement + 'Last Used' | dynamicTranslate }}" width="20%">
+            <ng-template kendoGridCellTemplate let-dataItem>
+              <div *ngIf="dataItem.lastUsed != null">{{ dataItem.lastUsed | localTime }}</div>
+            </ng-template>
+          </kendo-grid-column>
+          <kendo-grid-column field="isRetired" title="{{i18n.templateManagement + 'Status' | dynamicTranslate }}" [filterable]="false" width="20%">
+            <ng-template kendoGridCellTemplate let-dataItem>
+              <div>{{i18n.common + (dataItem.isRetired ? 'Enable' : 'Disable') | dynamicTranslate }}</div>
+            </ng-template>
+          </kendo-grid-column>
+          <kendo-grid-column field="Actions" [filterable]="false" title="{{i18n.templateManagement + 'Actions' | dynamicTranslate }}" width="20%">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+              <a href="#" routerLink="/admin/templates/builder/{{dataItem.id}}">{{i18n.common + 'Edit' | dynamicTranslate }}</a>
+              <a href="#" (click)="handleCopy(dataItem.id, $event)">{{i18n.common + 'Copy' | dynamicTranslate }}</a>
+              <a (click)="toggleIsRetired(dataItem.id, $event)" href="#">{{i18n.common + (dataItem.isRetired ? 'Enable' : 'Disable') | dynamicTranslate }}</a>
+            </ng-template>
+          </kendo-grid-column>
+
+        </kendo-grid>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,40 @@
+<h1>Task Management</h1>
+
+  <br />
+
+<div class="row">
+  <div class="col-md-12">
+    <div>
+      <kendo-grid [resizable]="true" [data]="tasks" [sortable]="false" [rowClass]="isDisabled">
+        <kendo-grid-column field="taskType" title="Type" width="9.5%">
+        </kendo-grid-column>
+        <kendo-grid-column field="description" title="Task Title" width="14.66%">
+        </kendo-grid-column>
+        <kendo-grid-column field="assignedToName" title="Assigned To" width="12.66%">
+        </kendo-grid-column>
+        <kendo-grid-column field="status" title="Status" width="9.5%">
+        </kendo-grid-column>
+        <kendo-grid-column field="escalationDays" title="Escalation Days" width="10.76%">
+        </kendo-grid-column>
+        <kendo-grid-column field="escalationToName" title="Escalation User" width="16.66%">
+        </kendo-grid-column>
+        <kendo-grid-column field="Actions" title="Actions" width="9.5%">
+          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+            <div *ngIf="dataItem.isActive">
+              <a (click)="editModal.open(dataItem,$event)" href="#">Edit</a>
+            </div>
+            <div *ngIf="canBeDisabled(dataItem.type) && dataItem.isActive">
+              <a (click)="toggle(dataItem.id,$event)" href="#">Disable</a>
+            </div>
+            <div class="enable-link-button" *ngIf="!dataItem.isActive">
+              <a (click)="toggle(dataItem.id, $event)" href="#">Enable</a>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+
+      </kendo-grid>
+    </div>
+  </div>
+</div>
+
+<edit-task #editModel (onTaskModified)="handleTaskModified($event)"></edit-task>

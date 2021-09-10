@@ -1,0 +1,40 @@
+﻿<div class="form-group" [formGroup]="form">
+  <label *ngIf="!field.isCustomField" [attr.for]="field.key">{{i18n.projectProfile + field.label | dynamicTranslate }}</label>
+  <label *ngIf="field.isCustomField" [attr.for]="field.key">{{field.label }}</label>
+
+  
+
+   <div [ngSwitch]="field.controlType">
+    <div *ngSwitchCase="'boolean'" class="checkbox k-form-field">
+      <input type="checkbox" [formControlName]="field.key" [id]="field.key" [tabindex]="field.order"  class="k-checkbox">
+      <label class="k-checkbox-label" [for]="field.key"></label>
+    </div>
+
+    <textarea [id]="field.key" class="form-control" *ngSwitchCase="'textarea'" [formControlName]="field.key" [tabindex]="field.order" rows="6"></textarea>
+    <input [id]="field.key" class="form-control" *ngSwitchCase="'text'" [formControlName]="field.key" [tabindex]="field.order" [type]="field.controlType">
+    <input [id]="field.key" class="form-control" *ngSwitchCase="'wholenumber'" [formControlName]="field.key" [tabindex]="field.order" type="number"
+      step="1">
+    <input [id]="field.key" class="form-control" *ngSwitchCase="'decimalnumber'" [formControlName]="field.key" [tabindex]="field.order" type="number"
+      step="0.01">
+    <div *ngSwitchCase="'date'">
+      <kendo-datepicker *ngIf="field.fieldName !== 'Created from Salesforce'" [id]="field.key" [formControlName]="field.key" [tabindex]="field.order"></kendo-datepicker>
+      <kendo-datepicker *ngIf="field.fieldName === 'Created from Salesforce'" [format]="'MM/dd/yyyy HH:mm'" [id]="field.key" [formControlName]="field.key" [tabindex]="field.order"></kendo-datepicker>
+    </div>
+
+    <div *ngSwitchCase="'peoplePicker'">
+      <input [id]="field.key" type="text" class="form-control" name="field.fieldName" [(ngModel)]="selectedEmployee" [value]="fieldValueString"
+        [ngbTypeahead]="search" placeholder="Employee Search" (selectItem)="onSelectItem($event)" [inputFormatter]="getImputFormatter"
+        [resultFormatter]="getResultFormatter" [tabindex]="field.order" [formControlName]="field.key"/>
+        <span *ngIf="searching">searching...</span>
+        <div class="invalid-feedback" *ngIf="searchFailed">Sorry, suggestions could not be loaded.</div>
+    </div>
+
+    <select class="form-control" [id]="field.key" *ngSwitchCase="'dropdown'" [tabindex]="field.order" [formControlName]="field.key"
+      [(ngModel)]="field.value">
+      <option value="" disabled selected>{{i18n.common + '-- Select Option --' | dynamicTranslate }}</option>
+      <option *ngFor="let opt of field.dropDownOptions" [value]="opt.key">{{i18n.projectProfile+ field.label + '_' + opt.value | dynamicTranslate }}</option>
+    </select>
+  </div>
+
+  <div class="errorMessage" *ngIf="!isValid">{{i18n.projectProfile+ field.label | dynamicTranslate }} is required.</div>
+</div>

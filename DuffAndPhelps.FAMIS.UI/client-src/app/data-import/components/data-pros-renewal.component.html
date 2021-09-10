@@ -1,0 +1,54 @@
+<div class="form-group row">
+  <div class="col-6">
+      <label for="AvailableDataTargets">{{i18n.dataImport + 'Destination Data Options' | dynamicTranslate}}</label>
+      <select class="form-control" id="AvailableDataTargets" [(ngModel)]="dataTargetName" name="selectedDataTarget"
+      #inputAvailableDataTargets="ngModel" (ngModelChange)="dataTargetChanged($event)" required>
+          <option value="" disabled>{{ i18n.dataImport + 'Select a Data Option' | dynamicTranslate }}</option>
+          <option *ngFor="let opt of availableDataTargets" [value]="opt.name">{{i18n.dataImport + opt.name | dynamicTranslate }}</option>
+      </select>
+
+      <div *ngIf="inputAvailableDataTargets.errors && (inputAvailableDataTargets.dirty || inputAvailableDataTargets.touched)"
+          class="alert alert-danger">
+          <div [hidden]="!inputAvailableDataTargets.errors.required">
+              {{ i18n.dataImport + 'Please select a data option' | dynamicTranslate }}
+          </div>
+      </div>
+
+      <div *ngIf="dataTargetName?.length && dataAlreadyExists" class="alert alert-warning">
+          {{i18n.dataImport + 'Warning: The' | dynamicTranslate }} {{i18n.dataImport + dataTargetName | dynamicTranslate}} {{i18n.dataImport + 'Asset File already contains data' | dynamicTranslate }}
+      </div>
+  </div>
+</div>
+
+<div class="row pt-3">
+      <div class="col-md-12">
+          <div class="form-group">
+              <label class="radio-inline pr-2">
+                  <input type="radio" [(ngModel)]="model.copyType"  (click)="updateCopyType($event)" name="copyType" value='replace' [checked]="model.copyType==='replace'">
+                      {{i18n.dataImport + 'Replace' | dynamicTranslate}}
+              </label>
+              <label class="radio-inline pl-2">
+                  <input type="radio" (click)="updateCopyType($event)" [(ngModel)]="model.copyType"  name="copyType" value='append' [checked]="model.copyType==='append'">
+                      {{i18n.dataImport + 'Append' | dynamicTranslate }}
+              </label>
+          </div>
+          <div #selections></div>
+          <button type="button" (click)="addSelection()" class="btn btn-action btn-small">
+              <i class="fa fa-plus"></i>
+          </button>
+          <strong>&nbsp;{{i18n.dataImport + 'Add Selection' | dynamicTranslate}}</strong>
+      </div>
+  </div>
+  
+  <div *ngIf="selectionErrors" class="row pt-3 pl-3">
+      <div class="alert alert-danger">
+          <div>
+              {{ i18n.dataImport + 'Please be sure to choose a Destination as well as a Contract and Group for each selection' | dynamicTranslate }}
+          </div>
+      </div>
+  </div>
+  
+  <div class="form-group pt-4">
+      <button [disabled]="!hasSelections()" class="btn btn-primary" (click)="prosRenewal()" >{{ i18n.dataImport + 'PROS Renewal' | dynamicTranslate }}</button>
+  </div>
+ 

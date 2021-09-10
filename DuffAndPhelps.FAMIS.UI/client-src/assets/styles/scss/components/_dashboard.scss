@@ -1,0 +1,25 @@
+#DashboardModule {
+  .k-grid td,
+  .k-grid th {
+    padding: 3px !important;
+    font-size: 9pt !important;
+  }
+
+  .k-grid {
+    .k-hierarchy-cell {
+      > .k-icon {
+        padding: 0.5rem 0;
+      }
+    }
+  }
+
+  .record-count {
+    display: block;
+  }
+
+  .groups-detail {
+    .k-grid {
+      margin-bottom: .2em;
+    }
+  }
+}

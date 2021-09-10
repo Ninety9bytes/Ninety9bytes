@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col-md-12">
+    <div>
+      <div id="high-density">
+        <kendo-grid [resizable]="true" [data]="gridData" [pageSize]="pageSize" [sort]="state.sort" [sortable]="true" [height]="500" [selectable]="selectableSettings"
+          [filter]="state.filter" [filterable]="true" [reorderable]="true" [kendoGridSelectBy]="'id'" [selectedKeys]="selectedMatchCodeIds"
+          (selectionChange)="onSelectionChanged($event)" (pageChange)="pageChange($event)" [reorderable]="true" (dataStateChange)="dataStateChange($event)"
+          [rowClass]="isDisabled">
+          <kendo-grid-checkbox-column [reorderable]="false" width="8%">
+            <ng-template kendoGridHeaderTemplate let-dataItem>
+              <div style="width: 100%; cursor: pointer;" (click)="sortSelected()">
+                <a class="clickable-link">{{Selected}}</a>
+                <span *ngIf="sortSelectedAsc">
+                  <i class="k-icon k-i-sort-asc-sm"></i>
+                </span>
+                <span *ngIf="sortSelectedDesc">
+                  <i class="k-icon k-i-sort-desc-sm"></i>
+                </span>
+              </div>
+            </ng-template>
+          </kendo-grid-checkbox-column>
+          <kendo-grid-column [reorderable]="true" field="name" [title]="'match-code_Match Code' | dynamicTranslate" width="15%">
+          </kendo-grid-column>
+          <kendo-grid-column [reorderable]="true" field="description" [title]="'match-code_Description' | dynamicTranslate" width="50%">
+          </kendo-grid-column>
+          <kendo-grid-column [reorderable]="true" field="categoryName" [title]="'match-code_Category' | dynamicTranslate" width="15%">
+          </kendo-grid-column>
+          <kendo-grid-column [reorderable]="true" field="isEnabled" [title]="'match-code_Enabled' | dynamicTranslate" width="6%"
+            [filterable]="false">
+          </kendo-grid-column>
+          <kendo-grid-column [reorderable]="true" field="Actions" [title]="'common_Actions' | dynamicTranslate" width="8%" [filterable]="false">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+              <a class="clickable-link" (click)="editMatchCode(dataItem.id,$event)">{{'common_Edit' | dynamicTranslate}}</a>
+            </ng-template>
+          </kendo-grid-column>
+
+        </kendo-grid>
+      </div>
+    </div>
+  </div>
+</div>
+
+<create-match-code (onAddorUpdateMatchCode)="handleCreatedorModifiedMatchCode($event)"></create-match-code>

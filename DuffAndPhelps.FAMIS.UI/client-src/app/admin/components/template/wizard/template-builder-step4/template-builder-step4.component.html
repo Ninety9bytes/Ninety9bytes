@@ -1,0 +1,54 @@
+<form (ngSubmit)="onSubmit()" #dataImportForm="ngForm" (keydown)="handleKeyDown($event)">
+
+  <div class="module-layout-preview" *ngFor="let module of selectedModules">
+
+    <ng-container *ngIf="module.moduleFields.length === 0">
+      <h2>{{i18n.common + module.name | dynamicTranslate }}</h2>
+
+      <h4>Enabled for Template</h4>
+    </ng-container>
+
+    <ng-container *ngIf="isModuleOnly(module)">
+        <h2>{{i18n.common + module.name | dynamicTranslate }}</h2>
+        <p>Enabled for Template</p>
+    </ng-container>
+
+    <ng-container *ngIf="!isModuleOnly(module) && module.moduleFields.length > 0">
+      <h2>{{i18n.common + module.name | dynamicTranslate }}</h2>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group" *ngFor="let field of formLayouts[module.id].oddOrderedFields">
+
+            <label for="input[field.Id]">{{field.name}}</label>
+            <input disabled type="text" class="form-control" id="input[field.Id]" aria-describedby="input[field.Id]" placeholder="">
+
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group" *ngFor="let field of formLayouts[module.id].evenOrderedFields">
+
+
+            <label for="input[field.Id]">{{field.name}}</label>
+            <input disabled type="text" class="form-control" id="input[field.id]" aria-describedby="input[field.id]" placeholder="">
+
+          </div>
+        </div>
+
+
+      </div>
+
+    </ng-container>
+
+  </div>
+
+  <div class="wizard-actions">
+
+    <button class="btn btn-default" (click)="navigateBack($event)">{{i18n.common + 'Back' | dynamicTranslate }}</button>
+
+    <button type="submit" class="btn btn-primary">{{i18n.common + 'Continue' | dynamicTranslate }}</button>
+
+  </div>
+
+</form>

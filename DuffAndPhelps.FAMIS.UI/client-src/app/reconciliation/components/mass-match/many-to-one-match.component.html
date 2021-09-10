@@ -1,0 +1,89 @@
+<div class="row">
+  <div class="col-md-6">
+    <b>{{matchesCount}} {{i18n.reconciliation + 'Matches' | dynamicTranslate }}</b>
+  </div>
+  <div class="col-md-6" style="text-align: right;">
+    <p> Match Code: {{selectedmatchCode}}</p>
+  </div>
+</div>
+<div class="row">
+  
+  <div class="col-md-12 ">
+
+    <kendo-grid 
+    [resizable]="true" 
+    [data]="manyMatchRecords"
+    [loading]="loading"
+    [selectable]="true" 
+    [kendoGridSelectBy]="'id'" 
+    [reorderable]="true"
+    [navigable]="true"
+    [height]="330" 
+    [sortable]="true"
+    [sort]="state.sort"
+    [navigable]="true"
+    #grid
+    >
+<!-- #clientFileMatchesGrid [rowClass]="isUnmatched"  //(detailExpand)="detailExpanded($event)" (dataStateChange)="dataStateChange($event)"  [dataItem]="dataItem"  
+-->
+
+      <ng-container *ngFor="let column of selectedInventoryHeaders">
+
+        <kendo-grid-column [reorderable]="true"  *ngIf="column.fieldType !== 'date'" [width]="200" field="{{column.name}}" format="{{column.format}}" title="CF - {{column.displayName}}"
+          [filter]="column.fieldType">
+          <ng-template kendoGridCellTemplate let-dataItem >
+            {{dataItem.inventoryRecords[0][column.name]}}
+          </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column [reorderable]="true" *ngIf="column.fieldType === 'date'" [width]="200" field="{{column.name}}" format="{{column.format}}" title="CF -{{column.displayName}}"
+          [filter]="column.fieldType">
+          <ng-template kendoGridCellTemplate let-dataItem >
+            {{ dataItem.inventoryRecords[0][column.name] | localizedDate }}
+          </ng-template>
+        </kendo-grid-column>
+      </ng-container>
+      <kendo-grid-column field="detailRecordCount"  title="Potenital Matches" width="100"></kendo-grid-column>
+      <div *kendoGridDetailTemplate="let dataItem">
+      
+          <kendo-grid 
+          [resizable]="true" 
+      
+          [data]="dataItem.clientFileRecords" 
+          [loading]="loading"
+          [selectable]="true" 
+          [kendoGridSelectBy]="'id'" 
+          [reorderable]="true"
+          [navigable]="true"
+          [sortable]="true"
+          [sort]="state.sort"
+          [navigable]="true"
+          >
+          <kendo-grid-column [reorderable]="false" field="Actions" title="Actions" width="100">
+            <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">
+              <a (click)="onMatch(dataItem,rowIndex)">{{i18n.reconciliation + 'Match' | dynamicTranslate}} </a>
+            </ng-template>
+          </kendo-grid-column>
+            <ng-container *ngFor="let column of selectedClientHeaders ">
+
+              <kendo-grid-column [reorderable]="true"  *ngIf="column.fieldType !== 'date'" [width]="200" field="{{column.name}}" format="{{column.format}}" title="AI-{{column.displayName}}"
+                [filter]="column.fieldType">
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                  {{dataItem[column.name]}}
+                </ng-template>
+              </kendo-grid-column>
+
+              <kendo-grid-column [reorderable]="true" *ngIf="column.fieldType === 'date'" [width]="200" field="{{column.name}}" format="{{column.format}}" title="AI-{{column.displayName}}"
+                [filter]="column.fieldType">
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                  {{ dataItem[column.name] | localizedDate }}
+                </ng-template>
+              </kendo-grid-column>
+            </ng-container>
+          </kendo-grid>
+        <!-- ---- details grid ---- end -->
+        </div>
+    </kendo-grid>
+
+  </div>
+</div>

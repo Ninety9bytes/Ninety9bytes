@@ -1,0 +1,9 @@
+<div class="container">
+  <div class="col-md-12">
+      <p><span><strong><ng-container i18n="Username@@usereditUsername">Username</ng-container>:</strong></span>&nbsp;{{user.Username}}</p>
+    <p><span><strong><ng-container i18n="Name@@usereditName">Name</ng-container>:</strong></span>&nbsp;{{user.Name}}</p>
+    <p><span><strong><ng-container i18n="Active@@usereditActive">Active</ng-container>:</strong></span>&nbsp;{{user.Active}}</p>
+    <p><span><strong><ng-container i18n="Date Added@@usereditDateAdded">Date Added</ng-container>: </strong>&nbsp;{{user.DateAdded | kendoDate }}</span></p>
+    <p><span><strong><ng-container i18n="Donation amount@@usereditDonation">Donation Amount</ng-container>: </strong>&nbsp;{{user.DonationAmount | kendoNumber:'c' }}</span></p>
+  </div>
+</div>

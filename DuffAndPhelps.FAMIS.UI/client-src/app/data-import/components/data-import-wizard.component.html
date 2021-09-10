@@ -1,0 +1,57 @@
+﻿<div id="DataImport-Module">
+
+  <ngb-tabset type="pills" #tabs *ngIf="canDataImport && !isLoading">
+    <ngb-tab id="step-1" [disabled]="isActive('') || !!dataImportService.importResult.success">
+      <ng-template ngbTabTitle>
+        <span>{{i18n.dataImport + 'Step 1' | dynamicTranslate}}</span>
+        <em>{{i18n.dataImport + 'Import Spreadsheet Data' | dynamicTranslate }}</em>
+      </ng-template>
+      <ng-template ngbTabContent>
+
+        <app-data-import-upload></app-data-import-upload>
+
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab id="step-2" [disabled]="isActive('step-2') || !!dataImportService.importResult.success">
+      <ng-template ngbTabTitle>
+        <span>{{i18n.dataImport + 'Step 2' | dynamicTranslate }}</span>
+        <em>{{i18n.dataImport + 'Map Source to Destination' | dynamicTranslate }}</em>
+      </ng-template>
+      <ng-template ngbTabContent>
+
+        <app-data-import-mapping></app-data-import-mapping>
+
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab id="step-3" [disabled]="isActive('step-3') || !!dataImportService.importResult.success">
+      <ng-template ngbTabTitle>
+        <span>{{i18n.dataImport + 'Step 3' | dynamicTranslate}}</span>
+        <em>{{i18n.dataImport + 'Review Data' | dynamicTranslate }}</em>
+      </ng-template>
+      <ng-template ngbTabContent>
+        <app-data-import-review></app-data-import-review>
+      </ng-template>
+    </ngb-tab>
+    <!--TODO: Determine why a ExpressionChangedAfterItHasBeenCheckedError is thrown when we get to step-4 -->
+        <ngb-tab id="step-4">
+      <ng-template ngbTabTitle>
+        <span>{{i18n.dataImport + 'Step 4' | dynamicTranslate}}</span>
+        <em>{{i18n.dataImport + 'Finish Import' | dynamicTranslate}}</em>
+      </ng-template>
+      <ng-template ngbTabContent>
+        <app-data-import-finish></app-data-import-finish>
+      </ng-template>
+    </ngb-tab>
+
+  </ngb-tabset>
+
+  
+  <div class="row buffer-row" *ngIf="!canDataImport  && !isLoading">
+    <div class="col-md-8">
+      <div class="alert alert-danger">
+        {{errorMessage || i18n.dataImport + 'Data import is not allowed as consolidated file exists' | dynamicTranslate}}
+      </div>
+    </div>
+  </div>
+
+</div>

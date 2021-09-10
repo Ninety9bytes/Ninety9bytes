@@ -1,0 +1,50 @@
+<!--<div class="row">
+<ng-container *ngFor="let field of formControls | orderBy: 'order'; let i=index; let odd=odd; let even=even;">
+
+  <ng-container *ngIf="field.type !== fieldTypes.Hidden">
+      <div class="col-md-6" *ngIf="even">
+
+          <dynamic-field [sourceTranslationKey]="i18n.building" [field]="field" [form]="formGroup" [key]='field.displayName'
+             [imageEntityType]="imageEntityTypes.Building" [entityId]="buildingId"></dynamic-field> 
+       
+         </div>
+       
+         <div class="col-md-6" *ngIf="odd">
+
+           <dynamic-field [sourceTranslationKey]="i18n.building" [field]="field" [form]="formGroup" [key]='field.displayName'
+           [imageEntityType]="imageEntityTypes.Building" [entityId]="buildingId"></dynamic-field> 
+       
+         </div>
+  </ng-container>
+
+
+</ng-container>
+</div>-->
+
+
+<div class="row">
+  <div class="col-md-6">
+
+    <div *ngFor="let field of fieldsLeft">
+      <dynamic-field *ngIf="!field.fieldCategory || field.fieldCategory === 0" [sourceTranslationKey]="i18n.building" [field]="field" [form]="formGroup" [key]='field.displayName'
+        [imageEntityType]="imageEntityTypes.Building" [entityId]="buildingId">
+      </dynamic-field>
+      <dynamic-field *ngIf="field.fieldCategory && field.fieldCategory === 1" [sourceTranslationKey]="i18n.customField" [field]="field" [form]="formGroup" [key]='field.displayName'
+        [imageEntityType]="imageEntityTypes.Building" [entityId]="buildingId" (customFieldLabelChange)="handleCustomFieldLabelChange($event)">
+      </dynamic-field>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+
+    <div *ngFor="let field of fieldsRight">
+      <dynamic-field *ngIf="!field.fieldCategory || field.fieldCategory === 0" [sourceTranslationKey]="i18n.building" [field]="field" [form]="formGroup" [key]='field.displayName'
+        [imageEntityType]="imageEntityTypes.Building" [entityId]="buildingId">
+      </dynamic-field>
+      <dynamic-field *ngIf="field.fieldCategory && field.fieldCategory === 1" [sourceTranslationKey]="i18n.customField" [field]="field" [form]="formGroup" [key]='field.displayName'
+        [imageEntityType]="imageEntityTypes.Building" [entityId]="buildingId" (customFieldLabelChange)="handleCustomFieldLabelChange($event)">
+      </dynamic-field>
+    </div>
+  </div>
+</div>

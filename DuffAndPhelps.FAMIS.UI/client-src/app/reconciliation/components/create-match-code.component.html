@@ -1,0 +1,71 @@
+<button type="button" (click)="open($event)" class="btn btn-action btn-small">
+  <i class="fa fa-plus"></i>
+</button>
+<strong> &nbsp; {{i18n.matchCodes + 'Add Match Code' | dynamicTranslate }}</strong>
+
+<ng-template #content let-c="close" let-d="dismiss">
+
+  <form (ngSubmit)="onSubmit(createMatchCodeForm)" #createMatchCodeForm="ngForm">
+
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="matchCodeInput">Match Code
+          <span class="required-indicator">*</span>
+        </label>
+        <input type="text" class="form-control" [(ngModel)]="matchCode.name" name="matchCodeName" id="matchCodeInput" aria-describedby="matchCodeHelp"
+          placeholder="" required #matchCodeInput="ngModel" (input)="onNameInputChange($event, $event.target.value)">
+        <div [hidden]="!isNameTaken" class="alert alert-danger">
+          {{i18n.matchCodes + 'This name is already asigned to a match code. Please provide a unique name' | dynamicTranslate }}.
+        </div>
+        <div *ngIf="matchCodeInput.errors && (matchCodeInput.dirty || matchCodeInput.touched || matchCodeInput.submitted)" class="alert alert-danger">
+          <div [hidden]="!matchCodeInput.errors.required">
+              {{i18n.matchCodes + 'Please provide a match code' | dynamicTranslate }}.
+          </div>
+
+        </div>
+
+      </div>
+      <div class="form-group">
+        <label for="descriptionInput">{{i18n.matchCodes + 'Description' | dynamicTranslate }}
+          <span class="required-indicator">*</span>
+        </label>
+        <input type="text" class="form-control" [(ngModel)]="matchCode.description" name="matchCodeDescription" id="descriptionInput"
+          aria-describedby="descriptionHelp" placeholder="" required #descriptionInput="ngModel">
+
+        <div *ngIf="descriptionInput.errors && (descriptionInput.dirty || descriptionInput.touched || descriptionInput.submitted)"
+          class="alert alert-danger">
+          <div [hidden]="!descriptionInput.errors.required">
+              {{i18n.matchCodes + 'Please provide a description' | dynamicTranslate }}.
+          </div>
+        </div>
+
+      </div>
+      <div class="form-group">
+        <label for="matchCodeCategorySelect">{{i18n.matchCodes + 'Match Category' | dynamicTranslate }}</label>
+        <select class="form-control" [(ngModel)]="matchCode.categoryId" name="matchCodeCategory" id="matchCodeCategorySelect">
+          <option *ngFor="let opt of matchCodeCategories" [value]="opt.id">{{ opt.name }}</option>
+        </select>
+
+
+
+      </div>
+
+      <div class="checkbox">
+
+
+        <input type="checkbox" id="matchCodeIsEnabled" class="k-checkbox" [(ngModel)]="matchCode.isEnabled" name="matchCodeIsEnabled">
+        <label class="k-checkbox-label" for="matchCodeIsEnabled">{{ i18n.matchCodes + 'Enable' | dynamicTranslate }}</label>
+
+
+      </div>
+
+
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" (click)="cancel()">{{ i18n.common + 'Cancel' | dynamicTranslate }}</button>
+      <button type="submit" class="btn btn-primary">{{i18n.common + action | dynamicTranslate }}</button>
+
+    </div>
+  </form>
+</ng-template>

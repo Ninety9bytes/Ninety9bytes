@@ -1,0 +1,9 @@
+<ng-container *ngIf="!isLoading">
+    <ol class="breadcrumb">
+        <li *ngFor="let breadCrumb of breadCrumbs" class="breadcrumb-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+        <a [class.disabled]="!!breadCrumb.isDisabled && breadCrumb.isDisabled" [routerLink]="breadCrumb.routerLink" >{{i18n.qualityControl + breadCrumb.name | dynamicTranslate}}</a>
+        </li>
+    </ol>
+    
+    <router-outlet></router-outlet>
+</ng-container>

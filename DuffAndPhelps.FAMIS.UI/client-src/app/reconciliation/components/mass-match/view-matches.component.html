@@ -1,0 +1,154 @@
+
+<div class="row">
+  <kendo-tabstrip>
+    <kendo-tabstrip-tab [title]="'1:1 Match '" [selected]="true" >
+      <ng-template kendoTabContent>
+        <form (ngSubmit)="onSubmit()" #massMatchSearchForm="ngForm">
+          <div class="row">
+            <div class="col-md-12">
+              <b>{{matchesCount}} {{i18n.reconciliation + 'Matches' | dynamicTranslate }}</b>
+              <!-- <b *ngIf="searchResponse.manyToManyMatches > 0" class="text-danger"> ({{searchResponse.manyToManyMatches}} {{i18n.reconciliation + 'recordswithmanytomanymatchesexists' | dynamicTranslate}})</b>       -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6" style="padding-right: 0;">
+              <div class="row">
+                <div class="col-md-3">{{i18n.reconciliation + 'Client File' | dynamicTranslate}}</div>
+                <div class="col-md-9">
+                  <grid-column-selector-modal style="visibility: hidden" [sourceTranslationKey]="i18n.asset" [selectedColumns]="selectedClientHeaderNames" [headersAvailable]="allClientHeaders" (columnSelectionEvent)="onColumnSelection($event)"></grid-column-selector-modal>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 hide-grid-scroll">
+                  <kendo-grid 
+                  [resizable]="true" 
+                  [data]="clientFileRecords" 
+                  [loading]="loading"
+                  [selectable]="true" 
+                  [kendoGridSelectBy]="'id'" 
+                  [selectedKeys]="selectedClientFileRows" 
+                  [reorderable]="true"
+                  (selectionChange)="clientFileSelectionChange($event)" 
+                  [height]="330" 
+                  [rowClass]="isUnmatched" 
+                  [sortable]="true"
+                  [sort]="state.sort"
+                  (sortChange)="sortChangeClient($event)"
+                  #clientFileMatchesGrid>
+        
+                    <kendo-grid-column [reorderable]="false" field="Actions" title="Actions" width="100">
+                      <ng-template kendoGridCellTemplate let-dataItem>
+                        <a (click)="unmatch(dataItem.id)">{{i18n.reconciliation + 'Unmatch' | dynamicTranslate}} </a>
+                      </ng-template>
+                    </kendo-grid-column>
+        
+                    <ng-container *ngFor="let column of selectedClientHeaders">
+        
+                      <kendo-grid-column [reorderable]="true"  *ngIf="column.fieldType !== 'date'" [width]="200" field="{{column.name}}" format="{{column.format}}" title="{{column.displayName}}"
+                        [filter]="column.fieldType">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                          {{dataItem[column.name]}}
+                        </ng-template>
+                      </kendo-grid-column>
+        
+                      <kendo-grid-column [reorderable]="true" *ngIf="column.fieldType === 'date'" [width]="200" field="{{column.name}}" format="{{column.format}}" title="{{column.displayName}}"
+                        [filter]="column.fieldType">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                          {{ dataItem[column.name] | localizedDate }}
+                        </ng-template>
+                      </kendo-grid-column>
+        
+        
+                    </ng-container>
+        
+        
+                  </kendo-grid>
+        
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6" style="padding-left: 0;">
+              <div class="row">
+                <div class="col-md-3">{{i18n.reconciliation + 'Actual Inventory' | dynamicTranslate}}</div>
+                <div class="col-md-9">
+                  <grid-column-selector-modal [sourceTranslationKey]="i18n.asset" [selectedColumns]="selectedInventoryHeaderNames" [headersAvailable]="allInventoryHeaders" (columnSelectionEvent)="onColumnSelection($event)"></grid-column-selector-modal>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+        
+                  <kendo-grid 
+                  [resizable]="true" 
+                  [data]="inventoryRecords"
+                  (scrollBottom)="refreshGridData()"          
+                  [loading]="loading"
+                  [selectable]="true" 
+                  [kendoGridSelectBy]="'id'" 
+                  [selectedKeys]="selectedInventoryFileRows"
+                  (selectionChange)="inventoryFileSelectionChange($event)" 
+                  [reorderable]="true"
+                  [height]="330" 
+                  [rowClass]="isUnmatched" 
+                  [sortable]="true"
+                  [sort]="stateInventory.sort"
+                  (sortChange)="sortChangeInventroyRecords($event)"
+                  #inventoryMatchesGrid>
+        
+                    <ng-container *ngFor="let column of selectedInventoryHeaders">
+        
+                  
+                      <kendo-grid-column *ngIf="column.fieldType !== 'date'" [width]="200" field="{{column.name}}" format="{{column.format}}" title="{{column.displayName}}"
+                        [filter]="column.fieldType">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                          {{dataItem[column.name]}}
+                        </ng-template>
+                      </kendo-grid-column>
+        
+                      <kendo-grid-column *ngIf="column.fieldType === 'date'" [width]="200" field="{{column.name}}" format="{{column.format}}" title="{{column.displayName}}"
+                        [filter]="column.fieldType">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                          {{ dataItem[column.name] | localizedDate }}
+                        </ng-template>
+                      </kendo-grid-column>
+        
+        
+                    </ng-container>
+        
+        
+        
+                  </kendo-grid>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-8 p-3">
+            
+              
+              <button [ladda]="saveIsLoading" class="btn btn-primary">Save</button>
+              <button [ladda]="saveAndNewIsLoading" (click)="saveAndNew($event)" class="btn btn-primary">{{i18n.common + 'Save &amp; New' | dynamicTranslate}}</button>
+        
+        
+            </div>
+            <div class="col-md-4"></div>
+          </div>
+      </form>
+      </ng-template>
+    </kendo-tabstrip-tab>
+    <kendo-tabstrip-tab [title]="'1:M Matches'">
+      <ng-template kendoTabContent>
+        <one-to-many-match [selectedInventoryHeaders]="selectedInventoryHeaders" [selectedClientHeaders]="selectedClientHeaders" ></one-to-many-match>
+      </ng-template>
+    </kendo-tabstrip-tab>
+    <kendo-tabstrip-tab [title]="'M:1 Matches'">
+      <ng-template kendoTabContent>
+        <many-to-one-match [selectedInventoryHeaders]="selectedInventoryHeaders" [selectedClientHeaders]="selectedClientHeaders" ></many-to-one-match>
+     
+      </ng-template>
+    </kendo-tabstrip-tab>
+  </kendo-tabstrip>
+</div>
+<div>
+  <button (click)="back($event)" class="btn btn-default">{{i18n.common + 'Back' | dynamicTranslate}}</button>
+</div>
+

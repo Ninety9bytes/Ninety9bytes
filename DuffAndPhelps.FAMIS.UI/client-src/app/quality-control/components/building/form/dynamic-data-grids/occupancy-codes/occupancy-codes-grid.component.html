@@ -1,0 +1,14 @@
+
+<famis-grid *ngIf="!additionalEquipmentGrid.loading" [famisGrid]="additionalEquipmentGrid"
+  (actionEvent)="handleActionEvent($event)" (sortChanged)="updateGrid($event)">
+</famis-grid>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-left">
+            <button type="button" (click)="addOccupancyCode()" class="btn btn-action btn-small">
+                <i class="fa fa-plus"></i>
+            </button> &nbsp; {{i18n.building + ' Add Occupancy Code' | dynamicTranslate }}
+        </div>
+    </div>
+</div>

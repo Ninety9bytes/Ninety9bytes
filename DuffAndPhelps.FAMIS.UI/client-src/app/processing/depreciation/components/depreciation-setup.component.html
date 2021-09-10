@@ -1,0 +1,117 @@
+<form (ngSubmit)="onSubmit(depreciationSetupForm)" #depreciationSetupForm="ngForm">
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label>{{i18n.depreciation + 'As of Date'| dynamicTranslate}} </label>
+      <input class="form-control" type="text" [value]="getSubProfileFieldValue('As of Date') | localizedDate" readonly>
+    </div>
+    <div class="form-group col-md-4">
+      <label>{{i18n.depreciation + 'Fiscal End Date'| dynamicTranslate}}</label>
+
+      <input class="form-control" type="text" [value]="getSubProfileFieldValue('Fiscal Year End') | localizedDate" readonly>
+    </div>
+
+  </div>
+
+  <h2>{{i18n.depreciation + 'Capitalization Policies'| dynamicTranslate}}</h2>
+  <div class="form-row">
+    <div class="form-group col-md-2">
+      <label>{{i18n.depreciation + 'Land'| dynamicTranslate}}</label>
+      <input class="form-control" type="text" [value]="getSubProfileFieldValue('Capitalization Policy - Land') | localizedNumber" readonly>
+    </div>
+    <div class="form-group col-md-2">
+      <label>{{i18n.depreciation + 'LI'| dynamicTranslate}}</label>
+      <input class="form-control" type="text" [value]="getSubProfileFieldValue('Capitalization Policy - LI') | localizedNumber" readonly>
+    </div>
+    <div class="form-group col-md-2">
+      <label>{{i18n.depreciation + 'Bldgs'| dynamicTranslate}}</label>
+      <input class="form-control" type="text" [value]="getSubProfileFieldValue('Capitalization Policy - Bldgs') | localizedNumber" readonly>
+    </div>
+    <div class="form-group col-md-2">
+      <label>{{i18n.depreciation + 'M&E'| dynamicTranslate}}</label>
+      <input class="form-control" type="text" [value]="getSubProfileFieldValue('Capitalization Policy - M&E') | localizedNumber" readonly>
+    </div>
+    <div class="form-group col-md-2">
+      <label>{{i18n.depreciation + 'Infrastructure'| dynamicTranslate}} </label>
+      <input class="form-control" type="text" [value]="getSubProfileFieldValue('Capitalization Policy - Infrastructure') | localizedNumber" readonly>
+    </div>
+
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label>{{i18n.depreciation + 'Depreciation Method'| dynamicTranslate}}</label>
+      <select class="form-control" [(ngModel)]="depreciationRequest.method" name="method" #selectDepreciationMethod="ngModel" required>
+        <option disabled>
+          <span>{{i18n.depreciation + 'Select a Depreciation Method'| dynamicTranslate}}</span>
+        </option>
+        <ng-container *ngFor="let method of depreciationMethods">
+          <option *ngIf="!method.isResultsOnly" [value]="method.value">{{i18n.depreciation + method.displayName | dynamicTranslate }}</option>
+        </ng-container>
+
+      </select>
+
+      <div *ngIf="selectDepreciationMethod.errors && depreciationSetupForm.submitted" class="alert alert-danger">
+        <div>
+          {{i18n.depreciation + 'Please select a depreciation method'| dynamicTranslate}}
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-4">
+      <label> {{i18n.depreciation + 'Starting Convention'| dynamicTranslate}}</label>
+      <select class="form-control" [(ngModel)]="depreciationRequest.convention" name="convention" #convention="ngModel" required>
+        <option disabled>
+          <span>{{i18n.depreciation + 'Select an Starting Convention'| dynamicTranslate}}</span>
+        </option>
+        <option *ngFor="let method of conventions" [value]="method.value">{{i18n.depreciation + method.displayName | dynamicTranslate }}</option>
+
+      </select>
+      <div *ngIf="convention.errors && depreciationSetupForm.submitted" class="alert alert-danger">
+        <div>
+          {{i18n.depreciation + 'Please select a starting convention' | dynamicTranslate }} 
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="form-group">
+    <div class="row">
+      <div class="col-md-8">
+        <h2> {{i18n.depreciation + 'Filter Criteria' | dynamicTranslate }} </h2>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+    <div #filterCriteria></div>
+
+    <button type="button" (click)="addFilter()" class="btn btn-action btn-small">
+      <i class="fa fa-plus"></i>
+    </button>
+    <strong>&nbsp;{{i18n.depreciation + 'Add Filter Criteria' | dynamicTranslate }}</strong>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-2">
+
+      <p>{{i18n.depreciation + 'Day 1 Calc' | dynamicTranslate }}</p>
+
+      <input type="checkbox" class="k-checkbox" id="isDayOneCalc" [(ngModel)]="depreciationRequest.dayOneCalc" name="dayOneCalc">
+      <label class="k-checkbox-label" for="isDayOneCalc"></label>
+      
+    </div>
+    <div class="form-group col-md-2">
+      <label>{{i18n.depreciation + 'Advanced Depreciation Years' | dynamicTranslate }}</label>
+      <input type="number" min="1" class="form-control" [(ngModel)]="depreciationRequest.futureYears" name="futureYears" #futureYears="ngModel">
+
+      <div *ngIf="futureYears.errors?.min && depreciationSetupForm.submitted" class="alert alert-danger">
+        <div>
+          {{i18n.depreciation + 'Please enter a value greater than zero' | dynamicTranslate }}
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <button [ladda]="isProcessing" type="submit" class="btn btn-primary">{{i18n.depreciation + 'Run' | dynamicTranslate }}</button>
+</form>

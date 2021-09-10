@@ -1,0 +1,47 @@
+<div id="HeaderManagement">
+    <h1>{{ i18n.common + 'Header Management' | dynamicTranslate}}</h1>
+
+    <ngb-tabset type="pills" #tabs *ngIf="!isLoading" class="ribbon">
+        <ngb-tab id="member">
+            <ng-template ngbTabTitle>
+                <span>{{i18n.common + 'Member' | dynamicTranslate}}</span>
+            </ng-template>
+            <ng-template ngbTabContent>
+
+                <header-management-member></header-management-member>
+
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab id="site">
+            <ng-template ngbTabTitle>
+                <span>{{i18n.common + 'Site' | dynamicTranslate}}</span>
+            </ng-template>
+            <ng-template ngbTabContent>
+
+                <header-management-site></header-management-site>
+
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab id="account">
+            <ng-template ngbTabTitle>
+                <span>{{i18n.common + 'Account' | dynamicTranslate}}</span>
+            </ng-template>
+            <ng-template ngbTabContent>
+
+                <header-management-account></header-management-account>
+
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab id="department">
+            <ng-template ngbTabTitle>
+                <span>{{i18n.common + 'Department' | dynamicTranslate}}</span>
+            </ng-template>
+            <ng-template ngbTabContent>
+
+                <header-management-department></header-management-department>
+
+            </ng-template>
+        </ngb-tab>
+
+    </ngb-tabset>
+</div>

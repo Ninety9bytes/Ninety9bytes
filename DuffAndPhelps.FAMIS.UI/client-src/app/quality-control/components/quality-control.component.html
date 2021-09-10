@@ -1,0 +1,13 @@
+<div id="QualityControl">
+  <h1>{{ i18n.qualityControl + 'Quality Control' | dynamicTranslate }}</h1>
+
+  <ng-container *ngIf="dataTarget === 0">
+    <div class="alert alert-danger">
+      {{ i18n.qualityControl + 'Unable to complete QC' | dynamicTranslate }}
+    </div>
+  </ng-container>
+
+  <ng-container>
+    <router-outlet *ngIf="hasRequiredData()"></router-outlet>
+  </ng-container>
+</div>

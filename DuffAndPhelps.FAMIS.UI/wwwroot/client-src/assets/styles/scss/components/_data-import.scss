@@ -1,0 +1,18 @@
+#DataImport-Module,
+.asset-selected-columns {
+  .is-mapped {
+    background-color: lighten(#5cb85c, 20%) !important;
+  }
+}
+
+#option-1, #option-2, #option-3 {
+    background-color: #d7dee2 !important;
+    margin-right: 0 !important;
+    text-align: center !important;
+    color: #8d8594 !important;
+
+    &.active {
+      background-color: #13b5ea !important;
+      color: #ffffff !important;
+    }
+}

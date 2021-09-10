@@ -1,0 +1,25 @@
+<div class="row pt-3">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label class="radio-inline pr-2"><input type="radio" name="replace" [(ngModel)]="replace" [value]="true">{{i18n.common + 'Replace' | dynamicTranslate}}</label>
+            <label class="radio-inline pl-2"><input type="radio" name="append" [(ngModel)]="replace" [value]="false">{{i18n.common + 'Append' | dynamicTranslate}}</label>
+        </div>
+        <div #selections></div>
+        <button type="button" (click)="addSelection()" class="btn btn-action btn-small">
+            <i class="fa fa-plus"></i>
+        </button>
+        <strong>&nbsp;{{i18n.common + 'Add Selection' | dynamicTranslate}}</strong>
+    </div>
+</div>
+
+<div *ngIf="selectionErrors" class="row pt-3 pl-3">
+    <div class="alert alert-danger">
+        <div>
+            {{i18n.common + 'Please be sure to choose at least a Contract and Group for each selection.' | dynamicTranslate}}
+        </div>
+    </div>
+</div>
+
+<div class="form-group pt-4">
+    <button [disabled]="!hasSelections()" class="btn btn-primary" (click)="copyGroups()">{{i18n.common + 'Copy' | dynamicTranslate}}</button>
+</div>

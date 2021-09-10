@@ -1,0 +1,52 @@
+<button type="button" (click)="open()" class="btn btn-action btn-small"><i class="fa fa-plus"></i></button>
+<strong> &nbsp; {{i18n.common + 'Add Group' | dynamicTranslate}}</strong>
+
+<ng-template #content let-c="close" let-d="dismiss">
+    
+    <form (ngSubmit)="onSubmit(manageGroupForm)" #manageGroupForm="ngForm">
+    <div>
+        <div class="modal-body">
+
+            <div class="form-group">
+                <label for="nameInput">{{i18n.common + 'Name' | dynamicTranslate}}</label>
+                <input type="text" class="form-control" [(ngModel)]="request.groupName" name="nameInput" #nameInput="ngModel" required />
+
+                <div *ngIf="nameInput.errors && manageGroupForm.submitted" class="alert alert-danger">
+                    <div>
+                         {{i18n.common + 'Please enter a name.' | dynamicTranslate}}
+                    </div>
+                </div>
+                <div *ngIf="uniqueNameError && manageGroupForm.submitted" class="alert alert-danger">
+                    <div>
+                       {{selectedGroupName}} {{i18n.common + 'already exists. Please enter a unique name.' | dynamicTranslate}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="">{{i18n.common + 'Select Template' | dynamicTranslate}}</label>
+                <type-ahead 
+                    [searching]="searching" 
+                    [model]="model" 
+                    [search]="search" 
+                    (selectItem)="onSelectItem($event)"
+                    [resultFormatter]="getResultFormatter" 
+                    [inputFormatter]="getInputFormatter"></type-ahead>
+
+                <div *ngIf="!request.templateId && manageGroupForm.submitted" class="alert alert-danger">
+                    <div>
+                        {{i18n.common + 'Please select a template.' | dynamicTranslate}}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" (click)="windowManager.close()" class="btn btn-default">{{i18n.common + 'Cancel' | dynamicTranslate}}</button>
+            <button type="submit" class="btn btn-primary">{{i18n.common + 'Save' | dynamicTranslate}}</button>
+        </div>
+    </div>
+
+    </form>
+
+</ng-template>

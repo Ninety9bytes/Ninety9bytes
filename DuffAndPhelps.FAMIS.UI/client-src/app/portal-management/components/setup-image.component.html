@@ -1,0 +1,16 @@
+<div class="row pt-3">
+  <img [src]="imageUrl" style="max-height:45px"/>
+</div>
+<div class="row pt-3">
+  <div class= "col-md-5">
+      <div *ngIf="!isUploading" class="pt-4">
+          <file-upload-control   [supportedFileTypes]="acceptedFileTypes" (onFileUploadRequested)="uploadFile($event)" [fileInputLabel]="'Replace Image'"></file-upload-control>
+        </div>
+        <div *ngIf="isUploading" class="pt-4">
+          <h3>{{ i18n.fileUpload + 'Uploading' | dynamicTranslate }} <i class="fa fa-circle-o-notch fa-spin"></i></h3> 
+        </div>
+  </div>
+  <div class="col-md-7">
+    <button [disabled]="!canRemove" class="btn btn-primary mt-3 mb-3" (click)="removeImage()">{{i18n.common + 'Remove' | dynamicTranslate}}</button>
+  </div>
+</div>

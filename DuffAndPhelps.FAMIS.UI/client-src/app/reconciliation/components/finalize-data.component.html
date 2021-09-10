@@ -1,0 +1,112 @@
+<div id="FinalizeData">
+
+  <div>
+    <div class="row" *ngFor="let matchItem of responseData">
+      <div class="col-sm-12">
+
+        <h3>{{matchItem.matchCodeName}} - 
+          <span *ngIf="matchItem.recordCount > 5">5 {{i18n.reconciliation + 'records of' | dynamicTranslate }} {{matchItem.recordCount}}</span>
+          <span *ngIf="matchItem.recordCount <= 5">{{matchItem.recordCount}} {{matchItem.recordCount > 1 ? i18n.reconciliation + 'Records' : i18n.reconciliation + 'Record' | dynamicTranslate}}</span>
+        </h3>
+
+        <kendo-grid [resizable]="true" [data]="matchItem.assetRecords" [rowHeight]="22.22" [height]="160" [scrollable]="'virtual'" [reorderable]="true">
+          <kendo-grid-column [width]="200" field="historicalCost" title="Historical Cost">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+              {{ dataItem['historicalCost'] | localizedNumber }}
+            </ng-template>
+          </kendo-grid-column>
+            <ng-container *ngFor="let column of headers">
+              <kendo-grid-column  *ngIf="column.fieldType === 0 || column.fieldType === 'text'" [width]="200" field="{{column.name}}"  format="{{column.format}}" title="{{i18n.asset + upperCasePropertyName(column.displayName) | dynamicTranslate}}" [filter]="column.fieldType">
+                <ng-template kendoGridFilterMenuTemplate let-filter let-column="column" let-filterService="filterService">
+                  <kendo-grid-string-filter-menu
+                    [column]="column"
+                    [filter]="filter"
+                    [filterService]="filterService">
+                      <kendo-filter-eq-operator></kendo-filter-eq-operator>
+                      <kendo-filter-neq-operator></kendo-filter-neq-operator>
+                      <kendo-filter-startswith-operator></kendo-filter-startswith-operator>
+                      <kendo-filter-contains-operator></kendo-filter-contains-operator>
+                      <kendo-filter-not-contains-operator></kendo-filter-not-contains-operator>
+                      <kendo-filter-isnull-operator></kendo-filter-isnull-operator>
+                      <kendo-filter-isnotnull-operator></kendo-filter-isnotnull-operator>
+                  </kendo-grid-string-filter-menu>
+                </ng-template>
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                  {{dataItem[column.name]}}
+                </ng-template>
+              </kendo-grid-column>
+
+              <kendo-grid-column *ngIf="column.fieldType === 1 || column.fieldType === 2 || column.fieldType === 'numeric'" [width]="200" field="{{column.name}}"  format="{0:n}" title="{{i18n.asset + upperCasePropertyName(column.displayName) | dynamicTranslate}}" [filter]="column.fieldType">
+                <ng-template kendoGridFilterMenuTemplate let-filter let-column="column" let-filterService="filterService">
+                    <kendo-grid-numeric-filter-menu
+                      [column]="column"
+                      [filter]="filter"
+                      [filterService]="filterService">
+                      <kendo-filter-eq-operator></kendo-filter-eq-operator>
+                      <kendo-filter-gt-operator></kendo-filter-gt-operator>
+                      <kendo-filter-lt-operator></kendo-filter-lt-operator>
+                      <kendo-filter-gte-operator></kendo-filter-gte-operator>
+                      <kendo-filter-lte-operator></kendo-filter-lte-operator>
+                      <kendo-filter-neq-operator></kendo-filter-neq-operator>
+                      <kendo-filter-isnull-operator></kendo-filter-isnull-operator>
+                      <kendo-filter-isnotnull-operator></kendo-filter-isnotnull-operator>
+                    </kendo-grid-numeric-filter-menu>
+                </ng-template>
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                {{ dataItem[column.name] | localizedNumber }}
+                </ng-template>
+              </kendo-grid-column>
+
+              <kendo-grid-column *ngIf="column.fieldType === 3 || column.fieldType === 'boolean'" [width]="200" field="{{column.name}}"  format="{{column.format}}" title="{{i18n.asset + upperCasePropertyName(column.displayName) | dynamicTranslate}}" [filter]="column.fieldType">
+                <ng-template kendoGridFilterMenuTemplate let-filter let-column="column" let-filterService="filterService">
+                    <kendo-grid-boolean-filter-menu
+                      [column]="column"
+                      [filter]="filter"
+                      [filterService]="filterService">
+                        <kendo-filter-eq-operator></kendo-filter-eq-operator>
+                        <kendo-filter-isnull-operator></kendo-filter-isnull-operator>
+                        <kendo-filter-isnotnull-operator></kendo-filter-isnotnull-operator>
+                    </kendo-grid-boolean-filter-menu>
+                  </ng-template>
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                  {{dataItem[column.name]}}
+                </ng-template>
+              </kendo-grid-column>
+        
+              <kendo-grid-column *ngIf="column.fieldType === 4 || column.fieldType === 'date'" [width]="200" field="{{column.name}}"  format="{0:d}" title="{{i18n.asset + upperCasePropertyName(column.displayName) | dynamicTranslate}}" [filter]="column.fieldType">
+                <ng-template kendoGridFilterMenuTemplate let-filter let-column="column" let-filterService="filterService">
+                  <kendo-grid-date-filter-menu
+                    [column]="column"
+                    [filter]="filter"
+                    [filterService]="filterService">
+                      <kendo-filter-eq-operator></kendo-filter-eq-operator>
+                      <kendo-filter-gt-operator></kendo-filter-gt-operator>
+                      <kendo-filter-lt-operator></kendo-filter-lt-operator>
+                      <kendo-filter-gte-operator></kendo-filter-gte-operator>
+                      <kendo-filter-lte-operator></kendo-filter-lte-operator>
+                      <kendo-filter-neq-operator></kendo-filter-neq-operator>
+                      <kendo-filter-isnull-operator></kendo-filter-isnull-operator>
+                      <kendo-filter-isnotnull-operator></kendo-filter-isnotnull-operator>
+                  </kendo-grid-date-filter-menu>
+                </ng-template>
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                  {{ dataItem[column.name] | localizedDate }}
+                </ng-template>
+              </kendo-grid-column>
+            </ng-container>
+
+        </kendo-grid>
+
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+<reconciliation-validation></reconciliation-validation>
+
+<div class="wizard-actions">
+  <button class="btn btn-default" i18n="Back button text@@reconBack" (click)="onBack($event)">{{i18n.common + 'Back' | dynamicTranslate }}</button>
+  <button class="btn btn-primary" i18n="Save button text@@reconSave" (click)="onSave($event)">{{i18n.common + 'Save &amp; Quit' | dynamicTranslate}}</button>
+  <button class="btn btn-primary" i18n="Commit button text@@reconCommit" (click)="onContinue($event)" [ladda]="isBusy">{{i18n.common + 'Commit' | dynamicTranslate }}</button>
+</div>

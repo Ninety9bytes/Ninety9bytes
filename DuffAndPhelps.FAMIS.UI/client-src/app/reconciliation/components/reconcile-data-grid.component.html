@@ -1,0 +1,169 @@
+<upsert-asset-record-component
+  [fileType]="dataSource"
+  [assetFileSummary]="assetFileSummary"
+  [groupSiteInfo]="groupSiteInfo"
+  [groupAccounts]="groupAccounts"
+  [groupDepartments]="groupDepartments"
+  (AssetUpsertComplete)="onAssetModified($event)"
+>
+</upsert-asset-record-component>
+
+<div>
+  <div class="row py-1">
+    <div class="col-md-8">
+      <h3 class="d-inline">{{ i18n.reconciliation + fileName | dynamicTranslate }}</h3>
+      <button *ngIf="dataSource === dataTargetName.inventory" class="ml-2 btn btn-primary add-record-button d-inline" (click)="openAddRecord()">
+        {{ i18n.reconciliation + "Add Record" | dynamicTranslate }}
+      </button>
+
+      <button class="ml-2 btn btn-primary add-record-button d-inline" *ngIf="dataSource === dataTargetName.inventory" [disabled]="selectedRows.length !== 1" (click)="duplicateRecord()">
+        {{ i18n.common + "Duplicate Record" | dynamicTranslate }}
+      </button>
+    </div>
+
+    <div class="col-md-4">
+      <order-asset-columns-component
+        class="d-inline float-right"
+        [dataSource]="dataSource"
+        [assetFileId]="assetFileSummary.id"
+        (columnAdded)="onAssetFileColumnsAdded($event)"
+        [mappedColumns]="mappedColumns"
+      ></order-asset-columns-component>
+
+      <button *ngIf="dataSource === 1" type="button" class="btn btn-sm btn-primary mb-2 pull-right save-in-grid-button" (click)="inGridSave()" [ladda]="isSaving" [disabled]="!editedRecords">
+        {{ i18n.common + "Save Edits" | dynamicTranslate }}
+      </button>
+    </div>
+  </div>
+
+  <div class="famis-grid">
+    <div class="row">
+      <div class="col-md-12">
+        <div>
+          <div *ngIf="dataSource === 0 && noFile" class="empty-grid text-center">
+            <div class="action-link ">
+              {{ i18n.reconciliation + "Import Client file via" | dynamicTranslate }}&nbsp;
+              <a href="" (click)="navigateToImportData($event)">{{ i18n.reconciliation + "Import Data" | dynamicTranslate }}</a>
+            </div>
+          </div>
+      
+          <div *ngIf="dataSource === 1 && noFile" class="empty-grid text-center">
+            <copy-inventory (onInventoryCopied)="handleInventoryCopied($event)"></copy-inventory>
+          </div>
+      
+          <div *ngIf="allMatched && !noFile" class="empty-grid text-center">
+            <div class="action-link">
+              {{ i18n.reconciliation + "All Records Matched" | dynamicTranslate }}
+            </div>
+          </div>
+      
+          <kendo-grid
+            
+            *ngIf="!!dataLoaded && gridSettingsLoaded !== undefined"
+            [data]="view"
+            [height]="300"
+            [selectable]="selectableSettings"
+            [kendoGridSelectBy]="'assetId'"
+            [selectedKeys]="selectedRows"
+            (selectionChange)="gridSelectionChange($event)"
+            (selectedKeysChange)="onSelectedKeysChange($event)"
+            [rowClass]="rowCallback"
+            [skip]="state.skip"
+            [reorderable]="true"
+            (columnReorder)="onColumnReorder($event)"
+            [pageSize]="100"
+            [scrollable]="'virtual'"
+            [rowHeight]="24"
+            [detailRowHeight]="24"
+            (pageChange)="callGridScrollDebouncer($event)"
+            [sortable]="{
+              allowUnsort: true,
+              mode: 'single'
+            }"
+            [sort]="sort"
+            [filter]="state.filter"
+            [resizable]="true"
+            filterable="menu"
+            (filterChange)="filterChange($event)"
+            (sortChange)="sortChange($event)"
+            (cellClick)="editClick($event)"
+            (cellClose)="cellCloseHandler($event)"
+            [loading]="loading"
+            #grid
+          >
+            <kendo-grid-checkbox-column [reorderable]="false" [width]="75">
+              <ng-template kendoGridHeaderTemplate>
+                <input class="k-checkbox" id="selectAllCheckboxId{{dataSource}}" kendoGridSelectAllCheckbox [state]="selectAllState" (selectAllChange)="onSelectAllChange($event)" />
+                <label class="k-checkbox-label" for="selectAllCheckboxId{{dataSource}}"></label>
+              </ng-template>
+            </kendo-grid-checkbox-column>
+      
+            <kendo-grid-column [reorderable]="false" [width]="75" title="" class="grid-actions">
+              <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                <span class="grid-action-item">
+                  <a *ngIf="dataItem.isMatched" (click)="showMatchForAsset(dataItem, rowIndex)">
+                    <i class="fa fa-link" aria-hidden="true"></i>
+                  </a>
+      
+                  <a *ngIf="dataItem.isParent" (click)="toggleParentChildMatch(dataItem, rowIndex)" [class.isExpanded]="expandedMatchIndex === rowIndex">
+                    <i class="fa" [class.fa-plus-circle]="expandedMatchIndex != rowIndex" [class.fa-minus-circle]="expandedMatchIndex === rowIndex" aria-hidden="true"></i>
+                  </a>
+                </span>
+              </ng-template>
+            </kendo-grid-column>
+    
+            <kendo-grid-column [reorderable]="false" [width]="200" title="" class="grid-actions">
+              <ng-template kendoGridCellTemplate let-dataItem *ngIf="showEditRecord">
+                <span class="grid-action-item" *ngIf="hasCustomColumns || dataSource === dataTargetName.inventory">
+                  <a (click)="openEditRecordForm(dataItem)">
+                    <i class="fa fa-edit" aria-hidden="true"></i>
+                  </a>
+                </span>
+      
+                <span class="grid-action-item">
+                  <a *ngIf="dataItem.imageCollection && dataItem.imageCollection.length > 0">
+                    <view-image [imageCollection]="dataItem.imageCollection"></view-image>
+                  </a>
+                </span>
+              </ng-template>
+            </kendo-grid-column>
+      
+            <kendo-grid-column [reorderable]="false" [filterable]="true" [sortable]="true" [width]="200" field="matchCodeName" title="{{ i18n.asset + 'Match Code' | dynamicTranslate }}">
+              <ng-template kendoGridFilterMenuTemplate let-filter let-filterService="filterService">
+                <grid-filter [fieldType]="fieldTypes.String" [filter]="filter" [textField]="'matchCodeName'" [valueField]="'matchCodeName'" [filterService]="filterService"> </grid-filter>
+              </ng-template>
+            </kendo-grid-column>
+      
+            <ng-container *ngFor="let column of headers | orderBy: 'order'; index as i;">
+              <kendo-grid-column
+                [editor]="column.fieldType"
+                [reorderable]="true"
+                field="{{ column.name }}"
+                [width]="headers[i] ? 200 : 0"
+                format="{{ column.format }}"
+                title="{{ getColumnTitle(column) }}"
+                editable="{{ column.isEditable }}"
+              >
+                <ng-template kendoGridFilterMenuTemplate let-filter let-filterService="filterService">
+                  <grid-filter [fieldType]="column.fieldType" [filter]="filter" [textField]="column.name" [valueField]="column.name" [filterService]="filterService"> </grid-filter>
+                </ng-template>
+      
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                  <ng-container *ngIf="column.fieldType === fieldTypes.String  || column.fieldType === fieldTypes.DropDown"> {{ dataItem[column.name] }} </ng-container>
+                  <ng-container *ngIf="column.fieldType === fieldTypes.Integer || column.fieldType === fieldTypes.Double">
+                    {{ dataItem[column.name] | localizedNumber }}
+                  </ng-container>
+                  <ng-container *ngIf="column.fieldType === fieldTypes.Date"> {{ dataItem[column.name] | localizedDate }} </ng-container>
+                  <ng-container *ngIf="column.fieldType === fieldTypes.DateTime"> {{ dataItem[column.name] | localTime }} </ng-container>
+                   </ng-template>
+              </kendo-grid-column>
+            </ng-container>
+           </kendo-grid>
+       <div *kendoGridDetailTemplate="let dataItem" class="parent-child-detail-grid">
+        <parent-child-match-detail *ngIf="dataItem.isParent" #parentChildMatchDetail></parent-child-match-detail>
+      </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>

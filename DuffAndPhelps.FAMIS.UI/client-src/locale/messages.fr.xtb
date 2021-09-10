@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE translationbundle [
+<!ELEMENT translationbundle (translation)*>
+<!ATTLIST translationbundle lang CDATA #REQUIRED>
+
+<!ELEMENT translation (#PCDATA|ph)*>
+<!ATTLIST translation id CDATA #REQUIRED>
+<!ATTLIST translation desc CDATA #IMPLIED>
+<!ATTLIST translation meaning CDATA #IMPLIED>
+<!ATTLIST translation xml:space (default|preserve) "default">
+
+<!ELEMENT ph (#PCDATA|ex)*>
+<!ATTLIST ph name CDATA #REQUIRED>
+
+<!ELEMENT ex (#PCDATA)>
+]>
+<translationbundle lang="fr">
+  <translation id="login">Connexion</translation>
+  <translation id="myAccount">Mon compte</translation>
+  <translation id="logout">Déconnectez-vous</translation>
+  <translation id="topmenDataImport">Importation de données</translation>
+  <translation id="topmenSchedule">Annexe</translation>
+  <translation id="topmenTemplateManagement">Gestion des modèles</translation>
+  <translation id="topmenReconciliation">Réconciliation</translation>
+  <translation id="topmenUsersTeams">Utilisateurs &amp; Équipes</translation>
+  <translation id="projectProfile">Profil du projet</translation>
+  <translation id="1430663748859427158" desc="The label visible in the Grid group panel when it is empty" meaning="kendo.grid.groupPanelEmpty">Faites glisser un en-tête de colonne et déposer ici pour grouper par cette colonne.</translation>
+  <translation id="1243399825085142134" desc="The label visible in the Grid when there are no records" meaning="kendo.grid.noRecords">Aucun enregistrement disponible.</translation>
+  <translation id="5647145449685906398" desc="The label for the first page button in Grid pager" meaning="kendo.grid.pagerFirstPage">Aller à la première page</translation>
+  <translation id="6745088753482690847" desc="The label for the previous page button in Grid pager" meaning="kendo.grid.pagerPreviousPage">Aller à la page précédente</translation>
+  <translation id="5510985262435270859" desc="The label for the next page button in Grid pager" meaning="kendo.grid.pagerNextPage">Aller à la page suivante</translation>
+  <translation id="4539768510520419313" desc="The label for the last page button in Grid pager" meaning="kendo.grid.pagerLastPage">Aller à la dernière page</translation>
+  <translation id="5228228287003939680" desc="The label before the current page number in the Grid pager" meaning="kendo.grid.pagerPage">Page</translation>
+  <translation id="7004642096327889102" desc="The label before the total pages number in the Grid pager" meaning="kendo.grid.pagerOf">de</translation>
+  <translation id="700193548223931835" desc="The label after the total pages number in the Grid pager" meaning="kendo.grid.pagerItems">articles</translation>
+  <translation id="8838594644885628398" desc="The label for the page size chooser in the Grid pager" meaning="kendo.grid.pagerItemsPerPage">articles par page</translation>
+  <translation id="4328959145426393682" desc="The text of the equal filter operator" meaning="kendo.grid.filterEqOperator">Est égal à</translation>
+  <translation id="8497658332767349737" desc="The text of the not equal filter operator" meaning="kendo.grid.filterNotEqOperator">N’est pas égal à</translation>
+  <translation id="1298299704757177797" desc="The text of the is null filter operator" meaning="kendo.grid.filterIsNullOperator">Est nulle</translation>
+  <translation id="8362279767336741540" desc="The text of the is not null filter operator" meaning="kendo.grid.filterIsNotNullOperator">N’est pas nulle</translation>
+  <translation id="4762263229995523226" desc="The text of the is empty filter operator" meaning="kendo.grid.filterIsEmptyOperator">Est vide</translation>
+  <translation id="8245213618709258015" desc="The text of the is not empty filter operator" meaning="kendo.grid.filterIsNotEmptyOperator">N’est pas vide</translation>
+  <translation id="6087783423599420507" desc="The text of the starts with filter operator" meaning="kendo.grid.filterStartsWithOperator">Commence par</translation>
+  <translation id="3831180413287131758" desc="The text of the contains filter operator" meaning="kendo.grid.filterContainsOperator">Contient</translation>
+  <translation id="7331253838216904826" desc="The text of the does not contain filter operator" meaning="kendo.grid.filterNotContainsOperator">Ne contient pas</translation>
+  <translation id="3662435311670509156" desc="The text of the ends with filter operator" meaning="kendo.grid.filterEndsWithOperator">Se termine par</translation>
+  <translation id="4542824413455511831" desc="The text of the greater than or equal filter operator" meaning="kendo.grid.filterGteOperator">Est supérieur ou égal à</translation>
+  <translation id="1527483349261806183" desc="The text of the greater than filter operator" meaning="kendo.grid.filterGtOperator">Est supérieur à</translation>
+  <translation id="4840714404733417604" desc="The text of the less than or equal filter operator" meaning="kendo.grid.filterLteOperator">Est inférieur ou égal à</translation>
+  <translation id="498627126459578706" desc="The text of the less than filter operator" meaning="kendo.grid.filterLtOperator">Est inférieur</translation>
+  <translation id="2361673238316312251" desc="The text of the IsTrue boolean filter option" meaning="kendo.grid.filterIsTrue">est vrai</translation>
+  <translation id="7759366406135608407" desc="The text of the IsFalse boolean filter option" meaning="kendo.grid.filterIsFalse">est fausse</translation>
+  <translation id="9215343856736761875" desc="The text of the (All) boolean filter option" meaning="kendo.grid.filterBooleanAll">(Tout)</translation>
+  <translation id="1964413288176201979" desc="The text of the after or equal date filter operator" meaning="kendo.grid.filterAfterOrEqualOperator">Est postérieur ou égal à</translation>
+  <translation id="3078502182807244703" desc="The text of the after date filter operator" meaning="kendo.grid.filterAfterOperator">Est postérieur</translation>
+  <translation id="3348865631071358219" desc="The text of the before date filter operator" meaning="kendo.grid.filterBeforeOperator">Est antérieur</translation>
+  <translation id="6582064037090631388" desc="The text of the before or equal date filter operator" meaning="kendo.grid.filterBeforeOrEqualOperator">Est antérieur ou égal à</translation>
+  <translation id="reconReconciliation">Réconciliation</translation>
+  <translation id="reconSelectMatchCodes" desc="Breadcrumb for reconciliation: select match codes">Sélectionner Les Codes de Match</translation>
+  <translation id="reconReconcileData" desc="Breadcrumb for reconciliation: reconcile data">Concilier Les Données</translation>
+  <translation id="reconDefineLayout" desc="Breadcrumb for reconciliation: define layout">Décrivez Layout</translation>
+  <translation id="reconMapMatchCodes" desc="Breadcrumb for reconciliation: map match codes">Mappage des codes de correspondance</translation>
+  <translation id="reconFinalizeData" desc="Breadcrumb for reconciliation: finilize data">Finaliser les données</translation>
+  <translation id="4963939512602581410" desc="reconSelectMatchCodes">Sélectionner les codes de match</translation>
+  <translation id="8292052252525200369" desc="groupsearchCopyFromExistingProject">Copie du projet existant</translation>
+  <translation id="4467784268438010275" desc="The title for the **Increment** button in the NumericTextBox" meaning="kendo.numerictextbox.increment">Kasvata arvoa</translation>
+  <translation id="3960022057994897997" desc="The title for the **Decrement** button in the NumericTextBox" meaning="kendo.numerictextbox.decrement">Vähennä arvoa</translation>
+  <translation id="589112377451589685" desc="The label for the **Increment** button in the DateInput" meaning="kendo.dateinput.increment">Kasvata arvoa</translation>
+  <translation id="6980524091606682769" desc="The label for the **Decrement** button in the DateInput" meaning="kendo.dateinput.decrement">Vähennä arvoa</translation>
+  <translation id="826701167553276328" desc="The label for the today button in the calendar header" meaning="kendo.calendar.today">Aujourd&apos;hui</translation>
+  <translation id="1910980355989755624" desc="The label for the today button in the calendar header" meaning="kendo.datepicker.today">Aujourd&apos;hui</translation>
+  <translation id="4817467473728423164" desc="The label for the toggle button in the datepicker component" meaning="kendo.datepicker.toggle">Toggle calendar</translation>
+  <translation id="8302125540024939132" desc="The title of the **Increase** button of the Slider." meaning="kendo.slider.increment">Kasvata arvoa</translation>
+  <translation id="652458644240352212" desc="The title of the **Decrease** button of the Slider." meaning="kendo.slider.decrement">Vähennä arvoa</translation>
+  <translation id="9117416417579607469" desc="The title of the drag handle of the Slider." meaning="kendo.slider.dragHandle">Drag</translation>
+  <translation id="818154782831456441" desc="The **On** label of the Switch." meaning="kendo.switch.on">Sur</translation>
+  <translation id="759820891948194060" desc="The **Off** label of the Switch." meaning="kendo.switch.off">De</translation>
+  <translation id="sidenavUsers" desc="Admin menu Users">Utilisateurs</translation>
+  <translation id="sidenavTeams" desc="Admin menu Teams">Équipes</translation>
+  <translation id="usereditUsername" desc="Username">Utilisateur</translation>
+  <translation id="usereditName" desc="Name">Nom</translation>
+  <translation id="usereditActive" desc="Active">Active</translation>
+  <translation id="teamlistName" desc="Name label">Nom</translation>
+  <translation id="teameditName" desc="Name">Nom</translation>
+  <translation id="teameditActive" desc="Active">Active</translation>
+  <translation id="userlistName" desc="User list name label">Nom</translation>
+  <translation id="usereditDateAdded" desc="Date Added">date ajoutée</translation>
+  <translation id="usereditDonation" desc="Donation amount">Montant du don</translation>
+  <translation id="helloworld" desc="Hello world">Salut tout le monde!</translation>
+  <translation id="homegreeting" desc="Home page greeting">Il s&apos;agit d&apos;un modèle pour un simple marketing ou site d&apos;information. Il comprend une grande légende appelée Jumbotron et trois pièces justificatives de contenu. Utilisez-le comme un point de départ pour créer quelque chose de plus unique.</translation>
+  <translation id="learn" desc="Learn more">Pour en savoir plus</translation>
+  <translation id="errortest" desc="Error testing">Test d&apos;erreur</translation>
+  <translation id="company" desc="Company">Société</translation>
+  <translation id="userlistUsernameCol" desc="User list Username col">Utilisateur</translation>
+  <translation id="userlistNameCol" desc="User list Name col">Nom</translation>
+  <translation id="userlistActiveCol" desc="User list Active col">Active</translation>
+  <translation id="userlistinputNamePlaceholder" desc="User list name placeholder">nom</translation>
+  <translation id="userlistDeleteAllButton" desc="User list delete all users button text">Supprimer tous les utilisateurs</translation>
+  <translation id="teamgridNameCol" desc="Grid-Name col">Nom</translation>
+  <translation id="teamgridActiveCol" desc="Grid-Active col">Active</translation>
+  <translation id="teamlistNamePlaceholder" desc="Name placeholder for team name">nom</translation>
+  <translation id="reconSelectMatchCodes2" desc="Reconciliation heading: select match codes">Sélectionner les codes de match</translation>
+  <translation id="reconCancel" desc="Cancel button text">Annuler</translation>
+  <translation id="reconContinue" desc="Continue button text">Continuer</translation>
+  <translation id="groupsearchCopyFromExistingProject" desc="Copy from existing project label">Copie d&apos;un projet existant</translation>
+  <translation id="reconGroupNamePlaceholder" desc="Placeholder for group search">Nom du Groupe</translation>
+</translationbundle>

@@ -1,0 +1,15 @@
+<famis-grid *ngIf="!!recipientsGrid.loading && !!recipientsGrid.selectedHeaders" 
+  [famisGrid]="recipientsGrid" 
+  (updateCacheEvent)="updateCache($event)" 
+  (actionEvent)="handleActionEvent($event)">
+</famis-grid>
+
+<div class="row">
+  <div class="col-md-12">
+    <button type="button" (click)="addRecipient()" class="btn btn-action btn-small">
+      <i class="fa fa-plus"></i>
+    </button>
+    <strong>&nbsp;{{i18n.recipients + 'Add Recipient' | dynamicTranslate}}</strong>
+  </div>
+
+</div>

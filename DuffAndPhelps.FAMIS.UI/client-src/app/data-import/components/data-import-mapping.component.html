@@ -1,0 +1,88 @@
+<div class="row" style="margin-bottom:20px;">
+  <div class="col-md-8 d-inline">
+    <button type="button" class="btn btn-small btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" (click)="toggleAutoMapped()">
+      {{i18n.dataImport + showHideAutoMappedText | dynamicTranslate }}
+    </button>
+    <button type="button" class="btn btn-small btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" (click)="toggleCategories()">
+      {{i18n.dataImport + showHideCategoriesText | dynamicTranslate }}
+    </button>
+    <select *ngIf="!activeReplace && !isBuilding" class="float-right form-control-sm" (change)="onKeyFieldSelect()" [(ngModel)]="keyFieldId">
+      <option value="" disabled>Select Key Field</option>
+      <ng-container *ngFor="let option of keyFields | orderBy: 'name'">
+        <option [value]="option.id">{{option.name}}</option>
+      </ng-container>
+    </select>
+    <label *ngIf="isBuilding"class="float-right">Using Display ID as key field</label>
+  </div>
+  <div class="col-md-4">
+    <h4><span>{{i18n.dataImport + 'mappedColumns' | dynamicTranslate}}</span><span> {{mappedSpreadsheetColumns}}</span></h4>
+    <h4><span>{{i18n.dataImport + 'unmappedColumns' | dynamicTranslate}}</span><span> {{unmappedSpreadsheetColumns}}</span></h4>
+  </div>
+</div>
+
+<form (ngSubmit)="onSubmit(dataMappingForm)" #dataMappingForm="ngForm" (change)="updateMappedTotals()">
+  <div class="form-group data-map-table">
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">
+            {{ i18n.common + 'Destination' | dynamicTranslate }}: {{i18n.dataImport + dataTargetName | dynamicTranslate }}
+          </th>
+          <th scope="col">
+            {{ i18n.common + 'Source' | dynamicTranslate }}: {{sourceSpreadsheetName}}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="hideCategories">
+          <tr *ngFor="let map of (mapping | showAutoMapped:hideAutoMapped)" [ngClass]="{'is-mapped':map.spreadsheetColumn.name}">
+            <td> {{i18n.dataImport + map.dataTargetField | dynamicTranslate }} ( {{map.columnDataType }}{{map.colLength==0 ? '': ', ' + map.colLength  }} )</td>
+            <td>
+              <select class="form-control form-control-sm data-mapping" id="DataMapping" name="{{map.importTemplateColumnId}}" (change)="updateAvailableOptions($event)"
+                [(ngModel)]="map.spreadsheetColumn.name">
+                <option value=""></option>
+                <ng-container *ngFor="let option of spreadsheetColumnsAvail">
+                  <option *ngIf="option.column.name === map.spreadsheetColumn.name" [value]="option.column.name">{{option.column.title}}</option>
+                  <option *ngIf="!option.isMapped" [value]="option.column.name">{{option.column.title}}</option>
+                </ng-container>
+              </select>
+            </td>
+          </tr>
+        </ng-container>
+        <ng-container *ngIf="!hideCategories">
+          <ng-container *ngFor="let columnCategory of columnCategories">
+            <tr *ngIf="(columnCategory.columnMap | showAutoMapped:hideAutoMapped)?.length > 0">
+              <td colspan="2" style="background-color: #465661; font-size: 1.2rem; text-align: center; color: #ffffff;">
+                {{ i18n.dataImport + columnCategory.categoryName | dynamicTranslate }}
+              </td>
+            </tr>
+            <tr *ngFor="let map of (columnCategory.columnMap | showAutoMapped:hideAutoMapped)" [ngClass]="{'is-mapped':map.spreadsheetColumn.name}">
+              <td> {{i18n.dataImport + map.dataTargetField | dynamicTranslate }} ( {{map.columnDataType }}{{map.colLength==0 ? '': ', ' + map.colLength  }} )</td>
+              <td>
+                <select class="form-control form-control-sm data-mapping" id="DataMapping" name="{{map.importTemplateColumnId}}" (change)="updateAvailableOptions($event)"
+                  [(ngModel)]="map.spreadsheetColumn.name">
+                  <option value=""></option>
+                  <ng-container *ngFor="let option of spreadsheetColumnsAvail">
+                    <option *ngIf="option.column.name === map.spreadsheetColumn.name" [value]="option.column.name">{{option.column.title}}</option>
+                    <option *ngIf="!option.isMapped" [value]="option.column.name">{{option.column.title}}</option>
+                  </ng-container>
+                </select>
+              </td>
+            </tr>
+          </ng-container>          
+        </ng-container>
+      </tbody>
+    </table>
+    <create-custom-column  [columnNames]="columnNames" (onAddCustomColumn)="handleCreatedCustomColumn($event)"></create-custom-column>
+  </div>
+  <ngb-alert type="danger" (close)="closeAlert()" *ngIf="showMappingAlert">
+    {{ i18n.dataImport + 'Please map data fields before continuing' | dynamicTranslate}} </ngb-alert>
+  <ngb-alert type="danger" (close)="closeAlert()" *ngIf="showKeyFieldMappingAlert">
+    {{ i18n.dataImport + 'Please select a key field to update' | dynamicTranslate}}</ngb-alert>
+  <ngb-alert type="danger" (close)="closeAlert()" *ngIf="!hasDisplayIdColumn && isBuilding">
+    {{ i18n.dataImport + 'Spreadsheet does not contain Display Id column' | dynamicTranslate}}</ngb-alert>
+  <div class="form-group">
+    <button (click)="back($event)" class="btn btn">{{ i18n.common + 'Back' | dynamicTranslate}}</button>
+    <button type="submit" class="btn btn-primary" [ladda]="isLoading">{{ i18n.common + 'Continue' | dynamicTranslate}}</button>
+  </div>
+</form>

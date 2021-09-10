@@ -1,0 +1,13 @@
+<div class="form-group row">
+  <div class="col-md-4">
+    <h2>{{i18n.reports + 'Static Reports' | dynamicTranslate}}</h2>
+  </div>
+  <div class="col-md-8 actions text-right">
+    <button [ladda]="isProcessing" type="button" class="btn btn-primary" (click)="openNameModal()">{{i18n.reports +
+      'Create New' | dynamicTranslate}}</button>
+  </div>
+</div>
+
+<famis-grid *ngIf="!!deliverablesGrid.loading && !!deliverablesGrid.selectedHeaders" [famisGrid]="deliverablesGrid"
+  (actionEvent)="handleActionEvent($event)">
+</famis-grid>

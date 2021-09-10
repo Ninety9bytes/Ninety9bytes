@@ -1,0 +1,23 @@
+<div id="Reports">
+    <h1>{{i18n.reports + 'Reports' | dynamicTranslate}}</h1>
+    <div class="row pt-3 pb-3 actions">
+        <div class="col-md-3 btn-group">
+            <button (click)="toggleReportMode(reportModes.Interactive)" type="button" [class.btn-default]="mode!==reportModes.Interactive"
+                [class.btn-primary]="mode===reportModes.Interactive" class="btn btn-primary">{{i18n.reports +
+                'Interactive' | dynamicTranslate}}</button>
+            <button (click)="toggleReportMode(reportModes.Static)" type="button" [class.btn-default]="mode!==reportModes.Static"
+                [class.btn-primary]="mode===reportModes.Static" class="btn btn-default">{{i18n.reports + 'Static' |
+                dynamicTranslate}}</button>
+        </div>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+            <reports-power-bi [isReadOnly]="!userCanWriteData()" (gridSelections)="selectedAssets = $event" *ngIf="mode === reportModes.Interactive"></reports-power-bi>
+
+            <reports-deliverables [isReadOnly]="!userCanWriteData()" (gridSelections)="selectedBuildings = $event"
+                *ngIf="mode === reportModes.Static"></reports-deliverables>
+        </div>
+    </div>
+</div>

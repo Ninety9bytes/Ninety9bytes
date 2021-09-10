@@ -1,0 +1,7 @@
+<i *ngIf="!imageCollection || imageCollection.length === 0" class="fa fa-picture-o disabled-action" aria-hidden="true"></i>
+
+<img *ngIf="imageCollection && imageCollection.length > 0" aria-hidden="false" src="{{(imageCollection | orderBy : 'index')[0].url}}" width="30" (click)="showImageCarouselOnClick()" [ngbPopover]="firstImage" triggers="mouseenter:mouseleave" container="body"/>
+
+<ng-template #firstImage>
+  <img src="{{imageCollection[0].url}}" class="popover-image" />
+</ng-template>

@@ -1,0 +1,16 @@
+<div id="ProjectProfile" class="container-fluid">
+    <div class="row">
+        <nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar" *ngIf="!isCollapsed" [@inOutFromLeftSideAnimation]>
+            <ul class="menu list-unstyled">
+                <li>
+                    <a class="nav-link" href="#" [routerLink]="['/dashboard/all-projects']" routerLinkActive="active">{{'dashboard.home.leftnav.All Projects' | dynamicTranslate}}</a>
+                </li>
+            </ul>
+            
+        </nav>
+
+        <main [ngClass]="{'col-sm-9 offset-sm-3 col-md-10 offset-md-2 menu-expanded' : isCollapsed === false, 'col-sm-12 ml-2 pt-3 mr-2' : isCollapsed === true}">
+            <router-outlet></router-outlet>
+        </main>
+    </div>
+</div>

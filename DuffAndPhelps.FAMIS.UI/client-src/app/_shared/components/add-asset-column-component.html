@@ -1,0 +1,33 @@
+<button type="button" [disabled]="isAddColumn" (click)="showForm()" class="btn btn-action btn-small custom-fields">
+  <i class="fa fa-plus"></i>
+</button>
+<strong> &nbsp; {{i18n.common + 'Add Custom Column' | dynamicTranslate }}</strong>
+
+
+<div *ngIf="isAddColumn">
+    <div class="row buffer-row">
+        <div class="col-md-5">
+          <label>{{i18n.common + 'Column Name' | dynamicTranslate }} </label>
+          <input [(ngModel)]="name" class="form-control">
+          <div *ngIf="!isNameValid" class="alert alert-danger">
+            {{i18n.common + nameFieldError | dynamicTranslate }}
+          </div>
+        </div>
+        <div class="col-md-5">
+          <label>
+            {{i18n.common + 'Data Type' | dynamicTranslate }}
+          </label>
+          <select [(ngModel)]="dataType" class="form-control">
+            <option disabled>Select custom field type</option>
+            <option *ngFor="let fieldType of this.dataTypes"  [value]="fieldType.dataType">{{i18n.common + fieldType.displayName | dynamicTranslate }}</option>
+          </select>
+          <div *ngIf="!isDataTypeValid" class="alert alert-danger">
+            {{i18n.common + 'Please select a data type' | dynamicTranslate }}
+          </div>
+        </div>
+        <div class="col-md-2">
+        
+          <button type="button" id="Add-Button" class="btn btn-small btn-primary form-control" (click)="submit()"><strong>Add</strong></button>
+        </div>
+      </div>
+</div>

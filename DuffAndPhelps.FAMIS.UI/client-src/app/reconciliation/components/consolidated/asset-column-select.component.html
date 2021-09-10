@@ -1,0 +1,35 @@
+<div class="asset-column-select">
+  <div class="row">
+    <div class="col-md-12">
+      <div>
+        <div>
+          <h3>{{i18n.reconciliation + title | dynamicTranslate }}</h3>
+          <kendo-grid [resizable]="true" [data]="assetFileFields | orderBy: 'displayName'" [height]="200" 
+            [selectable]="selectableSettings" (selectionChange)="onSelectionChange($event)" [kendoGridSelectBy]="'sourceColumn'" [selectedKeys]="selectedItems" >
+            <kendo-grid-checkbox-column width="8%">
+                <ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
+                    <input [id]="'k-grid-selectall-'+assetFileType" class="k-checkbox header-checkbox" kendoGridSelectAllCheckbox type="checkbox">
+                    <label kendoGridSelectAllCheckbox  class="k-checkbox-label" [for]="'k-grid-selectall-'+assetFileType"></label>
+                  </ng-template>
+            </kendo-grid-checkbox-column>
+            <kendo-grid-column [width]="150" field="displayName" title="{{i18n.common + 'Column Name' | dynamicTranslate }} ">
+
+
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                    <ng-container *ngIf="!dataItem.isCustom">
+                    {{i18n.asset + dataItem.displayName | dynamicTranslate }}
+                    </ng-container>  
+                    <ng-container *ngIf="dataItem.isCustom">
+                        {{dataItem.displayName}}
+                        </ng-container> 
+                    </ng-template>
+
+            </kendo-grid-column>
+
+           
+          </kendo-grid>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

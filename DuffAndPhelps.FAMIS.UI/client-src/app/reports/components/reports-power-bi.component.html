@@ -1,0 +1,26 @@
+<div class="form-group row">
+    <div class="col-md-4">
+        <h2>{{i18n.reports + 'Interactive Reports' | dynamicTranslate}}</h2>
+    </div>
+</div>
+
+<br />
+<div class="form-group row">
+    <div class="col-md-6">
+        <h4>{{i18n.reports + 'Select Interactive Report' | dynamicTranslate}}</h4>
+        <select class="form-control" [(ngModel)]="reportId" name="biReportSelect" id="biReportSelect">
+            <option disabled>
+                <span>{{i18n.reports + 'Select Interactive Report' | dynamicTranslate}}</span>
+            </option>
+            <option *ngFor="let rpt of availableReports | orderBy: 'name';" [value]="rpt.id">{{rpt.name}}</option>
+        </select>
+    </div>
+    <div class="col-md-4">
+        <button [ladda]="isProcessing" type="button" class="btn btn-primary" [(disabled)]="!reportId" (click)="runReport()">{{i18n.reports
+            + 'Run' | dynamicTranslate}}</button>
+    </div>
+</div>
+
+<br />
+
+<app-power-bi [report]="report" [isDefaultDashboard]="false" [filterPaneEnabled]="false"></app-power-bi>

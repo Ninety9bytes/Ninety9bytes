@@ -1,0 +1,133 @@
+<ng-template #content let-c="close" let-d="dismiss">
+  <div *ngIf="isConfirmOpen">
+    <confirm 
+      (isConfirmed)="onConfirmed($event)" 
+      [confirmationMessage]="confirmMessage" 
+      [confirmHeading]="confirmHeader">
+    </confirm>
+  </div>
+  <div *ngIf="!isConfirmOpen">
+    
+        <form (ngSubmit)="onSubmit(createAllocationForm)" #createAllocationForm="ngForm">
+      
+          <div class="modal-body">
+            <div class="form-group">
+              <ngb-alert type="danger" [dismissible]="false" *ngIf="!vm.isValidAllocation">
+                {{i18n.reconciliation + 'Allocations cannot contain negative dollar amounts and the total allocation amount must not exceed the client record value
+                of' | dynamicTranslate }} {{allocationCost}}.
+              </ngb-alert>
+            </div>
+            <div class="form-group">
+              <div class="row justify-content-left">
+                <div class="col-md-12">
+                  <h4>{{i18n.common + 'Client File' | dynamicTranslate }}</h4>
+                </div>
+              </div>
+            </div>
+            <div class="allocation-form-group">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>{{i18n.common + 'Asset Tag Number' | dynamicTranslate }}</th>
+                    <th>{{i18n.common + 'Old Tag Number' | dynamicTranslate }}</th>
+                    <th>{{i18n.common + 'Description' | dynamicTranslate }}</th>
+                    <th>{{i18n.common + 'Manufacturer' | dynamicTranslate }}</th>
+                    <th>{{i18n.common + 'Cost' | dynamicTranslate }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{vm.allocationClientAsset.assetTagNumber}}</td>
+                    <td>{{vm.allocationClientAsset.oldTagNumber}}</td>
+                    <td>{{vm.allocationClientAsset.description}}</td>
+                    <td>{{vm.allocationClientAsset.manufacturer}}</td>
+                    <th>{{allocationCost}}</th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="text-right">
+                    <a class="nav-link text-underline" href="#" (click)="allocateEvenly($event)">{{i18n.common + 'Allocate Evenly' | dynamicTranslate }} </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+      
+            <div class="form-group">
+              <div class="row justify-content-left">
+                <div class="col-md-12">
+                  <h4>{{i18n.common + 'Actual Inventory Allocation' | dynamicTranslate }}</h4>
+                </div>
+              </div>
+            </div>
+
+            <div class="allocation-form-group">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>{{i18n.common + 'Quantity' | dynamicTranslate }}</th>
+                    <th>{{i18n.common + 'Description' | dynamicTranslate }}</th>
+                    <th>{{i18n.common + 'Manufacturer' | dynamicTranslate }}</th>
+                    <th>{{i18n.common + 'Model Number' | dynamicTranslate }}</th>
+                    <th>{{i18n.common + 'Allocation' | dynamicTranslate }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Inventory Asset Data -->
+                  <tr *ngFor="let record of vm.allocationInventoryAssets;">
+                    <td>{{record.quantity}}</td>
+                    <td>{{record.description}}</td>
+                    <td>{{record.manufacturer}}</td>
+                    <td>{{record.modelNumber}}</td>
+                    <td><input currencyMask [options]="{prefix:''}" class="form-control" [name]="record.assetId" [id]="record.assetId" [(ngModel)]="record.allocatedValue" (ngModelChange)="updateTotal()" /></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="row">
+              <div class="col-md-8"></div>
+              <div class="col-md-2 text-right">
+                <h4>
+                 <b>{{i18n.common + 'Total $' | translate}}</b>
+                </h4>
+              </div>
+              <div class="col-md-2 text-right" style="padding-right: 2.5rem;">
+                <h4>
+                  <b>{{vm.allocationTotal.toFixed(2)}}</b>
+                </h4>
+              </div>
+            </div>
+              <div class="row">
+                <div class="col-md-6"></div>
+              <div class="col-md-4 text-right">
+                <h4>
+                  <b>{{i18n.common + 'Remaining Balance $' | dynamicTranslate }}</b>
+                </h4>
+              </div>
+              <div class="col-md-2 text-right" style="padding-right: 2.5rem;">
+                <h4>
+                  <b>{{remainingBalance.toFixed(2)}}</b>
+                </h4>
+              </div>
+            </div>
+
+            <br />
+            <div class="row justify-content-center">
+              <a class="text-underline clickable-link" href="#" (click)="unmatchAll($event)">{{i18n.common + 'Unmatch All' | dynamicTranslate}}</a>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" (click)="cancel()">{{i18n.common + 'Cancel' | dynamicTranslate}} </button>
+            <button type="submit" class="btn btn-primary">{{i18n.common + 'Apply' | dynamicTranslate}} </button>
+          </div>
+          <br />
+        </form>
+      
+  </div>
+  
+</ng-template>

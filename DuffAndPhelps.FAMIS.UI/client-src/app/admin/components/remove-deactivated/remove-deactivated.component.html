@@ -1,0 +1,38 @@
+<ol class="breadcrumb">
+  <li *ngFor="let breadCrumb of breadCrumbs" class="breadcrumb-item" routerLinkActive="active">
+    <a [class.disabled]="breadCrumb.isDisabled" [routerLink]="breadCrumb.routerLink">{{i18n.common + breadCrumb.name | dynamicTranslate}}</a>
+  </li>
+</ol>
+<form (ngSubmit)="onSubmit(removeDeactivatedForm)" #removeDeactivatedForm="ngForm">
+
+  <h1>{{ i18n.admin + 'Remove Deactivated  Assets & Buildings' | dynamicTranslate}}</h1>
+  <br/>
+  <div class="form-group row">
+    <div class="col-md-6">
+      <label for="typeSelect">{{ i18n.admin + 'Select Type' | dynamicTranslate}}</label>
+      <select class="form-control" [(ngModel)]="selectedType" name="costFieldSelect" id="typeSelect" #typeSelectOptions="ngModel" required >
+        <option value="0">{{ i18n.admin + 'Both' | dynamicTranslate}}</option>
+        <option value="1">{{ i18n.admin + 'Assets' | dynamicTranslate}}</option>
+        <option value="2">{{ i18n.admin + 'Buildings' | dynamicTranslate}}</option>
+      </select>
+      <div *ngIf="typeSelectOptions.errors && removeDeactivatedForm.submitted"
+      class="alert alert-danger">
+       {{ i18n.common + 'Please select the type.' | dynamicTranslate}}
+    </div>
+      <label for="Datatarget">{{ i18n.admin + 'Select data target' | dynamicTranslate}}</label>
+      <select [(ngModel)]="selectedDatatarget" class="form-control" #DatatargetSelectOptions="ngModel" name="SelectDatatarget" id="selectDatatarget">
+        <option value="" selected="true">{{ i18n.admin + 'All' | dynamicTranslate}}</option>
+        <option value="0">{{ i18n.admin + 'Client' | dynamicTranslate}}</option>
+        <option value="1">{{ i18n.admin + 'Inventory' | dynamicTranslate}}</option>
+        <option value="2">{{ i18n.admin + 'Consolidated' | dynamicTranslate}}</option>
+       </select>
+
+    </div>
+  </div>
+
+ 
+  <div class="form-group">
+<button class="btn btn-primary">{{ i18n.common + 'Apply' | dynamicTranslate}}</button>
+  </div>
+
+</form>

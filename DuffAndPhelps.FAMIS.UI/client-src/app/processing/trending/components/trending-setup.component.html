@@ -1,0 +1,89 @@
+<form (ngSubmit)="onSubmit(trendingSetupForm)" #trendingSetupForm="ngForm">
+
+  <div class="form-group row">
+    <div class="col-md-4">
+      <!-- Type ahead component here -->
+      <h4>{{ i18n.trending + 'Trend Table' | dynamicTranslate }}</h4>
+      <type-ahead 
+      [searching]="searching" 
+      [model]="model" 
+      [search]="search" 
+      (selectItem)="onSelectItem($event)"
+      [resultFormatter]="getResultFormatter" 
+      [inputFormatter]="getInputFormatter"></type-ahead>
+
+      <div *ngIf="!trendingRequest.trendingTableId && trendingSetupForm.submitted" class="alert alert-danger">
+        <div>
+          {{ i18n.trending + 'Please select a trend table' | dynamicTranslate }} .
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-md-4">
+        <h4>{{ i18n.trending + 'Starting Value' | dynamicTranslate }} </h4>
+        <select class="form-control" [(ngModel)]="trendingRequest.sourceField" name="sourceFieldSelect" id="sourceFieldSelect" #selectSourceField="ngModel" required>
+          <option disabled>
+            <span>{{ i18n.trending + 'Select a Starting Value' | dynamicTranslate }}</span>
+          </option>
+          <option *ngFor="let field of startingValueOptions | orderBy: 'displayName'" [value]="field.name">{{i18n.asset + field.displayName | dynamicTranslate }}</option>
+        </select>
+
+        <div *ngIf="selectSourceField.errors && trendingSetupForm.submitted" class="alert alert-danger">
+          <div>
+            {{ i18n.trending + 'Please select a starting value' | dynamicTranslate }}.
+          </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h4>{{ i18n.trending + 'Ending Value' | dynamicTranslate }} </h4>
+        <select class="form-control" [(ngModel)]="trendingRequest.destinationField" name="destinationFieldSelect" id="destinationFieldSelect" #selectDestinationField="ngModel" required>
+          <option disabled>
+            <span>{{ i18n.trending + 'Select an Ending Value' | dynamicTranslate }} </span>
+          </option>
+          <option *ngFor="let field of endingValueOptions | orderBy: 'displayName'" [value]="field.name">{{ i18n.asset + field.displayName | dynamicTranslate }}</option>
+        </select>
+
+        <div *ngIf="selectDestinationField.errors && trendingSetupForm.submitted" class="alert alert-danger">
+          <div>
+            {{ i18n.asset + 'Please select an ending value' | dynamicTranslate }}.
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="row">
+      <div class="col-md-8">
+        <h2>{{ i18n.common + 'Filter Criteria' | dynamicTranslate }} </h2>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+    <div #filterCriteria></div>
+
+    <button type="button" (click)="addFilter()" class="btn btn-action btn-small">
+      <i class="fa fa-plus"></i>
+    </button><strong>&nbsp; {{ i18n.common + 'Add Filter Criteria' | dynamicTranslate }}</strong>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-md-4">
+        <h4>{{ i18n.common + 'Types of Rounding' | dynamicTranslate }}</h4>
+        <select class="form-control" [(ngModel)]="trendingRequest.rounding" name="roundingSelect" id="roundingSelect" #selectRounding="ngModel" required>
+          <option disabled>
+            <span>{{ i18n.common + 'Select a Rounding Type' | dynamicTranslate }} </span>
+          </option>
+          <option *ngFor="let type of roundingTypeOptions" [value]="type.value">{{i18n.trending + type.displayName | dynamicTranslate }}</option>
+        </select>
+
+        <div *ngIf="selectRounding.errors && trendingSetupForm.submitted" class="alert alert-danger">
+          <div>
+            {{ i18n.common + 'Please select a rounding type' | dynamicTranslate }}.
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <button [ladda]="isProcessing" class="btn btn-primary" type="submit"> {{ i18n.common + 'Run' | dynamicTranslate }} </button>
+</form>

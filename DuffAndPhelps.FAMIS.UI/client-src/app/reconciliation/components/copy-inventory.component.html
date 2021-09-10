@@ -1,0 +1,30 @@
+<button type="button" (click)="open($event)" class="btn btn-action">Select File</button>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">{{title}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form (ngSubmit)="onSubmit(createCustomColumnForm)" #createCustomColumnForm="ngForm">
+
+    <div class="modal-body">
+
+      <kendo-grid [resizable]="true" [data]="availableGroups"  [selectable]="selectableSettings" [kendoGridSelectBy]="'id'" [selectedKeys]="selectedGroup" [height]="300">
+          <kendo-grid-checkbox-column [width]="50"></kendo-grid-checkbox-column>
+          
+        <kendo-grid-column field="groupName" title="Name"></kendo-grid-column>
+        <kendo-grid-column field="inventoryAssetCount" title="Inventory Asset Count"></kendo-grid-column>
+
+      </kendo-grid>
+
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" (click)="c('Close click')">{{i18n.common + 'Cancel' | dynamicTranslate }} </button>
+      <button type="submit" class="btn btn-primary">Copy to Current Group</button>
+    </div>
+
+  </form>
+</ng-template>

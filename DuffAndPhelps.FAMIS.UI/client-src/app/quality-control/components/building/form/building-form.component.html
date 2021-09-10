@@ -1,0 +1,428 @@
+<ol class="breadcrumb">
+  <li *ngFor="let breadCrumb of breadCrumbs" class="breadcrumb-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    <a
+      [class.disabled]="!!breadCrumb.isDisabled && breadCrumb.isDisabled"
+      [queryParams]="{ mode: '1' }"
+      [routerLink]="breadCrumb.routerLink"
+      >{{ i18n.qualityControl + breadCrumb.name | dynamicTranslate }}</a
+    >
+  </li>
+</ol>
+
+<div class="row">
+  <div class="col-md-3">
+    <span class="building-header-label">{{ i18n.building + 'Member Number' | dynamicTranslate }}:</span> {{ buildingDto.memberNumber }}
+    <br />
+    <span class="building-header-label">{{ i18n.building + 'Member Name' | dynamicTranslate }}:</span> {{ buildingDto.memberName }}
+  </div>
+  <div class="col-md-3">
+    <span class="building-header-label">{{ i18n.building + 'Site Number' | dynamicTranslate }}:</span> {{ buildingDto.siteNumber }} <br />
+    <span class="building-header-label">{{ i18n.building + 'Site Name' | dynamicTranslate }}:</span> {{ buildingDto.siteName }}
+  </div>
+  <div class="col-md-3">
+    <span class="building-header-label">{{ i18n.building + 'Building Number' | dynamicTranslate }}:</span> {{ buildingDto.buildingNumber }}
+    <br />
+    <span class="building-header-label">{{ i18n.building + 'Building Name' | dynamicTranslate }}:</span> {{ buildingDto.buildingName }}
+  </div>
+  <div class="col-md-3"></div>
+</div>
+
+<form
+  id="building-form"
+  class="fixed-menu-form"
+  *ngIf="formGroup"
+  [formGroup]="formGroup"
+  (ngSubmit)="onSubmit(buildingForm)"
+  #buildingForm="ngForm"
+>
+  <div>
+    <ngb-tabset [destroyOnHide]="false" type="pills" #tabs>
+      <ngb-tab>
+        <ng-template ngbTabTitle>
+          <h3>{{ i18n.building + 'Primary Info' | dynamicTranslate }}</h3>
+        </ng-template>
+        <ng-template ngbTabContent>
+          <div class="row">
+            <div class="col-md-10">
+              <h2 id="PrimaryInfo" #primaryInfoHeading>{{ i18n.building + 'Primary Info' | dynamicTranslate }}</h2>
+
+              <!--<div class="row">
+                <div class="col-md-6">
+                  <dynamic-field
+                    [sourceTranslationKey]="i18n.building"
+                    [field]="formModels[formModelEnum.PrimaryInfoFields][0]"
+                    [form]="formGroup"
+                    [key]="formModels[formModelEnum.PrimaryInfoFields][0].displayName"
+                    [imageEntityType]="imageEntityTypes.Building"
+                    [entityId]="buildingId"
+                  ></dynamic-field>
+                </div>
+
+                <div class="col-md-6">
+                  <dynamic-field
+                    [sourceTranslationKey]="i18n.building"
+                    [field]="formModels[formModelEnum.PrimaryInfoFields][1]"
+                    [form]="formGroup"
+                    [key]="formModels[formModelEnum.PrimaryInfoFields][1].displayName"
+                    [imageEntityType]="imageEntityTypes.Building"
+                    [entityId]="buildingId"
+                  ></dynamic-field>
+
+                  <dynamic-field
+                    [sourceTranslationKey]="i18n.building"
+                    [field]="formModels[formModelEnum.PrimaryInfoFields][2]"
+                    [form]="formGroup"
+                    [key]="formModels[formModelEnum.PrimaryInfoFields][2].displayName"
+                    [imageEntityType]="imageEntityTypes.Building"
+                    [entityId]="buildingId"
+                  ></dynamic-field>
+                </div>
+              </div>-->
+
+              <building-form-group
+                [formControls]="formModels[formModelEnum.PrimaryInfoFields]"
+                [formLayout]="formLayouts[formModelEnum.PrimaryInfoFields]"
+                [formGroup]="formGroup"
+                [buildingId]="buildingDto.id"
+              ></building-form-group>
+
+              <building-form-group
+                [formControls]="formModels[formModelEnum.BuildingImages]"
+                [formGroup]="formGroup"
+                [buildingId]="buildingDto.id"
+              ></building-form-group>
+
+              <h2 id="Location">{{ i18n.building + 'Location' | dynamicTranslate }}</h2>
+              <building-form-group
+                [formControls]="formModels[formModelEnum.BuildingLocationFields]"
+                [formLayout]="formLayouts[formModelEnum.BuildingLocationFields]"
+
+                [formGroup]="formGroup"
+                [buildingId]="buildingDto.id"
+              ></building-form-group>
+
+              <div class="form-group">
+                <label for="Map">{{ i18n.building + 'Map' | dynamicTranslate }}</label>
+
+                <div id="Map" class="heading-item">
+                  <div *ngIf="!buildingDto.latitude && !buildingDto.longitude" class="empty-item-action">
+                    <a [ngx-scroll-to-duration]="200" [ngx-scroll-to]="'#Location'">Set Lat/Long</a>
+                  </div>
+
+                  <bing-map
+                    *ngIf="buildingDto.latitude && buildingDto.longitude"
+                    [longitude]="buildingDto.longitude"
+                    [latitude]="buildingDto.latitude"
+                    [buildingName]="buildingDto.buildingName"
+                    [mapZoom]="15"
+                  ></bing-map>
+                </div>
+              </div>
+
+              <h2 id="Valuation">{{ i18n.building + 'Valuation' | dynamicTranslate }}</h2>
+              <building-form-group
+                [formControls]="formModels[formModelEnum.BuildingValuationFields]"
+                [formLayout]="formLayouts[formModelEnum.BuildingValuationFields]"
+                [formGroup]="formGroup"
+                [buildingId]="buildingDto.id"
+              ></building-form-group>
+
+              <h2 id="Superstructure">{{ i18n.building + 'Superstructure' | dynamicTranslate }}</h2>
+              <building-form-group
+                [formControls]="formModels[formModelEnum.BuildingSuperstructureFields]"
+                [formLayout]="formLayouts[formModelEnum.BuildingSuperstructureFields]"
+                [formGroup]="formGroup"
+                [buildingId]="buildingDto.id"
+              ></building-form-group>
+
+              <h2 id="Substructure">{{ i18n.building + 'Substructure' | dynamicTranslate }}</h2>
+              <building-form-group
+                [formControls]="formModels[formModelEnum.BuildingSubstructureFields]"
+                [formLayout]="formLayouts[formModelEnum.BuildingSubstructureFields]"
+                [formGroup]="formGroup"
+                [buildingId]="buildingDto.id"
+              ></building-form-group>
+
+              <h2 id="Occupancy">{{ i18n.building + 'Occupancy' | dynamicTranslate }}</h2>
+              <occupancy-codes-grid
+                *ngIf="buildingDto && occupancyCodeOptions"
+                [occupancyCodeOptions]="occupancyCodeOptions"
+              ></occupancy-codes-grid>
+
+              <h2 id="Construction">{{ i18n.building + 'Construction' | dynamicTranslate }}</h2>
+              <building-attributes-grid *ngIf="buildingDto" [buildingAttributes]="buildingAttributes"></building-attributes-grid>
+
+              <h2 id="Systems">{{ i18n.building + 'Systems' | dynamicTranslate }}</h2>
+              <building-form-group
+                [formControls]="formModels[formModelEnum.BuildingSystemsFields]"
+                [formLayout]="formLayouts[formModelEnum.BuildingSystemsFields]"
+                [formGroup]="formGroup"
+                [buildingId]="buildingDto.id"
+              ></building-form-group>
+
+              <h2 id="SiteAttributes">{{ i18n.building + 'Site Attributes' | dynamicTranslate }}</h2>
+              <building-form-group
+                [formControls]="formModels[formModelEnum.BuildingSiteAttributeFields]"
+                [formLayout]="formLayouts[formModelEnum.BuildingSiteAttributeFields]"
+
+                [formGroup]="formGroup"
+                [buildingId]="buildingDto.id"
+              ></building-form-group>
+
+              <h2 id="AdditionalData">{{ i18n.building + 'Additional Data' | dynamicTranslate }}</h2>
+              <building-form-group
+                [formControls]="formModels[formModelEnum.AdditionalDataFields]"
+                [formLayout]="formLayouts[formModelEnum.AdditionalDataFields]"
+                [formGroup]="formGroup"
+                [buildingId]="buildingDto.id"
+                (customFieldLabelChange)="handleCustomFieldLabelChange($event)"
+              ></building-form-group>
+
+              <h2 id="CoreLogic">{{ i18n.building + 'CoreLogic' | dynamicTranslate }}</h2>
+              <building-form-group
+                [formControls]="formModels[formModelEnum.CoreLogicFields]"
+                [formLayout]="formLayouts[formModelEnum.CoreLogicFields]"
+
+                [formGroup]="formGroup"
+                [buildingId]="buildingDto.id"
+              ></building-form-group>
+            </div>
+
+            <div class="col-md-2">
+              <div class="form-navigation">
+                <ul class="nav flex-column" #formNavigation>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link current-item"
+                      [ngx-scroll-to-duration]="200"
+                      href="#PrimaryInfo"
+                      [ngx-scroll-to]="'#PrimaryInfo'"
+                      (click)="preventDefault($event)"
+                      >{{ i18n.building + 'Primary Info' | dynamicTranslate }}</a
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      href="#Location"
+                      [ngx-scroll-to-duration]="200"
+                      [ngx-scroll-to]="'#Location'"
+                      (click)="preventDefault($event)"
+                      >{{ i18n.building + 'Location' | dynamicTranslate }}</a
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      href="#Valuation"
+                      [ngx-scroll-to-duration]="200"
+                      [ngx-scroll-to]="'#Valuation'"
+                      (click)="preventDefault($event)"
+                      >{{ i18n.building + 'Valuation' | dynamicTranslate }}</a
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      [ngx-scroll-to-duration]="200"
+                      href="#Superstructure"
+                      [ngx-scroll-to]="'#Superstructure'"
+                      (click)="preventDefault($event)"
+                      >{{ i18n.building + 'Superstructure' | dynamicTranslate }}</a
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      [ngx-scroll-to-duration]="200"
+                      href="#Substructure"
+                      [ngx-scroll-to]="'#Substructure'"
+                      (click)="preventDefault($event)"
+                      >{{ i18n.building + 'Substructure' | dynamicTranslate }}
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      href="#Occupancy"
+                      [ngx-scroll-to-duration]="200"
+                      [ngx-scroll-to]="'#Occupancy'"
+                      (click)="preventDefault($event)"
+                      >{{ i18n.building + 'Occupancy' | dynamicTranslate }}
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      [ngx-scroll-to-duration]="200"
+                      href="#Construction"
+                      [ngx-scroll-to]="'#Construction'"
+                      (click)="preventDefault($event)"
+                      >{{ i18n.building + 'Construction' | dynamicTranslate }}
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      [ngx-scroll-to-duration]="200"
+                      href="#Systems"
+                      [ngx-scroll-to]="'#Systems'"
+                      (click)="preventDefault($event)"
+                      >{{ i18n.building + 'Systems' | dynamicTranslate }}
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      [ngx-scroll-to-duration]="200"
+                      href="#SiteAttributes"
+                      [ngx-scroll-to]="'#SiteAttributes'"
+                      (click)="preventDefault($event)"
+                      >{{ i18n.building + 'Site Attributes' | dynamicTranslate }}
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      [ngx-scroll-to-duration]="200"
+                      href="#AdditionalData"
+                      [ngx-scroll-to]="'#AdditionalData'"
+                      (click)="preventDefault($event)"
+                      >{{ i18n.building + 'Additional Data' | dynamicTranslate }}
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      [ngx-scroll-to-duration]="200"
+                      href="#CoreLogic"
+                      [ngx-scroll-to]="'#CoreLogic'"
+                      (click)="preventDefault($event)"
+                      >{{ i18n.building + 'CoreLogic' | dynamicTranslate }}
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <br />
+        </ng-template>
+      </ngb-tab>
+
+      <ngb-tab>
+        <ng-template ngbTabTitle>
+          <h3>{{ i18n.building + 'Additional Data' | dynamicTranslate }}</h3>
+        </ng-template>
+        <ng-template ngbTabContent>
+          <div class="row">
+            <div class="additional-data-grid  col-md-12">
+              <h2 id="additionalBuildingEquipmentAndFeatures">
+                {{ i18n.building + 'Additional Building Equipment and Features' | dynamicTranslate }}
+              </h2>
+
+              <additional-building-equipment-grid [buildingDto]="buildingDto"></additional-building-equipment-grid>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="additional-data-grid additional-data-grid col-md-12">
+              <h2 id="customAdditions">{{ i18n.building + 'Custom Additions' | dynamicTranslate }}</h2>
+
+              <custom-additions-grid [buildingDto]="buildingDto"></custom-additions-grid>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="additional-data-grid col-md-12">
+              <h2 id="userFactors">{{ i18n.building + 'User Factors' | dynamicTranslate }}</h2>
+
+              <user-factor-grid [buildingDto]="buildingDto"></user-factor-grid>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+
+      <ngb-tab>
+        <ng-template ngbTabTitle>
+          <h3>{{ i18n.building + 'Secondary COPE' | dynamicTranslate }}</h3>
+        </ng-template>
+        <ng-template ngbTabContent>
+          <building-form-group *ngIf="!buildingDto" [formControls]="formModels[2]" [formGroup]="formGroup"></building-form-group>
+
+          <!-- FormModelEnum.CopedataWindFields -->
+
+          <div class="row">
+            <div class="col-md-12">
+              <h2 id="wind">{{ i18n.building + 'Wind' | dynamicTranslate }}</h2>
+              <building-form-group
+                [formControls]="formModels[formModelEnum.CopedataWindFields]"
+                [formLayout]="formLayouts[formModelEnum.CopedataWindFields]"
+
+                [formGroup]="formGroup"
+                [buildingId]="buildingDto.id"
+              ></building-form-group>
+
+              <h2 id="earthquake">{{ i18n.building + 'Earthquake' | dynamicTranslate }}</h2>
+              <building-form-group
+                [formControls]="formModels[formModelEnum.CopeDataEarthquakeFields]"
+                [formLayout]="formLayouts[formModelEnum.CopeDataEarthquakeFields]"
+
+                [formGroup]="formGroup"
+                [buildingId]="buildingDto.id"
+              ></building-form-group>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+
+      <ngb-tab>
+        <ng-template ngbTabTitle>
+          <h3>{{ i18n.building + 'Flood Zone' | dynamicTranslate }}</h3>
+        </ng-template>
+        <ng-template ngbTabContent>
+  
+          <building-form-group
+            *ngIf="buildingDto"
+            [formControls]="formModels[formModelEnum.InitialFloodPlainFields]"
+            [formLayout]="formLayouts[formModelEnum.InitialFloodPlainFields]"
+
+            [formGroup]="formGroup"
+            [buildingId]="buildingDto.id"
+          ></building-form-group>
+
+          <building-form-group
+          *ngIf="buildingDto"
+          [formControls]="formModels[formModelEnum.BuildingFloodPlainModelFields]"
+          [formLayout]="formLayouts[formModelEnum.BuildingFloodPlainModelFields]"
+
+          [formGroup]="formGroup"
+          [buildingId]="buildingDto.id"
+        ></building-form-group>
+        </ng-template>
+      </ngb-tab>
+     
+    </ngb-tabset>
+  </div>
+
+  <div id="bottom-form-action-bar">
+    <ng-container *ngIf="isReadOnly === false">
+      <button type="button" class="btn btn btn-default" (click)="cancel()">{{ i18n.common + 'Cancel' | dynamicTranslate }}</button>
+      <button type="button" class="btn btn-primary" (click)="save(buildingForm)" [ladda]="isSaving">
+        {{ i18n.common + 'Save' | dynamicTranslate }}
+      </button>
+      <button type="submit" class="btn btn-primary" (click)="closeForm = true" [ladda]="isSaving">
+        {{ i18n.common + 'Save And Close' | dynamicTranslate }}
+      </button>
+      <button type="button" class="btn btn-primary" *ngIf="isEditBuilding" (click)="valuateBuilding()">
+        {{ i18n.common + 'Building Valuation' | dynamicTranslate }}
+      </button>
+    </ng-container>
+    <ng-container *ngIf="isReadOnly === true">
+      <button type="button" class="btn btn btn-default" (click)="cancel()">{{ i18n.common + 'Close' | dynamicTranslate }}</button>
+    </ng-container>
+  </div>
+</form>
+<div>
+  <building-valuation (onAction)="handleAction($event)"></building-valuation>
+</div>

@@ -1,0 +1,245 @@
+#Reconciliation-Module {
+  #DataGrids {
+    .btn-action {
+      &.btn-block {
+        font-size: 18px;
+      }
+    }
+  }
+
+  .grid-action-item {
+    cursor: pointer;
+
+    .fa {
+      color: $brand-tertiary-violet;
+      font-size: 1.2em !important;
+    }
+  }
+
+  .selected-matches {
+    border: 1px solid darken($brand-secondary-gray-light, 5%);
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    &.bottom {
+      background-color: $brand-secondary-gray-light !important;
+    }
+  }
+
+  .match-col {
+    padding: 10px;
+  }
+
+  #NavMatchOptions {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    a {
+      text-decoration: underline;
+      color: $gray-text-medium;
+    }
+
+    .nav-link {
+      padding: 0px;
+      margin-top: 5px;
+    }
+  }
+
+  .match-col-item {
+    padding: 5px;
+  }
+
+  .k-grid td,
+  .k-grid th {
+    padding: 3px !important;
+    font-size: 9pt !important;
+  }
+
+  .reconciliation-actions .btn {
+    padding: 5px 10px 5px 10px;
+    font-size: $font-size-base;
+  }
+
+  .reconciliation-actions .btn-primary {
+    background-color: $brand-secondary-cyan;
+    color: white;
+  }
+
+  .reconciliation-actions > .btn-primary:not(.active) > .checked {
+    display: none;
+  }
+
+  .reconciliation-actions > .btn-primary.active > .not-checked {
+    display: none;
+  }
+
+  .reconciliation-actions input[type='checkbox'] {
+    display: none;
+  }
+
+  .match-form-expanded {
+    position: absolute;
+    top: -.4rem;
+    right: 100;
+    left: 76%;
+    z-index: 5;
+    background-color: white;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top:0 !important;
+    border-style: solid;
+    border-width: thin;
+    border-color: $brand-secondary-gray;
+  }
+
+  .match-form-collapse {
+    width: 90%;
+    margin-left: 5%;
+    padding-top: 0;
+    margin-top: 0;
+    border-style: none;
+    font-size: large;
+    background-color: white;
+    font-weight: bold;
+  }
+
+  a.disabled-unmatch-link {
+    pointer-events: none;
+    cursor: default;
+  }
+  a.enabled-unmatch-link {
+    cursor: pointer;
+  }
+
+  .clickable-link {
+    cursor: pointer;
+  }
+  // .k-hierarchy-cell .k-icon {
+  //   display: none !important;
+  // }
+
+  .parent-child-select-cell input {
+    text-align: center;
+  }
+
+  .k-grid-filter {
+    bottom: -0.2rem !important;
+  }
+
+  .k-grid .parent-child-action-cell a {
+    vertical-align: middle;
+    text-decoration: underline;
+    font-weight: inherit;
+  }
+
+  .parent-child-detail-grid {
+    margin-left: 53px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+    .k-grid {
+      margin: 0px;
+    }
+
+    .k-grid-header {
+      display: none !important;
+    }
+
+    .k-grid-content {
+      overflow-y: scroll !important;
+      overflow-x: hidden !important;
+    }
+
+    tr {
+      opacity: 0.8;
+    }
+  }
+
+  // .k-hierarchy-cell {
+  //   display: none;
+  // }
+
+  .k-detail-cell {
+    background-color: $brand-secondary-gray-light;
+  }
+
+  .allocation-odd-row {
+    background-color: #e6eaed;
+  }
+
+  .allocation-form-group {
+    padding: 0px 15px;
+  }
+
+ .circle-div {
+   width: 24px;
+   height: 24px;
+   -webkit-border-radius: 12px;
+   -moz-border-radius: 12px;
+   border-radius: 12px;
+   border-style: solid;
+   border-color: $gray-text-medium;
+   border-width: 1px;
+   text-align: center;
+   color: $gray-text-medium;
+   cursor: pointer;
+ }
+
+ .add-record-button{
+  margin-left:0.5rem;
+  margin-bottom:0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.25;
+  padding: 5px 10px 5px 10px;
+ }
+
+  .asset-selected-columns 
+  .k-grid th {
+    font-size: 10pt !important;
+  }
+
+  .asset-selected-columns 
+  .k-grid td {
+    font-size: 11pt !important;
+  }
+
+  .mass-match-row {cursor:pointer;}
+  .un-matched {background-color:rgba(238,49,36,.33) !important;}
+  
+  a.disabled {
+    pointer-events: none;
+    cursor: default;
+ }
+
+
+}
+
+.asset-selected-columns,
+.consolidation-match-code-assignment,
+.data-map-table {
+  table {
+    th {
+      color: $brand-secondary-gray;
+      background: darken($brand-secondary-gray-light, 5%);
+      padding: .5rem;
+    }
+
+    td {
+      padding: .5rem;
+    }
+  }
+}
+
+.upsert-asset-record .form-body{
+  overflow-x: hidden !important;
+}
+
+.custom-control-label:after, 
+.custom-control-label:before {
+  display: none;
+}
+
+.k-window-content, .k-prompt-container {
+  height: 500px;
+}

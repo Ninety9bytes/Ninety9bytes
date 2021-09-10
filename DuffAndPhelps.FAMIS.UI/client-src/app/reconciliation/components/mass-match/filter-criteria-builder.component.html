@@ -1,0 +1,62 @@
+<div class="row">
+  <div class="col-md-2">
+    <label>Source File</label>
+    <div class="form-group">
+      <input type="radio" [name]="formFieldNames.sourceClientFile" [checked]="filter.term.dataTarget === dataTargetNames.client"
+        (change)="setSourceFile(dataTargetNames.client, $event)">
+      <label class="custom-control-label" for="customRadio1">Client File</label><br />
+      <input type="radio" [name]="formFieldNames.sourceInventoryFile" [checked]="filter.term.dataTarget === dataTargetNames.inventory"
+        (change)="setSourceFile(dataTargetNames.inventory, $event)">
+      <label class="custom-control-label" for="customRadio2">Actual Inventory</label>
+    </div>
+  </div>
+  <div class="col-md-2">
+    <label>Field</label>
+
+    <select class="form-control form-control" id="selectMatchCode" [(ngModel)]="selectedField" (change)="initOperationAndValue()"
+      [name]="formFieldNames.selectedField" #selectMatchCode="ngModel" required>
+      <option *ngIf="!selectedField" [ngValue]="selectedField" disabled>Select Field</option>
+      <option *ngFor="let item of sourceMetadata|orderBy:'displayName'" [ngValue]="item">{{item.displayName}}</option>
+    </select>
+  </div>
+  <div class="col-md-2">
+    <label>Filter Type</label>
+    <select  class="form-control" *ngIf="!selectedField" disabled></select>
+
+    <select *ngIf="selectedField" [(ngModel)]="filter.operation" [name]="formFieldNames.selectedFilterType" (change)="criteriaChange()"
+      class="form-control">
+      <option *ngIf="!filter.operation" [ngValue]="filter.operation" disabled>Select Filter</option>
+      <option *ngFor="let item of operationsForSelectedTerm" [value]="item.name">{{item.displayName}}</option>
+    </select>
+
+  </div>
+  <div class="col-md-2" *ngIf="filter.operation !== 'in' && filter.operation !== 'nin'">
+
+
+    <label>Value</label>
+
+    <input *ngIf="!selectedField" type="text" disabled="true" [name]="formFieldNames.value" class="form-control">
+
+    <input type="text" *ngIf="selectedField && selectedField.fieldType===fieldTypes.String" [(ngModel)]="filter.term.value" [name]="formFieldNames.value"
+      class="form-control" (change)="criteriaChange()">
+
+    <kendo-datepicker class="form-control" *ngIf="selectedField && selectedField.fieldType===fieldTypes.DateTime" [(ngModel)]="filter.term.value"
+      [name]="formFieldNames.value" (change)="criteriaChange()"></kendo-datepicker>
+
+
+    <!-- TODO Hide stepper -->
+    <input type="number" *ngIf="selectedField && (selectedField.fieldType===fieldTypes.Integer || selectedField.fieldType===fieldTypes.Double)"
+      [(ngModel)]="filter.term.value" [name]="formFieldNames.value" class="form-control" (change)="criteriaChange()">
+
+  </div>
+  <div class="col-md-2 mt-4">
+
+
+    <button (click)="remove()" type="button" class="btn btn-action btn-small">
+      <i class="fa fa-minus"></i>
+    </button>
+    <strong>Remove Filter</strong>
+
+
+  </div>
+</div>

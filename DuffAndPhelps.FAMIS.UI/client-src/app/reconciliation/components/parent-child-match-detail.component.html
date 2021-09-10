@@ -1,0 +1,17 @@
+
+
+<kendo-grid [resizable]="true" height="60" [data]="children" [scrollable]="true" [resizable]="true">
+    <kendo-grid-column [width]="200" field="matchCodeName" title="{{ i18n.reconciliation + 'Match Code' | dynamicTranslate}}"></kendo-grid-column>
+    <kendo-grid-column [width]="200" field="serialNumber" title="{{ i18n.reconciliation + 'Serial Number' | dynamicTranslate}}"></kendo-grid-column>
+    <kendo-grid-column [width]="200" field="assetTagNumber" title="{{ i18n.reconciliation + 'Asset Tag Number' | dynamicTranslate}}"></kendo-grid-column>
+    <kendo-grid-column [width]="200" field="description" title="{{ i18n.reconciliation + 'Description'| dynamicTranslate }}"></kendo-grid-column>
+    <kendo-grid-column [width]="200" field="modelNumber" title="{{ i18n.reconciliation + 'Model Number' | dynamicTranslate }}"></kendo-grid-column>
+    <kendo-grid-column [width]="200" field="manufacturer" title="{{ i18n.reconciliation + 'Manufacturer' | dynamicTranslate }}"></kendo-grid-column>
+    <kendo-grid-column [width]="200" field="buildingName" title="{{ i18n.reconciliation + 'Building Name' | dynamicTranslate }}"></kendo-grid-column>
+    <kendo-grid-column [width]="200" field="floor" title="{{ i18n.reconciliation + 'Floor' | dynamicTranslate }}"></kendo-grid-column>
+    <kendo-grid-column [width]="200" field="quantity" title="{{ i18n.reconciliation + 'Quantity' | dynamicTranslate }}"></kendo-grid-column>
+    <kendo-grid-column [width]="200" field="historicalCost" title="{{ i18n.reconciliation + 'Historical Cost'| dynamicTranslate }}"></kendo-grid-column>
+    <ng-container *ngFor="let column of headers">
+        <kendo-grid-column [width]="200" field="{{column.key}}" title="{{column.key}}" *ngIf="!showColumn(column.key)"></kendo-grid-column>
+    </ng-container>
+</kendo-grid>

@@ -1,0 +1,22 @@
+<ngb-alert type="danger" [dismissible]="false" *ngIf="spreadsheetHasErrors">
+    <b>{{ i18n.dataImport + 'Upload Failed: ' + APIError | dynamicTranslate}}</b>
+    <br> {{ i18n.dataImport + 'Please validate spreadsheet data' | dynamicTranslate}}</ngb-alert>
+
+<form (ngSubmit)="onSubmit(dataImportForm)" #dataImportForm="ngForm">
+
+  <kendo-grid [resizable]="true" [data]="sampleData" [reorderable]="true">
+
+    <ng-container *ngFor="let column of headers">
+      <kendo-grid-column [width]="200" field="{{column.key}}" title="{{i18n.dataImport + column.key | dynamicTranslate }}"
+        *ngIf="column.key != 'Id'"></kendo-grid-column>
+    </ng-container>
+
+  </kendo-grid>
+
+  <div class="form-group">
+    <button (click)="back($event)" class="btn btn">{{ i18n.common + 'Back' | dynamicTranslate }}</button>
+
+    <button type="submit" [disabled]="spreadsheetHasErrors" [ngStyle]="{'cursor': spreadsheetHasErrors ? 'not-allowed' : 'pointer'}" [ladda]="isLoading" class="btn btn-primary">{{i18n.common + 'Import Records' | dynamicTranslate }}</button>
+  </div>
+
+</form>

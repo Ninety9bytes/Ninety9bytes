@@ -1,0 +1,34 @@
+<h1 appTooltip="test">{{i18n.dataImport + 'Import Data' | dynamicTranslate}}</h1>
+
+<ngb-tabset type="pills" id="parent-tabs">
+  <ngb-tab id="option-1">
+    <ng-template ngbTabTitle>
+      <span>{{i18n.dataImport + 'Upload Data' | dynamicTranslate}}</span>
+    </ng-template>
+    <ng-template ngbTabContent>
+
+      <app-data-import></app-data-import>
+
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab id="option-2" [disabled]="dataImportService.importResult.success">
+    <ng-template ngbTabTitle>
+      <span>{{i18n.dataImport + 'Copy Data' | dynamicTranslate}}</span>
+    </ng-template>
+    <ng-template ngbTabContent>
+
+      <app-data-copy></app-data-copy>
+
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab id="option-3">
+    <ng-template ngbTabTitle>
+      <span>{{i18n.dataImport + 'PROS Renewal' | dynamicTranslate}}</span>
+    </ng-template>
+    <ng-template ngbTabContent>
+
+      <pros-renewal-wizard></pros-renewal-wizard>
+
+    </ng-template>
+  </ngb-tab>
+</ngb-tabset>

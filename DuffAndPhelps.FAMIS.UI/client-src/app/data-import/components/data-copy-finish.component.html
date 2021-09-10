@@ -1,0 +1,27 @@
+<div *ngIf="!isError">
+    <ngb-alert type="success" [dismissible]="false">
+      <b>{{i18n.dataImport + 'Copy Successful' | dynamicTranslate }}</b>
+      <br> {{rowsCopied}} {{  i18n.dataImport + 'records were successfully copied to the' | dynamicTranslate }} {{dataTargetName}} {{  i18n.dataImport + 'Asset File' | dynamicTranslate}}
+    </ngb-alert>
+</div>
+<div *ngIf="isError">
+    <ngb-alert type="danger" [dismissible]="false">
+        <b>{{i18n.dataImport + 'Copy Failed' | dynamicTranslate }}</b>
+        <br />
+        <br />
+        <div *ngIf="errorMessage?.length">
+            {{i18n.dataImport + 'Details' | dynamicTranslate }}:
+            <br />
+            {{errorMessage}}
+        </div>
+        <div *ngIf="!errorMessage?.length">
+            {{i18n.dataImport + 'Details' | dynamicTranslate }}:
+            <br />
+            {{i18n.dataImport + 'An unknown error has occurred during the Data Copy proccess' | dynamicTranslate }}.
+        </div>
+    </ngb-alert>
+</div>
+
+<div class="wizard-actions">
+    <button class="btn btn-primary" (click)="finish($event)">{{ i18n.dataImport + 'Finish' | dynamicTranslate }}</button>
+</div>

@@ -1,0 +1,122 @@
+<div id="formBuilderDropArea">
+  <form (ngSubmit)="onSubmit(dataImportForm)" #dataImportForm="ngForm" (keydown)="handleKeyDown($event)">
+
+
+    <ng-container *ngFor="let module of selectedModules">
+
+      <div class="py-2" *ngIf="isModuleOnly(module)">
+        <h2>{{i18n.common + module.name | dynamicTranslate }}</h2>
+
+        <div class='drag-drop-container'>
+        
+
+            <div class="row">
+              <div class="col-md-12">
+               <h4>{{i18n.templateManagement + 'Enabled for Template' | dynamicTranslate }}
+                </h4>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      <div class="py-2" *ngIf="!isModuleOnly(module)">
+
+
+        <ng-container *ngIf="formLayouts[module.id].hasSelectedFields">
+
+          <h2>{{i18n.common + module.name | dynamicTranslate }}</h2>
+
+
+
+          <div class='parent'>
+            <div class='drag-drop-container field-bank' *ngIf="formLayouts[module.id].customFieldsAvailable.length > 0">
+              <h4>
+                <em>{{i18n.templateManagement + 'Drag Custom Field(s) to Form Layout in Desired Order' | dynamicTranslate }}</em>
+              </h4>
+
+              <div class="row">
+                <div class="col-md-6" [dragula]='module.id' [dragulaModel]='formLayouts[module.id].customFieldsAvailable'>
+                  <div class='template-field' *ngFor="let field of formLayouts[module.id].customFieldsAvailable">
+                     {{field.name}}
+                    <div class="pull-right draggable-arrow">
+                      <i class="fa fa-arrows"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+
+            <div class='drag-drop-container'>
+              <h3>{{i18n.templateManagement + 'Form Layout' | dynamicTranslate }}</h3>
+
+              <div class="row">
+                <div class="col-md-6" attr.data-moduleid="{{module.id}}" [dragula]='module.id' [dragulaModel]='formLayouts[module.id].oddOrderedFields'>
+                  <div class='template-field' *ngFor="let field of formLayouts[module.id].oddOrderedFields">
+                    <ng-container *ngIf="!field.isCustomField">
+                    {{i18n.projectProfile + field.name | dynamicTranslate }}
+                  </ng-container>
+                  <ng-container *ngIf="field.isCustomField">
+                      {{field.name}}
+                    </ng-container>
+                    <div class="pull-right draggable-arrow">
+                      <i class="fa fa-arrows"></i>
+                    </div>
+
+                  </div>
+
+
+
+
+                </div>
+
+
+
+                <div class="col-md-6" attr.data-moduleid="{{module.id}}" [dragula]='module.id' [dragulaModel]='formLayouts[module.id].evenOrderedFields'>
+                  <div class='template-field' *ngFor="let field of formLayouts[module.id].evenOrderedFields">
+                      <ng-container *ngIf="!field.isCustomField">
+                          {{i18n.projectProfile + field.name | dynamicTranslate }}
+                        </ng-container>
+                        <ng-container *ngIf="field.isCustomField">
+                            {{field.name}}
+                          </ng-container>                    <div class="pull-right draggable-arrow">
+                      <i class="fa fa-arrows"></i>
+                    </div>
+
+                  </div>
+
+
+
+                </div>
+              </div>
+
+
+            </div>
+
+          </div>
+
+
+
+
+
+        </ng-container>
+      </div>
+    </ng-container>
+
+
+
+
+    <div class="wizard-actions">
+
+      <button class="btn btn-default" (click)="navigateBack($event)">{{i18n.common + 'Back' | dynamicTranslate }}</button>
+
+      <button type="submit" class="btn btn-primary">{{i18n.common + 'Continue' | dynamicTranslate }}</button>
+
+    </div>
+
+
+  </form>
+</div>

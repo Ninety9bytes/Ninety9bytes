@@ -1,0 +1,26 @@
+<div [class.isBusy]="isBusy" class="wrapper">
+
+    <div class="spinner">
+        <div class="dot1"></div>
+        <div class="dot2"></div>
+      </div>
+
+  <router-outlet></router-outlet>
+</div>
+
+<ng-container *ngIf="!isBusy && userIsActive == false && isAuthError != true">
+
+  <div class="container error-pages">
+    <!-- Jumbotron -->
+    <div class="jumbotron">
+      <h1>You Are Logged Out</h1>
+      <p class="lead">Your session has expired and you have been logged out.</p>
+      <!-- <p>Detail: {{errorMessage}}</p> -->
+      <p>
+        <a i18n="" class="" href="#" [routerLink]="['/dashboard']">Take me to the Dashboard</a>
+      </p>
+    </div>
+  </div>
+
+</ng-container>
+

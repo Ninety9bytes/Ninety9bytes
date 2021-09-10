@@ -1,0 +1,42 @@
+<div *ngIf="transactionType" class="modal-header">
+  <h4 class="modal-title">{{i18n.transactions + 'Revert ' + transactionType + ' for Asset' | dynamicTranslate}} {{assetTagNumber}}</h4>
+</div>
+
+<form (ngSubmit)="onSubmit()">
+  <div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-12" >
+
+        <h2>{{i18n.transactions + 'Current' | dynamicTranslate}}</h2>
+        <kendo-grid  [data]="currentTransaction" >
+          <kendo-grid-column [width]="minColWidth" *ngFor="let column of headers" field="{{column.source}}" title="{{i18n.transactions + column.name | dynamicTranslate}}">
+          
+          </kendo-grid-column>
+        </kendo-grid>
+
+        <!-- <kendo-grid [resizable]="true" *ngIf="partialTransaction.length" [data]="partialTransaction" [height]="100" [scrollable]="'none'">
+          <kendo-grid-column *ngFor="let column of partialTransaction" field="{{column.name}}" title="{{i18n.transactions + column.name | dynamicTranslate}}">
+            <ng-template kendoGridCellTemplate>
+              {{column.value}}
+            </ng-template>
+          </kendo-grid-column>
+        </kendo-grid> -->
+        
+        <h2>{{i18n.transactions + 'Revert back' | dynamicTranslate}}</h2>
+        <kendo-grid  [data]="previousTransaction"  >
+          <kendo-grid-column [width]="minColWidth" *ngFor="let column of headers" field="{{column.source}}" title="{{i18n.transactions + column.name | dynamicTranslate}}">
+          </kendo-grid-column>
+        </kendo-grid>
+
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" (click)="closeModalEvent()">{{i18n.common + 'cancel' |
+        translate}}</button>
+      <button type="submit" class="btn btn-primary">{{i18n.transactions + 'Revert' | dynamicTranslate}}</button>
+    </div>
+  </div>
+
+</form>

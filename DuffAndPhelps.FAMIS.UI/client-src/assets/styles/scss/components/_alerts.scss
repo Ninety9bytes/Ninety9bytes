@@ -1,0 +1,23 @@
+.alert {
+  border-radius: 0;
+  border-width: 4px;
+  border-style: solid;
+
+  &.alert-danger {
+    color: $error;
+    background: lighten($error, 40%);
+    border-color: $error;
+  }
+
+  &.alert-success {
+    color: $success;
+    background: lighten($success, 40%);
+    border-color: $success;
+  }
+}
+
+.asset-selected-columns {
+  .alert-danger {
+    margin-bottom: 0;
+  }
+}

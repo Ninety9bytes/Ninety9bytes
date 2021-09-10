@@ -1,0 +1,453 @@
+/* Import Stylesheets */
+
+/* Variables */
+@import "_variables-DP.scss";
+
+/* Components */
+@import "components/_alerts.scss";
+@import "components/_buttons.scss";
+@import "components/_dragdrop.scss";
+@import "components/_dashboard.scss";
+@import "components/_forms.scss";
+@import "components/_navs.scss";
+@import "components/_tables.scss";
+@import "components/_breadcrumbs.scss";
+@import "components/_modals.scss";
+@import "components/_reconciliation.scss";
+@import "components/_data-import.scss";
+@import "components/_project-profile.scss";
+@import "components/_busy-indicators.scss";
+@import "components/_errors.scss";
+@import "components/_edit-column-order.scss";
+@import "components/_upsert-asset-record-modal.scss";
+@import "components/_processing.scss";
+@import "components/_famis-grid.scss";
+@import "components/_quality-control.scss";
+@import "components/_template-management.scss";
+@import "components/_carousel.scss";
+@import "components/_maps.scss";
+@import "components/_image-upload-field.scss";
+
+/* Layout */
+@import "layout/_typography.scss";
+
+.wrapper {
+  margin-top: 128px;
+  padding-bottom: 2em;
+}
+
+.container {
+  padding: 2em 0;
+  /* Justin Scratch */
+
+  .scrollable {
+    height: 570px;
+    overflow-x: auto;
+  }
+
+  /* Justin Sprint 9 Scratch */
+
+  .disabled-row {
+    opacity: 0.5;
+  }
+
+  tr.enabled-row {
+    background-color: white !important;
+  }
+
+  /* Sprint 5 Project Profile  */
+
+  .sidebar {
+    background-color: $brand-secondary-gray-light;
+    padding: 20px 0px 10px 30px;
+    margin-top: -32px !important;
+    margin-left: -15px !important;
+
+    position: fixed;
+    width: 200px;
+
+    height: 100%;
+    min-height: 100%;
+  }
+
+  .form-layout {
+    padding-left: 40px;
+
+    .form-check-input {
+      position: absolute;
+      margin-top: 0.25rem;
+      margin-left: 0;
+    }
+
+    .form-group {
+      margin-bottom: 2rem;
+    }
+  }
+
+  .sidebar li {
+    margin-top: 15px;
+  }
+
+  .active {
+    font-weight: bold;
+  }
+
+  /* Sprint 4 Edit Project Profile Wizard */
+  .wizard-actions {
+    margin-top: 30px;
+  }
+  .custom-fields {
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+
+  .custom-fields h4 {
+    font-size: 1em;
+  }
+
+  .dragula-well {
+    padding: 20px;
+    background-color: #e6eaed;
+
+    margin-bottom: 20px;
+  }
+
+  .drag-drop-container {
+    margin-bottom: 20px;
+  }
+
+  .dragula-well .ex-moved {
+    display: none;
+  }
+
+  .container-fluid {
+    margin-left: 15%;
+    padding: 2em;
+  }
+
+  /* Justin Scratch */
+  #DestinationColumns .ex-moved {
+    display: none;
+  }
+
+  #DestinationColumns .ex-moved .gu-transit {
+    display: block;
+  }
+}
+
+/* Sprint 10  */
+
+.container-fluid .sidebar {
+  background-color: #e6eaed;
+  padding: 20px;
+  height: 100%;
+  min-height: 100%;
+  margin-left: -15px;
+  margin-top: -3px;
+}
+
+.active {
+  font-weight: bold;
+}
+
+.form {
+  padding: 15px;
+}
+
+.wizard-actions {
+  margin-top: 20px;
+}
+
+.growl-alert {
+  z-index: 999;
+  top: 140px;
+  right: 0;
+  position: fixed;
+
+  width: 500px;
+  height: 75px;
+}
+
+.grid-actions {
+  padding-left: 5px;
+  border: none !important;
+
+  .grid-action-item {
+    padding-right: 10px;
+    cursor: pointer;
+  }
+}
+
+.k-grid tbody tr.k-state-selected:hover {
+  background-color: rgba(0, 123, 255, 0.2) !important;
+}
+
+.text-underline {
+  text-decoration: underline;
+}
+
+/* Template Layout  */
+
+.drag-drop-container {
+  &.field-bank {
+    background: white;
+    border: 1px solid $gray-text-medium;
+  }
+}
+
+.module-layout-preview {
+  margin-bottom: 2em;
+}
+
+.template-field {
+  margin: 20px;
+  padding: 15px;
+  background: white;
+  border: 1px solid $gray-text-medium;
+  border-radius: 4px;
+  cursor: move;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+
+.custom-field-form {
+  margin-top: 20px;
+}
+
+.toast-message {
+  white-space: pre-line;
+}
+
+.errorMessage {
+  color: red;
+  padding-top: 5px;
+  font-size: 12px;
+}
+
+.isOneToMany,
+.tinted-white {
+  background-color: #eee;
+  padding: 20px;
+}
+.tinted-white {
+  font-style: italic;
+  text-align: center;
+  border: 1px solid #e9e9e9;
+
+  p {
+    margin-bottom: 0;
+  }
+}
+
+.mediumModal > .modal-dialog {
+  max-width: 50% !important;
+  width: 50% !important;
+  max-height: 50% !important;
+  height: 50% !important;
+}
+
+div.modal-body {
+  height: auto;
+  max-height: 330px; 
+  overflow-y: auto; 
+  padding: 15px;
+}
+
+.modal-over-window {
+  z-index: 100000!important;
+}
+
+.linear-activity {
+  overflow: hidden;
+  width: 100%;
+  height: 4px;
+  background-color: #b3e5fc;
+  margin: 0px;
+}
+
+.determinate {
+  position: relative;
+  max-width: 100%;
+  height: 100%;
+  -webkit-transition: width 500ms ease-out 1s;
+  -moz-transition: width 500ms ease-out 1s;
+  -o-transition: width 500ms ease-out 1s;
+  transition: width 500ms ease-out 1s;
+  background-color: #03a9f4;
+}
+
+.indeterminate {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.indeterminate:before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  background-color: #03a9f4;
+  animation: indeterminate_first 1.5s infinite ease-out;
+}
+
+.indeterminate:after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  background-color: #4fc3f7;
+  animation: indeterminate_second 1.5s infinite ease-in;
+}
+
+@keyframes indeterminate_first {
+  0% {
+    left: -100%;
+    width: 100%;
+  }
+  100% {
+    left: 100%;
+    width: 10%;
+  }
+}
+
+@keyframes indeterminate_second {
+  0% {
+    left: -150%;
+    width: 100%;
+  }
+  100% {
+    left: 100%;
+    width: 10%;
+  }
+}
+
+/* Loading spinner */
+
+.isBusy {
+  .spinner {
+    margin: 100px auto;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    text-align: center;
+
+    -webkit-animation: sk-rotate 2s infinite linear;
+    animation: sk-rotate 2s infinite linear;
+  }
+
+  .dot1,
+  .dot2 {
+    width: 60%;
+    height: 60%;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    background-color: $brand-secondary-cyan;
+    border-radius: 100%;
+
+    -webkit-animation: sk-bounce 2s infinite ease-in-out;
+    animation: sk-bounce 2s infinite ease-in-out;
+  }
+
+  .dot2 {
+    top: auto;
+    bottom: 0;
+    -webkit-animation-delay: -1s;
+    animation-delay: -1s;
+  }
+
+  @-webkit-keyframes sk-rotate {
+    100% {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+  @keyframes sk-rotate {
+    100% {
+      transform: rotate(360deg);
+      -webkit-transform: rotate(360deg);
+    }
+  }
+
+  @-webkit-keyframes sk-bounce {
+    0%,
+    100% {
+      -webkit-transform: scale(0);
+    }
+    50% {
+      -webkit-transform: scale(1);
+    }
+  }
+
+  @keyframes sk-bounce {
+    0%,
+    100% {
+      transform: scale(0);
+      -webkit-transform: scale(0);
+    }
+    50% {
+      transform: scale(1);
+      -webkit-transform: scale(1);
+    }
+  }
+}
+
+.btn {
+  margin: .25rem;
+}
+
+.isBusy:after {
+  content: "";
+  display: block;
+  position: fixed; /* could also be absolute */
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+  background: rgba(19, 181, 234, 0.1);
+}
+
+.nav-link:not(.active) h3 {
+  color: rgb(7, 6, 6);
+}
+
+.famis-grid .btn {
+  border-radius: 0;
+  padding: 0.25em 1em;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.k-grid td,
+.k-grid th {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.match-summary {
+  font-size: 0.95em;
+  padding-left: 5px;
+  font-style: italic;
+}
+
+#group-management-grid .k-grid td{
+  padding: .25rem !important;
+}
+
+/* Add to a span containing a kendo numeric textbox to hide kendo arrow increment/decriment buttons
+  Using !important to override the styles that are rendered form the Kendo numeric input control.
+*/
+.hide-increment-controls .k-select {
+  display: none !important;
+}
+
+.hide-grid-scroll .k-grid-content {
+  overflow-y:  hidden !important;
+}
+
+.hide-grid-scroll .k-grid-header {
+  padding: 0px !important;
+}

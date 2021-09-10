@@ -1,0 +1,12 @@
+<div>
+  <select [id]="formKey" [(ngModel)]="selectedValue" class="form-control custom-select-sm" (change)="onChange()">
+    <option *ngFor="let opt of selectOptions | orderBy: 'label'" [value]="opt.value">
+      <ng-container *ngIf="!opt.isCustom">
+          {{i18n.reconciliation + opt.label | dynamicTranslate}}
+      </ng-container>
+      <ng-container *ngIf="opt.isCustom">
+          {{opt.label}}
+      </ng-container>
+     </option>
+  </select>
+</div>

@@ -1,0 +1,71 @@
+<button type="button" (click)="open()" class="btn btn-action btn-small">
+        <i class="fa fa-plus"></i>
+    </button>
+    <strong> &nbsp; {{i18n.headerManagement + 'Add Site' | dynamicTranslate}}</strong>
+    
+    <ng-template #content>
+        <form (ngSubmit)="onSubmit(siteUpsertForm)" #siteUpsertForm="ngForm">
+            <div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="nameInput">{{i18n.projectProfile + 'Site Name' | dynamicTranslate}}</label>
+                                <input type="text" class="form-control" [(ngModel)]="request.siteName" name="siteName" #siteName="ngModel" required />
+    
+                                <div *ngIf="siteName.errors && siteUpsertForm.submitted" class="alert alert-danger">
+                                    <div>
+                                        {{i18n.headerManagement + 'Please enter a site name.' | dynamicTranslate}}
+                                    </div>
+                                </div>
+                                <div *ngIf="isNameTaken" class="alert alert-danger">
+                                    <div>
+                                        {{i18n.headerManagement + 'Site name already exists under this member. Please enter a unique value for this member.' | dynamicTranslate}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="nameInput">{{i18n.dataImport + 'Site Number' | dynamicTranslate}}</label>
+                                <input type="text" class="form-control" [(ngModel)]="request.siteNumber" name="siteNumber" #siteNumber="ngModel" required />
+    
+                                <div *ngIf="siteNumber.errors && siteUpsertForm.submitted" class="alert alert-danger">
+                                    <div>
+                                        {{i18n.headerManagement + 'Please enter a site number' | dynamicTranslate}}
+                                    </div>
+                                </div>
+                                <div *ngIf="isNumberTaken" class="alert alert-danger">
+                                  <div>
+                                      {{i18n.headerManagement + 'Site number already exists under this member. Please enter a unique value for this member.' | dynamicTranslate}}
+                                  </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="nameInput">{{i18n.dataImport + 'Member Associated' | dynamicTranslate}}</label>
+                                <select class="form-control" [(ngModel)]="request.memberId" name="memberId" #memberId="ngModel" required>
+                                    <option value="" disabled>{{i18n.headerManagement + 'Select a Member' | dynamicTranslate}}</option>
+                                    <option *ngFor="let member of members" [value]="member.id">{{member.memberName}}</option>
+                                </select>
+    
+                                <div *ngIf="memberId.errors && siteUpsertForm.submitted" class="alert alert-danger">
+                                    <div>
+                                        {{i18n.headerManagement + 'Please enter a member number.' | dynamicTranslate}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" (click)="windowManager.close()">{{i18n.common + 'Cancel' | dynamicTranslate}}</button>
+                    <button type="submit" class="btn btn-primary">{{i18n.common + 'Save' | dynamicTranslate}}</button>
+                </div>
+            </div>
+    
+        </form>
+    </ng-template>

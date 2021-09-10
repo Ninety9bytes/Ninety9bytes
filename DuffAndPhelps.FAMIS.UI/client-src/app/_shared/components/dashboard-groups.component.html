@@ -1,0 +1,36 @@
+
+  <div *ngIf="groupsGridBusy">
+    <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+  </div>
+
+  <div class="groups-detail">
+    <kendo-grid [resizable]="true" *ngIf="!groupsGridBusy" [data]="gridViewData" [pageSize]="state.take" [sortable]="false" [pageable]="true" [reorderable]="true"
+      [pageSize]="state.take" [skip]="state.skip" (dataStateChange)="dataStateChange($event)" [height]="height" >
+
+      <kendo-grid-column [reorderable]="true" field="groupName" [title]="i18n.dashboard + 'Group Name' | dynamicTranslate">
+      </kendo-grid-column>
+      <kendo-grid-column [reorderable]="true" field="location" [title]=" i18n.dashboard + 'Location' | dynamicTranslate">
+      </kendo-grid-column>
+      <kendo-grid-column [reorderable]="true" field="groupNumber" [title]="i18n.dashboard + 'Group Number' | dynamicTranslate">
+      </kendo-grid-column>
+      <kendo-grid-column [reorderable]="true" [title]="i18n.dashboard + 'Last Update' | dynamicTranslate">
+        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+          {{dataItem.lastUpdated | localTime }}
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column [reorderable]="true" field="recordCounts" [title]="i18n.dashboard + 'Record Count' | dynamicTranslate">
+        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+          <div *ngFor="let recordCount of dataItem.recordCounts">
+            <div class="record-count pull-left">
+              <span>{{getTypeName(recordCount.type)}}: {{recordCount.count | localizedNumber}}</span>
+            </div>
+            <br />
+          </div>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column [reorderable]="false" [title]="i18n.dashboard + 'Actions' | dynamicTranslate">
+        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+          <a class="clickable-link" (click)='navigateToProject(dataItem.id,$event)'>{{i18n.dashboard + 'View Project' | dynamicTranslate}}</a>
+        </ng-template>
+      </kendo-grid-column>
+    </kendo-grid>

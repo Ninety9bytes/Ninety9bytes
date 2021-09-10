@@ -1,0 +1,25 @@
+
+
+<div class="row" *ngIf="buildingDto && buildingDto.costReproductionNewWithUserFactors">
+  <div class="col-md-12">
+
+
+    <label class="pull-left" for="costreproductionnew">
+      Cost of Reproduction New With User Factors
+      <br>
+      <input class="form-control" id="costreproductionnew" name="costreproductionnew" type="number" disabled [value]="buildingDto.costReproductionNewWithUserFactors">
+    </label>
+  </div>
+</div>
+
+<famis-grid [famisGrid]="userFactorsGrid" (updateCacheEvent)="updateCache($event)" (actionEvent)="handleActionEvent($event)">
+</famis-grid>
+
+<div class="row">
+  <div class="col-md-12">
+    <button type="button" (click)="addUserFactor()" class="btn btn-action btn-small">
+      <i class="fa fa-plus"></i>
+    </button>
+    <strong>&nbsp;{{i18n.userFactors + 'Add User Factor' | dynamicTranslate}}</strong>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+<div class="asset-selected-columns">
+  <div class="row">
+    <div class="col-md-12">
+      <h3>{{i18n.reconciliation + 'Final Output Column Order' | dynamicTranslate }}</h3>
+      <button style="margin-bottom: 10px;" class="btn btn-primary btn-small" (click)="autoMapFields($event)"
+              [disabled]="selectedColumns.length === 0">
+              {{i18n.reconciliation + 'Auto Map Fields' | dynamicTranslate }} 
+      </button>
+      <div>
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th width="150">
+                  {{i18n.reconciliation + 'Source' | dynamicTranslate }}  
+              </th>
+              <th width="300">
+                    {{i18n.reconciliation + 'Column' | dynamicTranslate }}  
+              </th>
+              <th scope="col">
+                    {{i18n.reconciliation + 'Destination' | dynamicTranslate }}  
+              </th>
+              <th width="150">
+                    {{i18n.reconciliation + 'Actions' | dynamicTranslate }}  
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let column of selectedColumns">
+              <tr [ngClass]="{'is-mapped':column.destinationColumnName}">
+                  <td>
+                    <ng-container *ngIf="column.sourceTarget === 0">
+                        {{i18n.reconciliation + 'Client File' | dynamicTranslate }}  
+                    </ng-container>
+
+                    <ng-container *ngIf="column.sourceTarget !== 0">
+                        {{i18n.reconciliation + 'Actual Inventory' | dynamicTranslate }}  
+                    </ng-container>
+
+                  </td>
+                  <td>{{column.displayName}}</td>
+                  <td>
+                    <destination-column-selector [column]="column" [value]="column.destinationColumnName"></destination-column-selector>
+                  </td>
+                  <td><strong><a (click)="remove(column)">{{i18n.common + 'Remove' | dynamicTranslate}}</a></strong></td>
+                </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

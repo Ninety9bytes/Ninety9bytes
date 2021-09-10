@@ -1,0 +1,202 @@
+<div id="DataGrids">
+
+  <div class="row">
+
+      <div class="reconciliation-actions col-md-6 float-left">
+
+        <!-- Todo: Revisit CSS styles for reconciliation-actions-->
+        <button id="showMatchesLabel" class="btn-primary" (click)="navigateToMassMatch($event)" ngbButtonLabel
+          [disabled]='!canMassMatch'>
+          {{ i18n.reconciliation + 'Mass Match' | dynamicTranslate }}
+        </button>
+
+        <label id="showMatchesLabel" class="btn-primary" ngbButtonLabel>
+          <input type="checkbox" ngbButton (click)="toggleShowMatchedRecords($event.target.checked)" autocomplete="off">
+          <div class="not-checked">          {{ i18n.reconciliation + 'Show Matches' | dynamicTranslate }}
+              </div>
+          <div class="checked">{{ i18n.reconciliation + 'Hide Matches' | dynamicTranslate }} </div>
+        </label>
+        <label id="clearSelectionLabel" class="btn-primary" ngbButtonLabel>
+          <input type="checkbox" ngbButton (click)="clearAssetRecordSelection()">
+          <div>{{ i18n.reconciliation + 'Clear Selections' | dynamicTranslate }}</div>
+        </label>
+
+        <label *ngIf="showValidationErrors" id="validateLabel" class="btn-danger" ngbButtonLabel>
+          <input type="checkbox" ngbButton (click)="onValidateReconciliation()" [disabled]="isBusy">
+          <div>{{ i18n.reconciliation + 'Validation Errors' | dynamicTranslate }}</div>
+        </label>
+      </div>
+
+      <div class="reconciliation-actions col-md-6 float-right">
+      
+        <div class="row">
+      
+          <div class="col-md-12">
+            <form (ngSubmit)="onSubmit(acceptMatchForm)" #acceptMatchForm="ngForm">
+                <div style="max-width: 25rem; min-width: 17rem; display: inline-block;">
+                  <select class="form-control form-control-sm" id="selectMatchCode" [(ngModel)]="selectedMatchCodeId"
+                    name="selectedMatchCodeId" #selectMatchCode="ngModel" required>
+                    <option value="" disabled>{{ i18n.reconciliation + 'Select Match Code' | dynamicTranslate }}</option>
+                    <option *ngFor="let item of matchCodes" [value]="item.matchCodeId">{{item.matchCodeName}}</option>
+                    <option *ngFor="let disabledItem of disabledMatchCodes" [value]="disabledItem.matchCodeId" disabled>
+                      {{disabledItem.matchCodeName}}</option>
+                  </select>
+                
+                  <div
+                    *ngIf="selectMatchCode.errors && acceptMatchForm.submitted && selectedMatchType!=matchTypes.parentChildMatch && this.hasSelectedItems"
+                    class="alert alert-danger">
+                    <div [hidden]="!selectMatchCode.errors.required ">
+                      {{ i18n.reconciliation + ' Please select a match code' | dynamicTranslate }}.
+                    </div>
+                  </div>
+                </div>
+                
+              <button *ngIf="selectedMatchType==null || selectedMatchType === matchTypes.allocationMatch"
+                id="allocationMatchLabel" class="btn-primary" ngbButtonLabel (click)="onEditAllocationMatchClick($event)">
+                {{ i18n.reconciliation + 'Allocation' | dynamicTranslate }}
+                <reconcile-data-allocations (allocation)="onAllocation($event)" (allocationUnmatchAll)="unmatchRecords(true)">
+                </reconcile-data-allocations>
+              </button>
+      
+              <button *ngIf="selectedMatchType==null || selectedMatchType === matchTypes.parentChildMatch"
+                id="parentChildMatchLabel" class="btn-primary" ngbButtonLabel
+                (click)="onParentChildMatchClick($event)">{{ i18n.reconciliation + 'Parent / Child' | dynamicTranslate }}
+                <parent-child-match (parentChildMatch)="onParentChildMatch($event)"
+                  (parentChildRemoved)="onParentChildMatchRemoved($event)"></parent-child-match>
+              </button>
+      
+              <button *ngIf="selectedMatchType != matchTypes.parentChildMatch" class="btn-primary" ngbButtonLabel
+                (click)="unmatchRecords(false)">{{ i18n.reconciliation + 'Unmatch' | dynamicTranslate }}
+              </button>
+              <div style="display: inline-block;">
+                <!-- Create match -->
+                <button class="btn btn-action" *ngIf="selectedMatchType==null"
+                  [disabled]="((selectedClientFileItems.length > 0 || selectedInventoryItems.length > 0)) ? false : true">
+                  {{ i18n.reconciliation + 'Accept Match' | dynamicTranslate }}</button>
+      
+                <!-- Disable accept button for Single Match -->
+                <button class="btn btn-action"
+                  *ngIf="selectedMatchType===matchTypes.singleMatch && !(selectedClientFileItems.length === 1 || selectedInventoryItems.length === 1)"
+                  [disabled]="true">{{ i18n.reconciliation + 'Accept Match' | dynamicTranslate }} </button>
+      
+                <button class="btn btn-action"
+                  *ngIf="selectedMatchType===matchTypes.singleMatch && (selectedClientFileItems.length === 1 || selectedInventoryItems.length === 1)">{{ i18n.reconciliation + 'Save Changes' | dynamicTranslate }}
+                </button>
+                <!-- Edit One to One Match -->
+                <button class="btn btn-action"
+                  *ngIf="selectedMatchType===matchTypes.oneToOneMatch">{{ i18n.reconciliation + 'Save Changes' | dynamicTranslate }}
+                </button>
+      
+                <!-- Edit Allocation Match -->
+                <button class="btn btn-action " *ngIf="selectedMatchType===matchTypes.allocationMatch"
+                  (click)="onEditAllocationMatchClick($event)">{{ i18n.reconciliation + 'Edit Match' | dynamicTranslate }}
+                </button>
+      
+                <!-- Edit Parent / Child Match -->
+                <button class="btn btn-action " *ngIf=" selectedMatchType===matchTypes.parentChildMatch"
+                  (click)="onParentChildMatchClick($event)">{{ i18n.reconciliation + 'Edit Match' | dynamicTranslate }}</button>
+      
+              </div>
+            </form>
+          </div>
+        </div>
+      
+      </div>
+      </div>
+
+  <div class="row">
+    <div class="col-md-3 match-form-expanded shadow p-3 mb-5 bg-white rounded" >
+      <div class="pl-3 pr-3 pt-3">
+        <div class="row">
+          <div class="col-sm-5">
+            <span><strong>{{selectedClientFileItems.length}}: {{i18n.reconciliation + 'Client' | dynamicTranslate}}</strong></span>
+          </div>
+          <div class="col-sm-5">
+            <span><strong>{{selectedInventoryItems.length}}: {{i18n.reconciliation + 'Inventory' | dynamicTranslate}}</strong></span>
+          </div>
+          <div class="col-sm-2">
+            <button class="match-form-collapse" (click)="isMatchSummaryExpanded = !isMatchSummaryExpanded;">
+              <span *ngIf="isMatchSummaryExpanded" class="fa fa-angle-up"></span>
+              <span *ngIf="!isMatchSummaryExpanded"  class="fa fa-angle-down"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+
+        <div class="form-group pl-3 pr-3 pt-3" *ngIf="isMatchSummaryExpanded" [@fadeInOutAnimation]>
+          <label for="exampleFormControlInput1">{{ i18n.reconciliation + 'Match' | dynamicTranslate }} </label>
+          <div >
+            <div class="selected-matches d-block">
+          
+                <div class="match-summary">
+                    {{ i18n.reconciliation + 'Total client records selected' | dynamicTranslate }}: {{selectedClientFileItems.length}}
+                </div>
+
+              <div *ngIf="selectedClientFileItems.length < 20">
+                  <div class="match-col" *ngFor="let match of selectedClientFileItems">
+                      <span class="match-col-item">{{match.assetTagNumber}}</span>
+                      <span class="match-col-item">{{match.oldTagNumber}}</span>
+                      <span class="match-col-item">{{match.description}}</span>
+                    </div>
+              </div>
+            </div>
+            <div class="selected-matches bottom d-block">
+
+                <div class="match-summary">
+                    {{ i18n.reconciliation + 'Total inventory records selected' | dynamicTranslate }}: {{selectedInventoryItems.length}}
+                </div>
+              <div *ngIf="selectedInventoryItems.length < 20">
+                  <div class="match-col d-block" *ngFor="let match of selectedInventoryItems">
+                      <span class="match-col-item">{{match.assetTagNumber}}</span>
+                      <span class="match-col-item">{{match.oldTagNumber}}</span>
+                      <span class="match-col-item">{{match.description}}</span>
+                    </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+        
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-12">
+
+      <reconcile-data-grid [fileName]="'Client File'" [dataSource]="dataTargetName.client" [selectedRows]="selectedClientFileIds" 
+        (selectionChanged)="onSelectionChanged($event, true)" (matchSelected)="onMatchSelected($event)" (parentChildSelected)="onParentChildSelected($event)"
+        #clientFileGrid></reconcile-data-grid>
+
+
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-12">
+
+      <reconcile-data-grid [fileName]="'Actual Inventory'" [dataSource]="dataTargetName.inventory" [selectedRows]="selectedInventoryIds"
+        (selectionChanged)="onSelectionChanged($event, false)" (clearSelection)="onClearSelection($event)" (matchSelected)="onMatchSelected($event)" (parentChildSelected)="onParentChildSelected($event)"
+        #inventoryGrid></reconcile-data-grid>
+
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="wizard-actions">
+        <button class="btn btn-default" i18n="Back button text@@reconBack" (click)=onBack($event)>{{ i18n.common + 'Back' | dynamicTranslate }}</button>
+        <button class="btn btn-primary" i18n="Continue button text@@reconContinue" (click)=onContinue($event) [ladda]="isBusy">{{ i18n.common + 'Continue' | dynamicTranslate }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<reconciliation-validation></reconciliation-validation>

@@ -1,0 +1,7 @@
+<div id="Recipients">
+  <h1>{{i18n.recipients + 'Add/Remove Recipients' | dynamicTranslate}}</h1>
+
+    <ng-container *ngIf="referenceDataLoaded()">
+      <router-outlet></router-outlet>
+    </ng-container>
+</div>

@@ -1,0 +1,10 @@
+<bing-map
+  [longitude]="longitude"
+  [latitude]="latitude"
+  [buildingName]="buildingName"
+  [mapZoom]="15"
+></bing-map>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" (click)="closeModalEvent()">{{i18n.common + 'Close' | dynamicTranslate}}</button>
+</div>

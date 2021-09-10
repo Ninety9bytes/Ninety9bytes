@@ -1,0 +1,6 @@
+<div class="row">
+    <div class="col-md-12">
+        <famis-grid style="font-weight:normal;" *ngIf="!!dataGrid.selectedHeaders" [famisGrid]="dataGrid" (updateCacheEvent)="updateCache($event)" (actionEvent)="handleActionEvent($event)"></famis-grid>
+    </div>
+</div>
+<account-upsert (onAddorUpdate)="handleCreateorModified($event)" (onAction)="handleAction($event)"></account-upsert>

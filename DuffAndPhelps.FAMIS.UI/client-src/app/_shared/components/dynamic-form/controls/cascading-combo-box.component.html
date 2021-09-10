@@ -1,0 +1,22 @@
+<ng-container *ngFor="let value of valuesToSelect; index as i;">
+
+    <ng-container *ngIf="i===0">
+
+        <kendo-combobox [textField]="'displayName'" [(ngModel)]="selectedItems[0]" [valueField]="'key'" [data]="options" [suggest]="true"
+            [placeholder]="" (valueChange)="onComboboxChange(i, $event)" ></kendo-combobox>
+        <div class="errorMessage" *ngIf="required && !selectedItems[0]"><b>{{i18n.cascading + 'required' |translate}}</b></div>
+    </ng-container>
+
+    <ng-container *ngIf="i>0">
+
+        <p class="mt-2">{{i18n.cascading + value.displayName | dynamicTranslate}}</p>
+
+
+        <kendo-combobox *ngIf="selectedItems[i-1]" [(ngModel)]="selectedItems[i]" [textField]="'displayName'" [valueField]="'key'"
+            [data]="selectedItems[i-1].options" [suggest]="true" [placeholder]="" (valueChange)="onComboboxChange(i, $event)"></kendo-combobox>
+        <kendo-combobox [disabled]='true' *ngIf="!selectedItems[i-1]"> </kendo-combobox>
+        <div class="errorMessage" *ngIf="required && !selectedItems[i]"><b>{{i18n.cascading + 'required' |translate}}</b></div>
+
+    </ng-container>
+    
+</ng-container>

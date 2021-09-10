@@ -1,0 +1,19 @@
+<div id="MapMatchcodes">
+  <div class="row">
+    <div class="col-md-12">
+      <h3>{{ i18n.reconciliation + 'Map Match Codes' | dynamicTranslate }}</h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <consolidation-match-code-assignment></consolidation-match-code-assignment>
+    </div>
+  </div>
+
+</div>
+
+<div class="wizard-actions">
+  <button class="btn btn-default" i18n="Back button text@@reconBack" (click)=onBack($event)>{{ i18n.common + 'Back' | dynamicTranslate }} </button>
+  <button class="btn btn-primary" i18n="Continue button text@@reconContinue" (click)=onContinue($event) [ladda]="isBusy">{{ i18n.common + 'Continue' | dynamicTranslate }} </button>
+</div>

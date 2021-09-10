@@ -1,0 +1,15 @@
+<div class="row">
+    <div class="col-md-12">
+
+        <famis-grid [famisGrid]="additionalEquipmentGrid"
+            (actionEvent)="handleActionEvent($event)">
+        </famis-grid>
+
+
+        <div class="pull-left">
+            <button type="button" (click)="addAddition()" class="btn btn-action btn-small">
+                <i class="fa fa-plus"></i>
+            </button> &nbsp; {{i18n.building + ' Add Additional Building Equipment and Feature' | dynamicTranslate }}
+        </div>
+    </div>
+</div>

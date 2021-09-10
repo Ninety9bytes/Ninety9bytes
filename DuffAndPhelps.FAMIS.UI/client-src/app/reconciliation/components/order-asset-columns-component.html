@@ -1,0 +1,34 @@
+<div class="circle-div" (click)="open()">
+  <span class="fa fa-ellipsis-h"></span>
+</div>
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+<div>
+  <input type="checkbox" class="k-checkbox" [checked]="showAllColumns" (change)="DisplayAllColumnsToggle($event)" id="showAll" name="showAll">
+  <label class="k-checkbox-label" for="showAll">{{i18n.asset + 'show All Columns' | dynamicTranslate}}</label>
+
+</div>
+  <div class="modal-body">
+    <grid-column-selector [sourceTranslationKey]="i18n.asset" [selectedColumns]="selectedHeaders" [headersAvailable]="headersAvailable"></grid-column-selector>
+    <div *ngFor="let customColumn of pendingCustomColumns" class="row">
+      <div class="col-md-4">{{i18n.common + 'Custom Field' | dynamicTranslate }} - {{customColumn.columnName}}</div>
+      <div class="col-md-4"><b><a (click)="removePendingColumn(customColumn)">{{i18n.common + 'Remove' | dynamicTranslate}}</a></b></div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-md-10">
+        <add-asset-column-component (onColumnAdded)="onColumnAdded($event)" [knownColumnNames]="columnNames"></add-asset-column-component>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="modal-footer">
+   
+    <button type="button" class="btn btn-default" (click)="cancle()">{{i18n.common + 'Cancel' | dynamicTranslate }}</button>
+    <button type="submit" class="btn btn-primary" (click)="saveChanges()">{{i18n.common + 'Save Changes' | dynamicTranslate }}</button>
+  </div>
+  <br />
+
+</ng-template>
+

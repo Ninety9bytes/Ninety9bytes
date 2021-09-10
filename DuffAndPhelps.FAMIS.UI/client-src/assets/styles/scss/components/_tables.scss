@@ -1,0 +1,258 @@
+/* Kendo UI Grid Overrides */
+.k-grid {
+  margin-bottom: 2em;
+  font-size: 0.9rem;
+
+  tbody {
+    font-size: 0.9rem;
+  }
+
+  .k-grid-header {
+    .k-i-sort-asc-sm,
+    .k-i-sort-desc-sm,
+    .k-sort-order {
+      color: $brand-primary;
+    }
+
+    .k-header {
+      > .k-link {
+        > .k-icon {
+          &.k-i-sort-asc-sm,
+          &.k-i-sort-desc-sm,
+          &.k-sort-order {
+            margin-left: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .k-header {
+    background: darken($brand-secondary-gray-light, 5%);
+    color: $brand-secondary-gray;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  a {
+    font-weight: 700;
+    margin-right: 0.4rem;
+    color: $brand-secondary-gray;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .k-pager-numbers .k-state-selected {
+    background-color: $brand-secondary-gray;
+    border-color: darken($brand-secondary-gray, 5%);
+
+    &:hover {
+      background-color: darken($brand-secondary-gray, 5%);
+      border-color: darken($brand-secondary-gray, 10%);
+    }
+  }
+
+  .k-pager-wrap .k-link,
+  .k-pager-wrap .k-state-selected {
+    padding: 0.2em;
+    font-size: 0.8em;
+  }
+
+  .k-pager-wrap {
+    .k-pager-nav {
+      color: $brand-secondary-gray;
+
+      &:hover {
+        color: $brand-secondary-gray;
+      }
+    }
+
+    .k-pager-info {
+      font-size: 0.8rem;
+    }
+
+    .k-pager-numbers {
+      .k-link {
+        color: $brand-secondary-gray;
+
+        &:hover {
+          color: $brand-secondary-gray;
+        }
+
+        &.k-state-selected {
+          color: white;
+        }
+      }
+    }
+  }
+
+  .k-dropdown-operator {
+    &.k-header {
+      vertical-align: inherit;
+    }
+
+    .k-select {
+      width: auto;
+      height: auto;
+      padding: 2px;
+    }
+  }
+
+  .k-filtercell {
+    .k-filtercell-operator {
+      > .k-button {
+        &.k-clear-button-visible {
+          height: auto;
+          width: auto;
+          padding: 2px;
+          border-radius: 0;
+          vertical-align: inherit;
+        }
+      }
+    }
+
+    .k-button-icon {
+      height: auto;
+      width: auto;
+      padding: 2px;
+      border-radius: 0;
+      vertical-align: inherit;
+    }
+
+    .k-filtercell-wrapper {
+      > .k-textbox {
+        height: 2.2em;
+        padding: 0.375em;
+      }
+    }
+  }
+}
+
+#high-density {
+  .k-grid td,
+  .k-grid th {
+    padding: 0.33rem;
+  }
+}
+
+#step-3-panel {
+  tbody {
+    td {
+      font-weight: 400;
+    }
+  }
+}
+
+/*Todo: Overide the default kendoui highlight with this*/
+.highlight {
+  background-color: rgba($brand-secondary-cyan, 0.8);
+}
+
+.disabled-row {
+  opacity: 0.5;
+}
+
+/* Reconciliation */
+
+#DataGrids {
+  .empty-grid {
+    background-color: white;
+    padding: 88px;
+
+    margin-bottom: 20px;
+
+    border-top: 20px solid #d0d8dc;
+    border-bottom: 2px solid #d0d8dc;
+  }
+}
+
+/* Bootstrap Table Overrides */
+.table {
+  border: 1px solid $brand-secondary-gray-light;
+
+  thead {
+    background: darken($brand-secondary-gray-light, 5%);
+    color: $brand-secondary-gray;
+  }
+}
+
+.k-filter-menu {
+  .k-grid-edit-row input {
+    padding: 0.33px;
+    border: #777 solid 0.5px;
+    border-radius: 0px;
+  }
+
+  .disabled-action {
+    color: #ccc !important;
+  }
+
+  .k-filter-and {
+    display: none !important;
+  }
+
+  .filter-list {
+    width: 300px;
+    padding: 10px;
+    overflow-y: scroll;
+    height: 250px;
+    overflow-x: hidden;
+  }
+
+  .filter-list .row {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-top: 1px solid #eee;
+  }
+
+  .filter-list .row:first-child {
+    border-top: none;
+  }
+
+  .filter-list .form-control {
+    margin-bottom: 8px;
+  }
+
+  .remove-filter {
+    margin-bottom: 10px;
+  }
+
+  .k-button {
+    background-color: #e6eaed !important;
+    color: #333 !important;
+  }
+
+  .k-primary {
+    background-color: #13b5ea !important;
+    color: white !important;
+  }
+
+  .k-popup {
+    border-radius: 0.25rem;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+
+}
+
+.k-animation-container-shown {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.k-filter-menu-container,
+.k-filter-menu > div:not(.k-animation-container) {
+  padding: 0px !important;
+}
+
+.k-filter-menu .k-action-buttons {
+  margin: 0px !important;
+}
+
+.k-grid-filter-popup {
+  font-size: 1em !important;
+  margin:0px !important;
+  padding:0px !important;
+}

@@ -1,0 +1,110 @@
+.navbar {
+  &#accountNav {
+    background: white;
+    border-bottom: 1px solid $brand-secondary-gray;
+    padding: 1rem 1.5rem;
+
+    .nav-item {
+      text-transform: uppercase;
+      margin-left: 1rem;
+
+      .nav-link {
+        color: $gray-text-medium;
+      }
+    }
+  }
+
+  &#mainNav {
+    margin-top: 82px;
+    padding: 0.2rem 1.5rem;
+    background: $brand-secondary-gray;
+
+    .nav-item {
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-right: 1rem;
+
+      .nav-link {
+        color: white;
+      }
+    }
+  }
+
+  &.navbar-fixed-left {
+    position: fixed;
+    border-radius: 0;
+    height: 100%;
+    background: $gray-sidebar;
+    z-index: 1000;
+    align-items: flex-start;
+    min-width: 15%;
+
+    .nav-item {
+      padding: .5rem 3rem .5rem 1rem;
+    }
+  }
+}
+
+.nav-pills {
+  margin: 1.5rem 0;
+
+  .nav-link {
+    border-radius: 0;
+    color: white;
+    background: darken($brand-secondary-gray-light, 5%);
+    padding: 0.8rem 1rem;
+    margin-right: 1rem;
+    min-width: 220px;
+    font-size: 14px;
+
+    &.active {
+      background: $brand-secondary-gray;
+    }
+
+    span {
+      display: block;
+      font-weight: 700;
+    }
+  }
+}
+
+.nav-menu-toggle {
+  padding-left: 0px !important;
+  padding-bottom: 0;
+  padding-top: 0;
+  cursor: pointer;
+  font-size: x-large;
+}
+
+.ribbon .nav-pills {
+  margin: 1.5rem 0 0 0;
+  
+  .nav-link {
+    border-bottom: solid 1px white;
+    margin-right: 0rem;
+    color: $brand-secondary-gray;
+
+    &.active {
+      color: white;
+      border-bottom: solid 1px #d7dee2;
+    }
+  }
+}
+
+.sidebar {
+  .sidebar-project {
+    h2 {
+      padding-left: .6em;
+     /* margin-bottom: 1em;*/
+      font-size: 1.5em;
+    }
+
+    h3 {
+      padding-left: 1em;
+      margin-top: 1em;
+      font-size: 1em;
+    }
+  }
+
+
+}

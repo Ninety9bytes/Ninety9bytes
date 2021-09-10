@@ -1,0 +1,46 @@
+.btn {
+  border-radius: 0;
+  padding: 1rem 1.5rem;
+  font-size: 20px;
+  cursor: pointer;
+
+  &.btn-primary {
+    background: $brand-secondary-cyan;
+    border-color: $brand-secondary-cyan;
+  }
+
+  &.btn-action {
+    background: $brand-primary;
+    border-color: $brand-primary;
+    color: #fff;
+  }
+
+  &.btn-small {
+    padding: 5px 10px;
+    font-size: $font-size-base;
+  }
+
+  &.btn-default {
+    background: $brand-secondary-gray-light;
+    color: $gray-text-medium;
+  }
+}
+
+a {
+  color: $gray-text-medium;
+  cursor: pointer;
+
+  &:hover {
+    color: darken($gray-text-medium, 5%);
+  }
+}
+
+.action-link {
+  font-size: 1.2em;
+  font-style:italic;
+
+  a {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+}

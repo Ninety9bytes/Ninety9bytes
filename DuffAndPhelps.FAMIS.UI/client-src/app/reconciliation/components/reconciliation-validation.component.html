@@ -1,0 +1,47 @@
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">{{i18n.reconciliation + title | dynamicTranslate}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row" *ngIf="showMissingMatch">
+      <div class="col-sm-11">
+        <h3>{{i18n.reconciliation + 'Missing Matches' | dynamicTranslate }}</h3>
+        <h5>{{missingMatchIds.length}} {{i18n.reconciliation + 'records have not been reconciled' | dynamicTranslate }}.</h5>
+        <br />
+      </div>
+    </div>
+    <div class="row" *ngIf="showAllocations">
+      <div class="col-sm-12">
+        <h3>{{i18n.reconciliation + 'Unbalanced Allocations' | dynamicTranslate }} </h3>
+        <h5>{{i18n.reconciliation + 'The following allocations are unbalanceds' | dynamicTranslate }} :</h5>
+
+        <kendo-grid [resizable]="true" [data]="assetFileRecords" [height]="200">
+          <kendo-grid-column field="assetTagNumber" title="{{i18n.reconciliation + 'Asset Tag Number' | dynamicTranslate }}"></kendo-grid-column>
+          <kendo-grid-column field="oldTagNumber" title="{{i18n.reconciliation + 'Old Tag Number' | dynamicTranslate }}"></kendo-grid-column>
+          <kendo-grid-column field="serialNumber" title="{{i18n.reconciliation + 'Serial Number' | dynamicTranslate }}"></kendo-grid-column>
+          <kendo-grid-column field="description" title="{{ i18n.reconciliation + 'Item Description' | dynamicTranslate }}"></kendo-grid-column>
+        </kendo-grid>
+
+      </div>
+    </div>
+    <div class="row" *ngIf="resolveErrorsToCommit">
+      <div class="col-sm-12">
+        <div class="alert alert-danger">
+            {{i18n.reconciliation + 'Please resolve validation errors before committing consolidated file.' | dynamicTranslate }}.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" (click)="c('Close click')">{{i18n.common + 'Close' | dynamicTranslate }} </button>
+    <button *ngIf="showContinue" type="button" class="btn btn-primary" (click)="continueAnyway()">{{i18n.common + 'Continue Anyway' | dynamicTranslate }} </button>
+  </div>
+  <br />
+
+</ng-template>

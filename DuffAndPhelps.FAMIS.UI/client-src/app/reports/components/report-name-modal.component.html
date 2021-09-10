@@ -1,0 +1,113 @@
+<form (ngSubmit)="runReport()" #reportNameForm="ngForm">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+              <div *ngIf="metadataList?.length > 0">
+                <h4 >{{i18n.reports + 'Select Report Filters' | dynamicTranslate}}</h4>
+                <div id="high-density" >
+                  <kendo-grid  [data]="gridData"  [sortable]="true" [height]="200"  [selectable]="selectableSettings"
+                     [reorderable]="false" [kendoGridSelectBy]="'id'" 
+                    (selectionChange)="onSelectionChanged($event)"  (dataStateChange)="dataStateChange($event)"
+                    >
+                    <kendo-grid-checkbox-column [reorderable]="false" width="5%">
+                      <ng-template kendoGridHeaderTemplate let-dataItem>
+                        <div style="width: 50%; cursor: pointer;" >
+                          <a class="clickable-link">{{Selected}}</a>
+                         </div>
+                      </ng-template>
+                    </kendo-grid-checkbox-column>
+                    <kendo-grid-column [reorderable]="false" field="tagName" [title]="'common_Category' | dynamicTranslate" width="95%">
+                    </kendo-grid-column>
+                  </kendo-grid>
+                </div>
+              </div>
+            </div>
+          </div>
+        <div class="row">
+        <div class="col-md-12">
+            <h4>{{i18n.reports + 'Select Report Type' | dynamicTranslate}}</h4>
+            <select class="form-control" [(ngModel)]="ssrsReportId" name="reportSelect" id="reportselect" (change)="updateExtension(ssrsReportId); canSubmit();">
+                <option disabled>
+                <span>{{i18n.reports + 'Select Report Type' | dynamicTranslate}}</span>
+                </option>
+                <option *ngFor="let rpt of availableReports | orderBy: 'name';" [value]="rpt.id">{{rpt.name}}</option>
+            </select>
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <label>{{i18n.reports + 'File Name' | dynamicTranslate}}</label>
+                <input type="text" class="form-control" name="fileName" [(ngModel)]="requestedReport.fileName" #fileName="ngModel" (change)="validateName(requestedReport.fileName); canSubmit();"/>
+                <div *ngIf="!validName" class="alert alert-danger">
+                    {{ i18n.reports + 'invalidName' | dynamicTranslate }}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label>{{i18n.reports + 'File Type' | dynamicTranslate}}</label>
+                <input type="text" class="form-control" name="extension" [(ngModel)]="fileExtension" readonly="true">
+            </div>
+        </div>
+        <div class="row">
+                <h3 *ngIf="">{{i18n.kendo + 'loading' | dynamicTranslate }}</h3>
+            <div *ngIf="ssrsReportId && isFilterEnabled" class="col-md-12">
+                <h3>{{i18n.common + 'Filter Criteria' | dynamicTranslate}}</h3>
+                <div *ngFor="let fv of reportFilters; index as i;">
+                    <div class="row pb-3">
+                        <div class="col-md-3">
+                            <label>{{i18n.common + 'Field' | dynamicTranslate }}</label>
+                            <select class="form-control form-control" [name]="i + '_filter'" [(ngModel)]="fv.filterColumnId" (change)="canSubmit()" required>
+                                <option *ngIf="!fv.filterColumnId" [ngValue]="fv.filterColumnId" disabled>
+                                    {{i18n.common + 'Select Field' | dynamicTranslate }} </option>
+                                <option *ngFor="let item of filterMetaData|orderBy:'name'" [ngValue]="item.id">
+                                    {{i18n.reports + item.columnName | dynamicTranslate }}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label>{{i18n.common + 'Filter Type' | dynamicTranslate }} </label>
+                            <select class="form-control" *ngIf="!fv.filterColumnId" disabled></select>
+        
+                            <select *ngIf="fv.filterColumnId" [name]="i + '_operation'" [(ngModel)]="fv.filterOperationId" (change)="canSubmit()" class="form-control">
+                                <option *ngIf="!fv.filterOperationId" [ngValue]="fv.filterOperationId" disabled>
+                                    {{i18n.common + 'Select Filter' | dynamicTranslate }} </option>
+                                <option *ngFor="let item of filterOperations" [value]="item.id">
+                                    {{i18n.reports + item.operationName | dynamicTranslate }}</option>
+                            </select>
+        
+                        </div>
+                        <div class="col-md-4">
+                            <label>{{i18n.common + 'Value' | dynamicTranslate }} </label>
+                            <input [disabled]="!fv.filterColumnId" type="text" class="form-control" [name]="i + '_value'" [(ngModel)]="fv.filterValue" (change)="canSubmit()">
+                        </div>
+                        <div class="col-md-2 mt-4">
+                            <div class="row">
+                                <div class="col-sm-3 pl-0 pr-0 pt-2">
+                                    <button (click)="remove()" type="button" class="btn btn-action btn-small">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                                <div class="col-sm-9">
+                                    <strong>{{i18n.common + 'Remove Filter' | dynamicTranslate }} </strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6">
+                    <button *ngIf="canAddFilter" [disabled]="!ssrsReportId || !isFilterEnabled" type="button" (click)="addFilter()"
+                    class="btn btn-action btn-small">
+                    <i class="fa fa-plus"></i>
+                </button><strong  *ngIf="canAddFilter">&nbsp;{{i18n.common + 'Add Filter Criteria' | dynamicTranslate}}</strong>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn btn-default" (click)="dismiss()">{{i18n.common + 'Cancel' | dynamicTranslate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!isValid">{{i18n.common + 'save' | translate}}</button>
+    </div>
+</form>
+

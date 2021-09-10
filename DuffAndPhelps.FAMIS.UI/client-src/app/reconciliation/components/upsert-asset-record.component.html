@@ -1,0 +1,11 @@
+<ng-template #content let-c="close" let-d="dismiss">
+
+
+  <div class="modal-body upsert-asset-record">
+    <div class="row">
+      <div class="col-md-12">
+        <asset-form [imageEntityType]="imageEntityType" [fieldMetaData]="getFormFields()" [isModal]="true" [assetDto]="asset" (formActionEvent)="onFormActionEvent($event)" #assetFormComponent></asset-form>
+      </div>
+    </div>
+  </div>
+</ng-template>

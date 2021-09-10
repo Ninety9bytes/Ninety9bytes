@@ -1,0 +1,12 @@
+<famis-grid [famisGrid]="customAdditionsGrid" (updateCacheEvent)="updateCache($event)" (actionEvent)="handleActionEvent($event)">
+</famis-grid>
+
+<div class="row">
+  <div class="col-md-12">
+    <button type="button" (click)="addCustomAddition()" class="btn btn-action btn-small">
+      <i class="fa fa-plus"></i>
+    </button>
+    <strong>&nbsp;{{i18n.customAdditions + 'Add Custom Addition' | dynamicTranslate}}</strong>
+  </div>
+
+</div>

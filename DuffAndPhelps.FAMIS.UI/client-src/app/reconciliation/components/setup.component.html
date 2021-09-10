@@ -1,0 +1,37 @@
+<form (ngSubmit)="onSubmit(dataImportForm)" #dataImportForm="ngForm">
+
+  <h4 i18n="Reconciliation heading: select match codes@@reconSelectAllocationField">{{i18n.reconciliation + 'Set Allocation Field' | dynamicTranslate }}</h4>
+
+
+  <div class="form-group">
+    <select [disabled]="!!selectedCostField === false" class="form-control col-md-6" [(ngModel)]="selectedCostField" name="costFieldSelect" id="costFieldSelect">
+      <option disabled>
+        <span i18n="Reconciliation select hint: select match codes@@hintSelectAnAllocationField">{{i18n.reconciliation + 'Select an Allocation Field' | dynamicTranslate }}</span>
+      </option>
+      <option *ngFor="let field of costFields | orderBy: 'name' " [value]="field.value">{{i18n.reconciliation + field.name | dynamicTranslate}}</option>
+    </select>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <h4>{{i18n.reconciliation + 'Select Match Codes from Existing Project' | dynamicTranslate}}</h4>
+      <div class="form-group">
+        <group-search [includeContractSearch]="true"  (selectGroup)="onGroupSelected($event)"></group-search>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <h4 i18n="Reconciliation heading: select match codes@@reconSelectMatchCodes2">{{ i18n.reconciliation + 'Match Codes' | dynamicTranslate }}</h4>
+    </div>
+  </div>
+
+  <match-codes [selectedMatchCodeIds]="selectedMatchCodeIds" (onMatchCodeSelection)="handleMatchCodes($event)" (onMatchCodesLoaded)="handleMatchCodesLoaded($event)"></match-codes>
+
+  <div class="wizard-actions">
+    <button class="btn btn-primary" i18n="Continue button text@@reconContinue" [ladda]="isBusy">{{ i18n.common + 'Continue' | dynamicTranslate }}</button>
+  </div>
+
+
+</form>

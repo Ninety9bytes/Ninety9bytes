@@ -1,0 +1,20 @@
+<div class="pb-4">
+  <h1>{{ i18n.fileUpload + 'File Upload' | dynamicTranslate }}</h1>
+</div>
+<div>
+  <famis-grid *ngIf="!!finalizedDocumentsGrid.loading && !!finalizedDocumentsGrid.selectedHeaders"
+    [famisGrid]="finalizedDocumentsGrid" (sortChanged)="handleSortChanged($event)" (actionEvent)="handleFinalizedFilesActionEvent($event)">
+  </famis-grid>
+  <div *ngIf="!isUploading">
+    <div class="checkbox k-form-field ml-1">
+      <input [id]="'isInternal'" [(ngModel)]="isInternalDocument" class="k-checkbox" type="checkbox" value="">
+      <label class="k-checkbox-label" [for]="'isInternal'">{{ i18n.fileUpload + 'Do not publish to portal' | dynamicTranslate }}</label>
+    </div>
+    <file-upload-control [supportedFileTypes]="acceptedFileTypes" (onFileUploadRequested)="uploadFile($event)"></file-upload-control>
+  </div>
+  <div *ngIf="isUploading">
+     <h3>{{ i18n.fileUpload + 'Uploading' | dynamicTranslate }} <i class="fa fa-circle-o-notch fa-spin"></i></h3> 
+  </div>
+</div>
+
+

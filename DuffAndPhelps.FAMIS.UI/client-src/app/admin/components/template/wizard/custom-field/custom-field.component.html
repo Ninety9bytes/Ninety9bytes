@@ -1,0 +1,44 @@
+<div class="custom-field-form">
+    <h4 class="page-header">{{i18n.common + 'Custom Field.' | dynamicTranslate }}</h4>
+  
+    <form [formGroup]="form">
+      <div formArrayName="customFields">
+  
+        <div *ngFor="let itemrow of this.formArray.controls; let i=index;">
+          <div formGroupName="{{i}}">
+            <div class="form-group row">
+              <div class="col-md-4">
+                <input formControlName="name" class="form-control">
+                <div *ngIf="isNameFieldDirty(itemrow)" class="alert alert-danger">
+                   {{i18n.projectProfile + GetNameFieldErrors(itemrow) | dynamicTranslate }}
+                </div>
+              </div>
+              <div class="col-md-4">
+                <select formControlName="fieldType" class="form-control" required >
+                  <option disabled>{{i18n.templateManagement + 'Select custom field type' | dynamicTranslate }}</option>
+                  <option>{{i18n.common + 'String' | dynamicTranslate }}</option>
+                  <option>{{i18n.common + 'Integer' | dynamicTranslate }}</option>
+                  <option>{{i18n.common + 'Double' | dynamicTranslate }}</option>
+                  <option>{{i18n.common + 'Date' | dynamicTranslate }}</option>
+                  <option>{{i18n.common + 'Boolean' | dynamicTranslate }}</option>
+                </select>
+                <div *ngIf="isSelectFieldDirty(itemrow)" class="alert alert-danger">
+                  {{i18n.templateManagement + 'Please select a custom field type.' | dynamicTranslate }}
+                </div>
+              </div>
+              <div class="col-md-4" *ngIf="!isEditTemplate">
+                <button (click)="deleteRow(itemrow)" type="button" class="btn btn-action btn-small"><i class="fa fa-minus"></i></button> &nbsp; {{i18n.templateManagement + 'Remove Field' | dynamicTranslate }}
+              </div>
+            </div>
+            
+          </div>
+        </div>
+  
+      </div>
+  
+    </form>
+  
+    <button type="button" (click)="addNewRow()" class="btn btn-action btn-small">
+      <i class="fa fa-plus"></i>
+    </button> &nbsp; {{i18n.templateManagement + 'Add New Custom Field' | dynamicTranslate }}
+  </div>

@@ -1,0 +1,33 @@
+<div>
+  <div class="row p-1" *ngIf="isAddingFile">
+      <div class="col-md-12">
+          <input type="file" name="file" (change)="updateFile($event)" class="file-upload" id="fileInput">
+          <div class="row" *ngIf="isInvalidFileType">
+              <div class="col-md-6">
+                  <div class="alert alert-danger">
+                          {{i18n.common + 'Please select a valid file type' | dynamicTranslate }}.
+                          <br />
+                          ({{i18n.common + supportedFileTypes | dynamicTranslate }})
+                  </div>
+              </div>
+              
+          </div>
+      </div>
+  </div>
+  
+  <div class="row p-1" *ngIf="isAddingFile">
+      <div class="col-md-6">
+          <button [disabled]="!isFileSelected" type="button" (click)="RequestFileUpload()" class="btn btn-action btn-small" id="uploadFile">{{i18n.common + 'Upload' | dynamicTranslate }}</button>
+          <button type="button" class="btn btn-small" (click)="CancelUpload($event)">{{i18n.common + 'Cancel' | dynamicTranslate }}</button>
+      </div>
+  </div>
+  <div class="row p-1" *ngIf="!isAddingFile">
+      <div class="col-md-12">
+          <button type="button" (click)="AddFileClicked($event)" class="btn btn-action btn-small custom-fields">
+              <i class="fa fa-plus"></i>
+          </button>
+          <strong> &nbsp;{{i18n.common + fileInputLabel | dynamicTranslate }}</strong>
+      </div>
+  </div>
+</div>
+

@@ -1,0 +1,77 @@
+<modal-form [modalTitle]="i18n.asset + modalTitle | dynamicTranslate" (modalEvent)="handleModalEvent($event)">
+    <form (ngSubmit)="costAdjustment(costAdjustmentForm)" #costAdjustmentForm="ngForm">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="checkbox" class="k-checkbox" [checked]="costAdjustmentDto.prorateValues" (change)="costAdjustmentDto.prorateValues = !costAdjustmentDto.prorateValues" id="prorate" name="prorate">
+                    <label class="k-checkbox-label" for="prorate">{{i18n.asset + 'Prorate Values' | dynamicTranslate}}</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group border p-3">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-4 text-center pt-2">{{i18n.asset + 'Cost' | dynamicTranslate}}</div>
+                <div class="col-md-4 text-center">{{i18n.asset + 'Accumulated Depr.' | dynamicTranslate}}</div>
+            </div>
+            <div class="row pt-1">
+                <div class="col-md-3 text-right">{{i18n.common + 'Old' | dynamicTranslate}}</div>
+                <div class="col-md-4">
+                    <input type="number" class="form-control" [(ngModel)]="selectedAsset.historicalCost" name="currentHistorialCost" readonly
+                    />
+                </div>
+                <div class="col-md-4">
+                    <input type="number" class="form-control" [(ngModel)]="selectedAsset.accumulatedDepreciation" name="currentAccumulatedDepreciation"
+                        readonly />
+                </div>
+            </div>
+            <div class="row pt-1">
+                <div class="col-md-3 text-right">{{i18n.asset + 'Adjustment' | dynamicTranslate}}</div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" [(ngModel)]="costAdjustmentDto.costChange" name="costChange" (change)="calcHistoricalCost()"
+                    />
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" [(ngModel)]="costAdjustmentDto.accumChange" name="accumChange" name="adjustmentAccumulatedDepreciation"
+                        (change)="calcNewAccumulatedDepreciation()" />
+                </div>
+            </div>
+            <div class="row pt-1">
+                <div class="col-md-3 text-right">{{i18n.common + 'New' | dynamicTranslate}}</div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" [(ngModel)]="newHistorialCost" name="newHistorialCost" (change)="calcCostChange()"
+                    />
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" [(ngModel)]="newAccumulatedDepreciation" name="newAccumulatedDepreciation" (change)="calcAccumChange()"
+                    />
+                </div>
+            </div>
+
+            <div class="row" *ngIf="hasErrors() && submitted">
+                <div class="col-md-12">
+                    <div  class="alert alert-danger" *ngIf="missingRequiredField">
+                        <div>
+                            {{i18n.qualityControl + 'Please enter a value in one of the fields for the cost adjustment to be completed' | dynamicTranslate}}
+                        </div>
+                    </div>
+
+                    <div class="alert alert-danger" *ngIf="!isFiscalYearEndValid">
+                        <div>
+                             {{i18n.qualityControl + 'Cannot complete cost adjustment. Fiscal Year End is not set.' | dynamicTranslate}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="apiErrorMessage">
+                <div class="col-md-12">
+                    <div class="alert alert-danger" *ngIf="apiErrorMessage">
+                        <div>
+                            {{i18n.qualityControl + '' + apiErrorMessage | dynamicTranslate}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</modal-form>

@@ -1,0 +1,92 @@
+.famis-grid {
+  .circle-div {
+    width: 24px;
+    height: 24px;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+    border-style: solid;
+    border-color: $gray-text-medium;
+    border-width: 1px;
+    text-align: center;
+    color: $gray-text-medium;
+    cursor: pointer;
+  }
+
+  .k-grid td,
+  .k-grid th {
+    padding: 3px !important;
+    font-size: 9pt !important;
+  }
+
+  .k-grid-virtual .sub-grid .k-grid-content .k-grid-table {
+    position: inherit;
+  }
+}
+
+/* Drag and drop column style */
+.k-drag-clue {
+  background-color: $brand-secondary-gray !important;
+  border-color: $brand-secondary-gray !important;
+  font-family: inherit;
+  font-size: 12px !important;
+}
+
+.isEdited {
+  font-weight: bold;
+}
+
+.k-loading-color {
+  opacity: 1 !important;
+  color: #f8f8f8 !important;
+}
+
+.k-plus {
+  color: #7a2379 !important;
+}
+
+.k-minus {
+  color: #7a2379 !important;
+}
+
+.disabled-action {
+  color: #ccc !important;
+}
+
+.save-in-grid-button {
+  font-size: 1.15em !important;
+}
+
+.edited-row {
+  font-style: italic;
+  font-weight: bold;
+}
+
+.editedRow{
+  font-style: italic;
+  font-weight: bold;
+}
+
+.with-errors {
+  color: $brand-primary !important;
+}
+
+.edit-record-errors {
+  color: $brand-primary !important;
+  cursor: pointer;
+}
+
+.save-in-grid-button {
+  font-size: 1em !important;
+  padding: 10px;
+  margin-right: 10px !important;
+}
+
+.withErrors {
+  color: $brand-primary !important;
+}
+
+.edit-record-errors {
+  color: $brand-primary !important;
+  cursor: pointer;
+}

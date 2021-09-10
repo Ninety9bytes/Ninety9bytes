@@ -1,0 +1,29 @@
+<div *ngIf="!isError">
+  <ngb-alert type="success" [dismissible]="false">
+    <b>{{i18n.dataImport + 'Upload Successful' | dynamicTranslate}}</b>
+    <br>{{importResult.rowsAdded}} {{i18n.dataImport + dataImport.spreadsheetUpload.dataTargetName | dynamicTranslate}} records were successfully added.
+    <span><br>{{importResult.rowsUpdated}} {{i18n.dataImport + dataImport.spreadsheetUpload.dataTargetName | dynamicTranslate}} records were successfully updated.</span>
+  </ngb-alert>
+    
+</div>
+<div *ngIf="isError">
+  <ngb-alert type="danger" [dismissible]="false">
+    <b>{{i18n.dataImport + 'Upload Failed' | dynamicTranslate }}</b>
+    <br /> 
+    {{i18n.dataImport + 'The selected spreadsheet was not able to be imported.  Please verify column mapping and/or spreadsheet data format' | dynamicTranslate }}
+    <br />
+    <br />
+    {{i18n.dataImport + 'Details' | dynamicTranslate}}:
+    <br />
+    <span *ngFor="let error of importResult.errors">
+      {{error}}
+      <br />
+    </span>
+  </ngb-alert>
+</div>
+
+<div class="wizard-actions">
+  <button *ngIf="isError" (click)="back($event)" class="btn btn">{{ i18n.common + 'Back' | dynamicTranslate }}</button>
+
+  <button class="btn btn-primary" (click)="onSave($event)">{{ i18n.dataImport + 'Finish' | dynamicTranslate}}</button>
+</div>

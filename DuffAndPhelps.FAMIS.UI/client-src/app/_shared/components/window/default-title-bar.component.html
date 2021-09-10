@@ -1,0 +1,4 @@
+<ng-template #windowTitleBar let-win>
+  <div class="k-window-title modal-window">{{translationkey + title | dynamicTranslate}}</div>
+  <button kendoWindowCloseAction [window]="win"></button>
+</ng-template>

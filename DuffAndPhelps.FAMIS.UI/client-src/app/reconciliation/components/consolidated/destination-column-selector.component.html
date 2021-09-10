@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-md-6">
+    <select class="form-control form-control-sm" required 
+            name="{{'selectedValue_' + column.sourceTarget + '_' + column.sourceColumn}}" 
+            [(ngModel)]="selectedValue" 
+            (change)="onSelectionChanged()">
+      <option value=""></option>
+      <option *ngFor="let item of availableColumns | orderBy: 'label'" value="{{item.value}}">{{i18n.asset + item.label | dynamicTranslate }}</option>
+      <option value="-1">{{ i18n.common + 'Custom Field' | dynamicTranslate }}</option>
+    </select>
+  </div>
+  <div class="col-md-6">
+    <input class="form-control form-control-sm" 
+           *ngIf="selectedValue === '-1'" 
+           type="text" 
+           name="{{'customValue_' + column.sourceTarget + '_' + column.sourceColumn}}"
+           [(ngModel)]="customValue" 
+           (change)="onTextChanged()">
+  </div>
+</div>
+<div *ngIf="validationMessage.length > 0" class="row justify-content-end">
+  <div class="col-md-6 alert alert-danger">{{validationMessage}}</div>
+</div>

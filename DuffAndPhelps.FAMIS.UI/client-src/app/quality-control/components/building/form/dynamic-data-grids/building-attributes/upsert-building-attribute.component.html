@@ -1,0 +1,68 @@
+<form (ngSubmit)="save(buildingForm)" #buildingForm="ngForm">
+
+  <div>
+    <div class="modal-body building-attribute-selector">
+
+      <h2>{{i18n.building + attribute.attributeTypeName | dynamicTranslate }}</h2>
+
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th></th>
+              <th> {{i18n.common + 'Value' | dynamicTranslate}}
+              </th>
+              <th> {{i18n.common + 'Percent' | dynamicTranslate}} </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let attributeValue of selectedValues; let i=index;">
+              <td>
+                <span class="grid-action-item">
+                  <a (click)="remove(i)">
+                    {{i18n.common + 'Remove' | dynamicTranslate}}
+                  </a>
+
+                </span>
+
+              </td>
+              <td>
+
+                <select class="form-control" name="{{'attribute' + i}}" [(ngModel)]="selectedValues[i].buildingAttributeCodeId"
+                  required="true">
+                  <option value="" disabled>{{i18n.building + 'Select Attribute Value' | dynamicTranslate}} </option>
+                  <option *ngFor="let attribute of attribute.attributeValueOptions | orderBy: 'description'" [value]="attribute.buildingAttributeCodeId">{{i18n.building
+                    + attribute.description | dynamicTranslate }}</option>
+                </select>
+
+              </td>
+              <td><input type="text" class="form-control" [value]="attributeValue.value" name="{{'attributeValue' + i}}"
+                  [(ngModel)]="selectedValues[i].value" aria-describedby="percent" placeholder="Enter percent" required="true"></td>
+            </tr>
+
+          </tbody>
+        </table>
+
+        <div class="row">
+            <div class="col-md-12">
+              <button type="button" (click)="add()" class="btn btn-action btn-small">
+                <i class="fa fa-plus"></i>
+              </button>
+              <strong>&nbsp;{{i18n.userFactors + 'Add' | dynamicTranslate}}</strong>
+            </div>
+          </div>
+      
+
+
+    </div>
+
+    <div *ngIf="showValidationError" style="color:red; text-align: center; padding:20px;">{{i18n.common + 'Please
+      complete all required (*) fields' | dynamicTranslate}} </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" (click)="dismiss()">{{i18n.common + 'Cancel' | dynamicTranslate }}</button>
+      <button type="submit" class="btn btn-primary">{{i18n.common + 'Save' | dynamicTranslate }}</button>
+    </div>
+  </div>
+
+</form>

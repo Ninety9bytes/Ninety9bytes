@@ -1,0 +1,87 @@
+<ngb-alert type="danger" [dismissible]="false" *ngIf="showInvalidFieldMatchesAlert">
+  <b>Field Match Selection is Invalid</b>
+  <br> Please select one field match from the Client File and Actual Inventory</ngb-alert>
+
+<form (ngSubmit)="onSubmit(massMatchSearchForm)" #massMatchSearchForm="ngForm">
+
+
+
+<div>
+  <div class="filter-builder mb-3">
+    <div class="row">
+      <div class="col-md-8">
+        <h2>Field Matches</h2>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+     <!-- Container for dynamic FieldMatchesComponent -->
+     <div #fieldMatch></div>
+    <div required class="row">
+      <div class="col-md-8 px-3 pb-3 align-self-center">
+        <button type="button" (click)="addFieldMatch()" class="btn btn-action btn-small">
+          <i class="fa fa-plus"></i>
+        </button><strong>&nbsp;Add Field Match</strong></div>
+      <div class="col-md-4"></div>
+    </div>
+  </div>
+  <div class="filter-builder mb-3">
+    <div class="row">
+      <div class="col-md-8">
+        <h2>Filter Criteria</h2>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+    <!-- Container for dynamic FilterCriteriaBuilderComponent -->
+    <div #filterCriteria></div>
+    <div class="row">
+      <div class="col-md-8 pb-3">
+        <button type="button" (click)="addFilter()" class="btn btn-action btn-small">
+          <i class="fa fa-plus"></i>
+        </button><strong>&nbsp;Add Filter Criteria</strong></div>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+</div>
+<div class="filter-builder mb-3">
+  <div class="row">
+    <div class="col-md-8">
+      <h2>Match Code</h2>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+  <div class="row pb-3">
+    <div class="col-md-4">
+
+      <div class="form-group">
+        <label for="selectMatchCode">Match Code</label>
+        <select class="form-control" id="selectMatchCode" [(ngModel)]="selectedMatchCodeId" name="selectedMatchCodeId"
+          #selectMatchCode="ngModel" required>
+          <option value="" disabled>Select Match Code</option>
+          <option *ngFor="let item of matchCodes" [value]="item.matchCodeId">{{item.matchCodeName}}</option>
+          <option *ngFor="let disabledItem of disabledMatchCodes" [value]="disabledItem.matchCodeId" disabled>{{disabledItem.matchCodeName}}</option>
+        </select>
+
+        <div *ngIf="selectMatchCode.errors && massMatchSearchForm.submitted"
+          class="alert alert-danger">
+          <div [hidden]="!selectMatchCode.errors.required ">
+            Please select a match code.
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-md-8"></div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 p-3">
+      <!-- Changed style -->
+      <button class="btn btn-default" (click)="cancel($event)">Cancel</button>
+
+      <button [ladda]="isLoading" class="btn btn-primary">Continue</button>
+
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+</div>
+
+</form>

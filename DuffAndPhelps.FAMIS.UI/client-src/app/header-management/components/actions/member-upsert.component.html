@@ -1,0 +1,50 @@
+<button type="button" (click)="open()" class="btn btn-action btn-small">
+    <i class="fa fa-plus"></i>
+</button>
+<strong> &nbsp; {{i18n.headerManagement + 'Add Member' | dynamicTranslate}}</strong>
+
+<ng-template #content>
+    <form (ngSubmit)="onSubmit(memberUpsertForm)" #memberUpsertForm="ngForm">
+        <div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="nameInput">{{i18n.dataImport + 'Member Name' | dynamicTranslate}}</label>
+                            <input type="text" class="form-control" [(ngModel)]="request.memberName" name="memberName" #memberName="ngModel" required />
+
+                            <div *ngIf="memberName.errors && memberUpsertForm.submitted" class="alert alert-danger">
+                                <div>
+                                    {{i18n.headerManagement + 'Please enter a member name.' | dynamicTranslate}}
+                                </div>
+                            </div>
+                            <div *ngIf="isNameTaken" class="alert alert-danger">
+                                <div>
+                                    {{i18n.headerManagement + 'Member name already exists for this group. Please enter a unique value.' | dynamicTranslate}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="nameInput">{{i18n.dataImport + 'Member Number' | dynamicTranslate}}</label>
+                            <input type="text" class="form-control" [(ngModel)]="request.memberNumber" name="memberNumber" #memberNumber="ngModel" />
+
+                            <div *ngIf="memberNumber.errors && memberUpsertForm.submitted" class="alert alert-danger">
+                                <div>
+                                    {{i18n.headerManagement + 'Please enter a member number.' | dynamicTranslate}}
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" (click)="windowManager.close()">{{i18n.common + 'Cancel' | dynamicTranslate}}</button>
+                <button type="submit" class="btn btn-primary">{{i18n.common + 'Save' | dynamicTranslate}}</button>
+            </div>
+        </div>
+
+    </form>
+</ng-template>

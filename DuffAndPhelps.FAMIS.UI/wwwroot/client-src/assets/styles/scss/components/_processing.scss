@@ -1,0 +1,24 @@
+.processing-summary {
+  font-weight: bold;
+
+  .success {
+    color: $success;
+  }
+
+  .error {
+    color: $error;
+  }
+}
+
+.errors-grid th {
+  background-color: $error !important;
+  color: #fff !important;
+
+  .k-i-sort-desc-sm {
+    color: #fff !important;
+  }
+
+  .k-i-sort-asc-sm {
+    color: #fff !important;
+  }
+}

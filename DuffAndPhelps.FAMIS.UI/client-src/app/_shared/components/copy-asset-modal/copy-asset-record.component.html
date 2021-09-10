@@ -1,0 +1,14 @@
+<button class="ml-2 btn btn-primary add-record-button d-inline" [disabled]="disabled" (click)="open(content)">{{i18n.common + 'Duplicate Record' | dynamicTranslate}}</button>
+
+<ng-template #content let-c="close" let-d="dismiss">
+
+  <div class="modal-body">
+    {{i18n.common + 'Create duplicate record from selected asset?' | dynamicTranslate}}
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" (click)="close()">{{i18n.common + 'Cancel' | dynamicTranslate }}</button>
+    <button type="submit" class="btn btn-primary" (click)="createCopy()">{{i18n.common + 'Create' | dynamicTranslate}}</button>
+  </div>
+
+</ng-template>

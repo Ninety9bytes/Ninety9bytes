@@ -1,0 +1,17 @@
+<form (ngSubmit)="onSubmit(massUpdateFormResults)" #massUpdateFormResults="ngForm">
+
+    <div class="form-group">
+        <h3>{{recordsFoundCount}} {{i18n.qualityControl + 'Records Found' | dynamicTranslate}}</h3>
+        <famis-grid [isPersistentGrid]="false" *ngIf="filterMetaData && resultsGrid.loading" [famisGrid]="resultsGrid" (updateCacheEvent)="updateCache($event)" (actionEvent)="handleActionEvent($event)" (sortChanged)="handleSortChanged($event)"></famis-grid>
+    </div>
+
+    <div class="form-group">
+        <replace-field [translatedBaseKey]="translatedBaseKey" [form]="massUpdateFormResults" [supportsAdvancedReplace]="true" [isAdvanced]='isAdvanced'></replace-field>
+    </div>
+
+    <div class="form-group pt-4">
+        <button class="btn btn-default" type="button" (click)="back()">{{i18n.common + 'Back' | dynamicTranslate}}</button>
+        <button class="btn btn-primary" type="submit">{{i18n.common + 'Commit' | dynamicTranslate}}</button>
+    </div>
+
+</form>

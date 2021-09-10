@@ -1,0 +1,20 @@
+<div id="DefineLayout">
+  <div class="row">
+    <div class="col-md-6">
+      <asset-column-select title="{{i18n.reconciliation + 'Client File' | dynamicTranslate }}" [file-type]="0"></asset-column-select>
+    </div>
+    <div class="col-md-6">
+      <asset-column-select title="{{i18n.reconciliation + 'Actual Inventory' | dynamicTranslate }}" [file-type]="1"></asset-column-select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <asset-selected-columns></asset-selected-columns>
+    </div>
+  </div>
+</div>
+
+<div class="wizard-actions">
+  <button class="btn btn-default" i18n="Back button text@@reconBack" (click)=onBack($event)>{{i18n.common + 'Back' | dynamicTranslate }} </button>
+  <button class="btn btn-primary" i18n="Continue button text@@reconContinue" (click)=onContinue($event) [ladda]="isBusy">{{i18n.common + 'Continue' | dynamicTranslate }}</button>
+</div>

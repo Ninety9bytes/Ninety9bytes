@@ -1,0 +1,53 @@
+<button type="button" (click)="open($event)" class="btn btn-action btn-small custom-fields">
+    <i class="fa fa-plus"></i>
+</button>
+<strong> &nbsp; {{ i18n.common + 'Add Custom Column' | dynamicTranslate }}</strong>
+
+<ng-template #content let-c="close" let-d="dismiss">
+
+    <form (ngSubmit)="onSubmit(createCustomColumnForm)" #createCustomColumnForm="ngForm">
+
+        <div class="modal-body">
+
+            <div class="form-group">
+                <label for="columnNameInput">{{i18n.common + 'Name' | dynamicTranslate}}
+                    <span class="required-indicator">*</span>
+                </label>
+                <input type="text" class="form-control" name="columnName" id="columnNameInput" required #columnNameInput="ngModel" [(ngModel)]="name"
+                    pattern="^[a-zA-Z_$][a-zA-Z_$0-9]*$">
+
+                <div *ngIf="columnNameInput.errors && (columnNameInput.dirty || columnNameInput.touched || columnNameInput.submitted)" class="alert alert-danger">
+                    <div [hidden]="!columnNameInput.errors.required">
+                        {{i18n.common + 'Field name is required.' | dynamicTranslate }}.
+                    </div>
+                    <div [hidden]="!columnNameInput.errors?.pattern">{{i18n.common + 'customcolumnscannotcontainspacesorspecialcharacters.' | dynamicTranslate }}.</div>
+                </div>
+                <div *ngIf="!isNameValid" class="alert alert-danger">
+                    {{i18n.common + 'Field name must be unique.' | dynamicTranslate }}.      
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="customColumnDataTypeSelect">{{i18n.common + 'Data Type' | dynamicTranslate}}</label>
+                <select class="form-control" [(ngModel)]="dataType" name="customColumnDataType" id="customColumnDataTypeSelect" required
+                    #customColumnDataTypeSelect="ngModel">
+                    <option value="" disabled selected>{{i18n.common + 'Select Data Type' | dynamicTranslate }}</option>
+                    <option *ngFor="let opt of customColumnDataTypes" [value]="opt.dataType">{{i18n.common + opt.displayName | dynamicTranslate }}</option>
+                </select>
+
+                <div *ngIf="customColumnDataTypeSelect.errors && (customColumnDataTypeSelect.dirty || customColumnDataTypeSelect.touched || customColumnDataTypeSelect.submitted)"
+                    class="alert alert-danger">
+                    <div [hidden]="!customColumnDataTypeSelect.errors.required">
+                        {{i18n.common + 'Please select a data type' | dynamicTranslate }}.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" (click)="close()">{{i18n.common + 'Cancel' | dynamicTranslate}}</button>
+            <button type="submit" class="btn btn-primary">{{i18n.common + action | dynamicTranslate}}</button>
+        </div>
+
+    </form>
+</ng-template>

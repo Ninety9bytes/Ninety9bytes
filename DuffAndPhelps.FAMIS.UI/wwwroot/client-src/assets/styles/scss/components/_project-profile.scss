@@ -1,0 +1,64 @@
+#ProjectProfile {
+
+  .menu{
+    margin-top:2em;
+  }
+
+  .actions{
+    
+    .btn {
+      padding: 5px 10px 5px 10px;
+      font-size: $font-size-base;
+    }
+  
+   .btn-primary {
+      background-color: $brand-secondary-cyan;
+      color: white;
+    }
+  
+  .btn-primary:not(.active) > .checked {
+      display: none;
+    }
+  
+   .btn-primary.active > .not-checked {
+      display: none;
+    }
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 120px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  main {
+    margin-left: 16.666667%;
+  }
+
+  #GroupSelector .dropdown-menu {
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  .menu-expanded {
+    padding-top: 1rem !important;
+  }
+
+  .menu-collapsed {
+
+  }
+
+  .content-menu-expanded {
+    
+  }
+
+  .content-menu-collapsed {
+
+  }
+
+}

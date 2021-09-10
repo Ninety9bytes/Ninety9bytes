@@ -1,0 +1,30 @@
+<div class="consolidation-match-code-assignment">
+  <div class="row">
+    <div class="col-md-12">
+      <div>
+        <div *ngIf="!emptyMatchCodesIndicator">
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th></th>
+                <th *ngFor="let match of selectedMatchCodes">{{match.matchCodeName}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let column of models; let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
+                <td>{{column.displayName }}</td>
+
+                <td *ngFor="let match of selectedMatchCodes">
+                  <dynamic-assignment-field *ngIf="column[match.matchCodeId]" [columnId]="column.id" [matchCodeId]="match.matchCodeId" [selectedValue]="column[match.matchCodeId]"></dynamic-assignment-field>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div *ngIf="emptyMatchCodesIndicator">
+           {{ i18n.asset + 'translate No data to display.  Ensure that reconciliation is complete and you have properly defined the layout.' | dynamicTranslate }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

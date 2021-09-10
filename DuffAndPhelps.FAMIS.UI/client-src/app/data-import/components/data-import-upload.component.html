@@ -1,0 +1,65 @@
+<ngb-alert type="danger" [dismissible]="false" *ngIf="showMissingFileAlert">
+  <b>{{ i18n.dataImport + 'Upload Failed: ' + APIError | dynamicTranslate}}</b>
+  <br> {{ i18n.dataImport + 'Please upload a valid Excel file (.xlsx)' | dynamicTranslate}}</ngb-alert>
+
+<form (ngSubmit)="onSubmit(dataImportForm)" #dataImportForm="ngForm">
+
+  <div class="form-group row">
+    <div class="col-6">
+      <label for="AvailableDataOptions">{{i18n.dataImport + 'Available Data Options' | dynamicTranslate}}</label>
+      <select class="form-control" id="AvailableDataOptions" [(ngModel)]="dto.dataTargetId" name="selectedDataOption" required
+        #inputAvailableDataOptions="ngModel">
+        <option value="" disabled>{{i18n.dataImport + 'Select a Data Option' | dynamicTranslate}}</option>
+        <option *ngFor="let opt of availableDataTargets" [value]="opt.id">{{ i18n.dataImport + opt.name | dynamicTranslate}}</option>
+
+      </select>
+
+      <div *ngIf="inputAvailableDataOptions.errors && (inputAvailableDataOptions.dirty || inputAvailableDataOptions.touched || dataImportForm.submitted)"
+        class="alert alert-danger">
+        <div [hidden]="!inputAvailableDataOptions.errors.required">
+          {{i18n.dataImport + 'Please select a data option' | dynamicTranslate}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div *ngIf="dataImportService.dataImportHistory">
+  <div class="form-group">
+    <label *ngIf="!dataImportService.reconciliationStarted && !isConsolidatedSelected()" class="radio-inline pr-2">
+      <input type="radio" name="replace" (change)="buttonChange('replace')" [checked]="replace && isButtonSelected">
+      {{i18n.dataImport + 'Replace' | dynamicTranslate}}
+    </label>
+    <label class="radio-inline pl-2">
+      <input type="radio" name="append" (change)="buttonChange('append')" [checked]="!replace && isButtonSelected">
+      {{i18n.dataImport + 'Append' | dynamicTranslate}}</label>
+    <div *ngIf="!isButtonSelected && dataImportForm.submitted" class="alert alert-danger">
+      <div [hidden]="isButtonSelected">
+        {{i18n.dataImport + 'Please select an import option' | dynamicTranslate}}
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="form-group row">
+    <div class="col-6">
+      <label for="exampleInputFile" id="label">{{i18n.dataImport + 'Upload Spreadsheet' | dynamicTranslate}}</label>
+
+      <input *ngIf="!dataImport.spreadsheetUpload" type="file" (change)="fileChange($event)" name="file" accept=".xlsx" class="form-control-file" id="exampleInputFile"
+        aria-describedby="fileHelp">
+
+        <div *ngIf="dataImport.spreadsheetUpload">
+            <button type="button" (click)="clear()">{{i18n.common + 'Clear File' | dynamicTranslate}}</button>
+            {{ dto.fileName }}
+        </div>
+      
+      <small id="fileHelp" class="form-text text-muted">{{i18n.dataImport + 'Upload a valid .xlsx file' | dynamicTranslate}}</small>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <button [disabled]="!dto.file" [ladda]="isLoading" type="submit" (click)="importAfterReconciliation && !isConsolidatedSelected() ? displayPostReconcilModal($event, dataImportForm) : true"
+      class="btn btn-primary">{{i18n.dataImport + 'Upload &amp; Continue' | dynamicTranslate}}</button>
+
+  </div>
+
+</form>

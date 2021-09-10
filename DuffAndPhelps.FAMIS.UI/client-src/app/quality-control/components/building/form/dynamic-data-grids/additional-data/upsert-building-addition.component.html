@@ -1,0 +1,121 @@
+<form (ngSubmit)="save(buildingForm)" #buildingForm="ngForm">
+  <div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <h2>{{ i18n.building + 'Group and Category' | dynamicTranslate }}</h2>
+            <hr />
+
+            <select class="form-control" [(ngModel)]="selectedGroupId" name="group" id="disposalCode" (change)="changeGroup()" required>
+              <option [value]="undefined" disabled>
+                <span>{{ i18n.building + 'Select Group' | dynamicTranslate }}</span>
+              </option>
+              <option *ngFor="let group of (groups | orderBy: 'description')" [value]="group.id">{{
+                i18n.building + group.description | dynamicTranslate
+              }}</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <select
+              [disabled]="selectedGroupId === undefined"
+              class="form-control"
+              [(ngModel)]="selectedCategoryId"
+              name="category"
+              id="disposalCode"
+              (change)="setCriteriaAndAdjustments()"
+              required
+            >
+              <option [value]="undefined" disabled>
+                <span>{{ i18n.building + 'Select Category' | dynamicTranslate }}</span>
+              </option>
+              <option *ngFor="let category of (categories | orderBy: 'description')" [value]="category.id"
+                >{{ i18n.building + category.description | dynamicTranslate }} ({{ category.code }})</option
+              >
+            </select>
+          </div>
+        </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group pl-3">
+                <span style="color: red;">*</span> {{ i18n.building + 'Quantity' | dynamicTranslate }}
+                <kendo-numerictextbox [disabled]="selectedGroupId === undefined" name="quantity" [required]="true" [(ngModel)]="selectedQuantity"
+                  class="form-control"></kendo-numerictextbox>
+              </div>
+            </div>
+          </div>
+        <div class="col-md-6">
+            
+          <ng-container *ngIf="selectedCategoryId !== undefined && selectedCriteria.length > 0">
+            <h2>{{ i18n.building + 'Criteria' | dynamicTranslate }}</h2>
+            <hr />
+
+            <ng-container *ngFor="let criteria of criteriaForCategory">
+              <div *ngIf="criteria.length === 1 && criteria[0].hasValueEntry" class="form-group">
+                <label [attr.for]="criteria[0].quantity"></label>
+                  
+                
+
+                <label [attr.for]="criteria[0].description">
+                  <span style="color:red;">*</span> {{ i18n.building + criteria[0].description | dynamicTranslate }}</label
+                >
+
+                <kendo-numerictextbox
+                  [name]="criteria[0].index"
+                  [required]="true"
+                  [(ngModel)]="selectedCriteria[criteria[0].index].criterionValue"
+                  class="form-control"
+                ></kendo-numerictextbox>
+              </div>
+
+              <div *ngIf="criteria.length > 1 && !criteria[0].hasValueEntry" class="form-group">
+                <span style="color:red;">*</span>
+                <select
+                  [required]="true"
+                  [name]="criteria[0].index"
+                  [(ngModel)]="selectedCriteria[criteria[0].index].referenceBuildingAdditionCriterionId"
+                  class="form-control"
+                >
+                  <option></option>
+                  <option *ngFor="let option of (criteria | orderBy: 'code')" [value]="option.id">{{
+                    i18n.building + option.description | dynamicTranslate
+                  }}</option>
+                </select>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+
+        <div class="row p-3">
+          <div class="col-md-12">
+            <ng-container *ngIf="adjustmentsForCategory.length > 0">
+              <h2>{{ i18n.building + 'Adjustments' | dynamicTranslate }}</h2>
+              <hr />
+
+              <div class="form-row">
+                <div class="col-md-6" *ngFor="let adjustment of adjustmentsForCategory; let i = index">
+                  <label [attr.for]="adjustment.description">{{ i18n.building + adjustment.description | dynamicTranslate }}</label>
+                  <kendo-numerictextbox
+                    [name]="adjustment.id"
+                    [(ngModel)]="selectedAdjustments[i].value"
+                    class="form-control"
+                  ></kendo-numerictextbox>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="showValidationError" style="color:red; text-align: center; padding:20px;">
+      Please complete all required (*) Criteria fields
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" (click)="dismiss()">{{ i18n.common + 'Cancel' | dynamicTranslate }}</button>
+      <button type="submit" class="btn btn-primary">{{ i18n.common + 'Save' | dynamicTranslate }}</button>
+    </div>
+  </div>
+</form>

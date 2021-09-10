@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-md-12">
+    <div>
+      <div id="high-density">
+        <kendo-grid  [data]="gridData" [sortable]="true" [height]="200"  [selectable]="selectableSettings"
+           [reorderable]="false" [kendoGridSelectBy]="'id'" [selectedKeys]="selectedMetadataIds"
+          (selectionChange)="onSelectionChanged($event)"   (dataStateChange)="dataStateChange($event)"
+          >
+          <kendo-grid-checkbox-column [reorderable]="false" width="5%">
+            <ng-template kendoGridHeaderTemplate let-dataItem>
+              <div style="width: 10%; cursor: pointer;" >
+                <a class="clickable-link">{{Selected}}</a>
+               </div>
+            </ng-template>
+          </kendo-grid-checkbox-column>
+          <kendo-grid-column [reorderable]="false" field="tagName" [title]="'common_Category' | dynamicTranslate" width="95%">
+          </kendo-grid-column>
+        </kendo-grid>
+      </div>
+    </div>
+  </div>
+</div>

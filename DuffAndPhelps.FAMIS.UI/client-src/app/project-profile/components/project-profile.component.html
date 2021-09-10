@@ -1,0 +1,66 @@
+<div id="ProjectProfile" class="container-fluid">
+  <div class="row" style="margin-left: auto; margin-right: auto;">
+    <nav *ngIf="!isCollapsed" [@inOutFromLeftSideAnimation]
+    class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
+
+      <div class="sidebar-project">
+        <h3>{{accountName}}</h3>
+        <h2>{{groupName}}</h2>
+
+        <select *ngIf="groups.length > 1" name="GroupSelector" class="mx-1 form-control" id="GroupSelector" (change)="onGroupSelected($event.target.value)">
+          <option selected="true" disabled>
+            <span>{{i18n.common + 'Switch Group' | dynamicTranslate }}</span>
+          </option>
+          <option *ngFor="let group of groups | orderBy:'groupName'" [value]="group.id">{{group.groupName}}</option>
+        </select>
+
+      </div>
+      <ul class="menu list-unstyled">
+        <li>
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['/project-profile', currentGroupId,'MainProfile']">{{i18n.common + 'Main Profile' | dynamicTranslate }}</a>
+        </li>
+        <li *ngIf="isEnabled('Sub-Profile')">
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['/project-profile', currentGroupId,'SubProfile']">{{i18n.common + 'Sub Profile' | dynamicTranslate }}</a>
+        </li>
+        <li [showIfCanAccess]='permissions.canWriteData'>
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['/project-profile', currentGroupId,'DataImport']">{{i18n.common + 'Data Import' | dynamicTranslate }}</a>
+        </li>
+        <li [showIfCanAccess]='permissions.canWriteData' *ngIf="isEnabled('Reconciliation')">
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['/project-profile', currentGroupId,'Reconciliation']">{{i18n.common + 'Reconciliation' | dynamicTranslate }} </a>
+        </li>
+        <li [showIfCanAccess]='permissions.canWriteData' *ngIf="isEnabled('Trending')">
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['/project-profile', currentGroupId,'Trending']">{{i18n.common + 'Trending' | dynamicTranslate }}</a>
+        </li>
+        <li [showIfCanAccess]='permissions.canWriteData' *ngIf="isEnabled('Depreciation')">
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['/project-profile', currentGroupId,'Depreciation']">{{i18n.common + 'Depreciation' | dynamicTranslate }}</a>
+        </li>
+        <li>
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['/project-profile', currentGroupId,'QualityControl']">{{i18n.common + 'Quality Control' | dynamicTranslate }}</a>
+        </li>
+
+        <li [showIfCanAccess]='permissions.canAdminProjects'>
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['/project-profile', currentGroupId,'Administration']">{{i18n.common + 'Administration' | dynamicTranslate }}</a>
+        </li>
+        <li [showIfCanAccess]='permissions.canAdminProjects'>
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['/project-profile', currentGroupId,'HeaderManagement']">{{i18n.common + 'Header Management' | dynamicTranslate }}</a>
+        </li>
+        <li *ngIf="isEnabled('Recipients')">
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['/project-profile', currentGroupId,'Recipients']">{{i18n.common + 'Recipients' | dynamicTranslate }}</a>
+        </li>
+        <li *ngIf="isEnabled('Reporting')">
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['/project-profile', currentGroupId, 'Reports']">{{i18n.common + 'Reports' | dynamicTranslate}}</a>
+        </li>
+        <li *ngIf="isEnabled('File Upload')">
+          
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['/project-profile', currentGroupId, 'FileUpload']">{{i18n.common + 'File Upload' | dynamicTranslate}}</a>
+        </li>
+        <li >
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['/project-profile', currentGroupId, 'Support']">{{i18n.common + 'Support' | dynamicTranslate}}</a>
+        </li>
+      </ul>
+    </nav>
+    <main [ngClass]="{'col-sm-9 offset-sm-3 col-md-10 offset-md-2 menu-expanded' : isCollapsed === false, 'col-sm-12 ml-2 pt-3 mr-2' : isCollapsed === true}">
+    <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

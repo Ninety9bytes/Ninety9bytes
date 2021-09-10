@@ -1,0 +1,27 @@
+<div id="DataImport">
+  <ngb-tabset type="pills" #prostabs>
+    <ngb-tab id="step-1-copy">
+      <ng-template ngbTabTitle>
+        <span>{{i18n.dataImport + 'Step 1' | dynamicTranslate }}</span>
+        <em>{{i18n.dataImport + 'Copy Data' | dynamicTranslate }}</em>
+      </ng-template>
+      <ng-template ngbTabContent>
+
+        <app-data-pros-renewal></app-data-pros-renewal>
+
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab id="step-2-copy" [disabled]="isActive('step-2-copy')">
+      <ng-template ngbTabTitle>
+        <span>{{i18n.dataImport + 'Step 2' | dynamicTranslate }}</span>
+        <em>{{i18n.dataImport + 'Finish Renewal' | dynamicTranslate }}</em>
+      </ng-template>
+      <ng-template ngbTabContent>
+
+        <app-data-copy-finish></app-data-copy-finish>
+
+      </ng-template>
+    </ngb-tab>
+
+  </ngb-tabset>
+</div>

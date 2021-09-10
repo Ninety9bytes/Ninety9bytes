@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE messagebundle [
+<!ELEMENT messagebundle (msg)*>
+<!ATTLIST messagebundle class CDATA #IMPLIED>
+
+<!ELEMENT msg (#PCDATA|ph|source)*>
+<!ATTLIST msg id CDATA #IMPLIED>
+<!ATTLIST msg seq CDATA #IMPLIED>
+<!ATTLIST msg name CDATA #IMPLIED>
+<!ATTLIST msg desc CDATA #IMPLIED>
+<!ATTLIST msg meaning CDATA #IMPLIED>
+<!ATTLIST msg obsolete (obsolete) #IMPLIED>
+<!ATTLIST msg xml:space (default|preserve) "default">
+<!ATTLIST msg is_hidden CDATA #IMPLIED>
+
+<!ELEMENT source (#PCDATA)>
+
+<!ELEMENT ph (#PCDATA|ex)*>
+<!ATTLIST ph name CDATA #REQUIRED>
+
+<!ELEMENT ex (#PCDATA)>
+]>
+<messagebundle>
+  <msg id="login"><source>client-src\app\app.component.ts:12</source>Login</msg>
+  <msg id="myAccount"><source>client-src\app\app.component.ts:15</source>My Account</msg>
+  <msg id="logout"><source>client-src\app\app.component.ts:18</source>Log Out</msg>
+  <msg id="topmenDataImport"><source>client-src\app\app.component.ts:30</source>Data Import</msg>
+  <msg id="topmenSchedule"><source>client-src\app\app.component.ts:33</source>Schedule</msg>
+  <msg id="topmenTemplateManagement"><source>client-src\app\app.component.ts:36</source>Template Management</msg>
+  <msg id="topmenReconciliation"><source>client-src\app\app.component.ts:39</source>Reconciliation</msg>
+  <msg id="topmenUsersTeams"><source>client-src\app\app.component.ts:42</source>Users &amp; Teams</msg>
+  <msg id="projectProfile"><source>client-src\app\app.component.ts:45</source>Project Profile</msg>
+  <msg id="1430663748859427158" desc="The label visible in the Grid group panel when it is empty" meaning="kendo.grid.groupPanelEmpty"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:4</source>Drag a column header and drop it here to group by that column</msg>
+  <msg id="1243399825085142134" desc="The label visible in the Grid when there are no records" meaning="kendo.grid.noRecords"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:7</source>No records available.</msg>
+  <msg id="5647145449685906398" desc="The label for the first page button in Grid pager" meaning="kendo.grid.pagerFirstPage"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:10</source>Go to the first page</msg>
+  <msg id="6745088753482690847" desc="The label for the previous page button in Grid pager" meaning="kendo.grid.pagerPreviousPage"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:13</source>Go to the previous page</msg>
+  <msg id="5510985262435270859" desc="The label for the next page button in Grid pager" meaning="kendo.grid.pagerNextPage"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:16</source>Go to the next page</msg>
+  <msg id="4539768510520419313" desc="The label for the last page button in Grid pager" meaning="kendo.grid.pagerLastPage"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:19</source>Go to the last page</msg>
+  <msg id="5228228287003939680" desc="The label before the current page number in the Grid pager" meaning="kendo.grid.pagerPage"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:22</source>Page</msg>
+  <msg id="7004642096327889102" desc="The label before the total pages number in the Grid pager" meaning="kendo.grid.pagerOf"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:25</source>of</msg>
+  <msg id="700193548223931835" desc="The label after the total pages number in the Grid pager" meaning="kendo.grid.pagerItems"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:28</source>items</msg>
+  <msg id="8838594644885628398" desc="The label for the page size chooser in the Grid pager" meaning="kendo.grid.pagerItemsPerPage"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:31</source>items per page</msg>
+  <msg id="4328959145426393682" desc="The text of the equal filter operator" meaning="kendo.grid.filterEqOperator"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:34</source>Is equal to</msg>
+  <msg id="8497658332767349737" desc="The text of the not equal filter operator" meaning="kendo.grid.filterNotEqOperator"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:37</source>Is not equal to</msg>
+  <msg id="1298299704757177797" desc="The text of the is null filter operator" meaning="kendo.grid.filterIsNullOperator"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:40</source>Is null</msg>
+  <msg id="8362279767336741540" desc="The text of the is not null filter operator" meaning="kendo.grid.filterIsNotNullOperator"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:43</source>Is not null</msg>
+  <msg id="4762263229995523226" desc="The text of the is empty filter operator" meaning="kendo.grid.filterIsEmptyOperator"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:46</source>Is empty</msg>
+  <msg id="8245213618709258015" desc="The text of the is not empty filter operator" meaning="kendo.grid.filterIsNotEmptyOperator"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:49</source>Is not empty</msg>
+  <msg id="6087783423599420507" desc="The text of the starts with filter operator" meaning="kendo.grid.filterStartsWithOperator"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:52</source>Starts with</msg>
+  <msg id="3831180413287131758" desc="The text of the contains filter operator" meaning="kendo.grid.filterContainsOperator"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:55</source>Contains</msg>
+  <msg id="7331253838216904826" desc="The text of the does not contain filter operator" meaning="kendo.grid.filterNotContainsOperator"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:58</source>Does not contain</msg>
+  <msg id="3662435311670509156" desc="The text of the ends with filter operator" meaning="kendo.grid.filterEndsWithOperator"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:61</source>Ends with</msg>
+  <msg id="4542824413455511831" desc="The text of the greater than or equal filter operator" meaning="kendo.grid.filterGteOperator"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:64</source>Is greater than or equal to</msg>
+  <msg id="1527483349261806183" desc="The text of the greater than filter operator" meaning="kendo.grid.filterGtOperator"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:67</source>Is greater than</msg>
+  <msg id="4840714404733417604" desc="The text of the less than or equal filter operator" meaning="kendo.grid.filterLteOperator"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:70</source>Is less than or equal to</msg>
+  <msg id="498627126459578706" desc="The text of the less than filter operator" meaning="kendo.grid.filterLtOperator"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:73</source>Is less than</msg>
+  <msg id="2361673238316312251" desc="The text of the IsTrue boolean filter option" meaning="kendo.grid.filterIsTrue"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:76</source>Is True</msg>
+  <msg id="7759366406135608407" desc="The text of the IsFalse boolean filter option" meaning="kendo.grid.filterIsFalse"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:79</source>Is False</msg>
+  <msg id="9215343856736761875" desc="The text of the (All) boolean filter option" meaning="kendo.grid.filterBooleanAll"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:82</source>(All)</msg>
+  <msg id="1964413288176201979" desc="The text of the after or equal date filter operator" meaning="kendo.grid.filterAfterOrEqualOperator"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:85</source>Is after or equal to</msg>
+  <msg id="3078502182807244703" desc="The text of the after date filter operator" meaning="kendo.grid.filterAfterOperator"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:88</source>Is after</msg>
+  <msg id="3348865631071358219" desc="The text of the before date filter operator" meaning="kendo.grid.filterBeforeOperator"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:91</source>Is before</msg>
+  <msg id="6582064037090631388" desc="The text of the before or equal date filter operator" meaning="kendo.grid.filterBeforeOrEqualOperator"><source>node_modules\@progress\kendo-angular-grid\dist\es\grid.component.d.ts:94</source>Is before or equal to</msg>
+  <msg id="helloworld" desc="Hello world"><source>client-src\app\home\home.component.ts:4</source>Hello, world!</msg>
+  <msg id="homegreeting" desc="Home page greeting"><source>client-src\app\home\home.component.ts:5</source>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</msg>
+  <msg id="learn" desc="Learn more"><source>client-src\app\home\home.component.ts:6</source>Learn more »</msg>
+  <msg id="errortest" desc="Error testing"><source>client-src\app\home\home.component.ts:30</source>Error Testing</msg>
+  <msg id="company" desc="Company"><source>client-src\app\home\home.component.ts:35</source>Company</msg>
+  <msg id="sidenavUsers" desc="Admin menu Users"><source>client-src\app\admin\admin-home\admin-home.component.ts:7</source>Users</msg>
+  <msg id="sidenavTeams" desc="Admin menu Teams"><source>client-src\app\admin\admin-home\admin-home.component.ts:10</source>Teams</msg>
+  <msg id="usereditUsername" desc="Username"><source>client-src\app\admin\user\user-edit\user-edit.component.ts:3</source>Username</msg>
+  <msg id="usereditName" desc="Name"><source>client-src\app\admin\user\user-edit\user-edit.component.ts:4</source>Name</msg>
+  <msg id="usereditActive" desc="Active"><source>client-src\app\admin\user\user-edit\user-edit.component.ts:5</source>Active</msg>
+  <msg id="usereditDateAdded" desc="Date Added"><source>client-src\app\admin\user\user-edit\user-edit.component.ts:6</source>Date Added</msg>
+  <msg id="usereditDonation" desc="Donation amount"><source>client-src\app\admin\user\user-edit\user-edit.component.ts:7</source>Donation Amount</msg>
+  <msg id="userlistUsernameCol" desc="User list Username col"><source>client-src\app\admin\user\user-list\user-list.component.ts:4</source>Username</msg>
+  <msg id="userlistNameCol" desc="User list Name col"><source>client-src\app\admin\user\user-list\user-list.component.ts:5</source>Name</msg>
+  <msg id="userlistActiveCol" desc="User list Active col"><source>client-src\app\admin\user\user-list\user-list.component.ts:6</source>Active</msg>
+  <msg id="userlistName" desc="User list name label"><source>client-src\app\admin\user\user-list\user-list.component.ts:16</source>Name</msg>
+  <msg id="userlistinputNamePlaceholder" desc="User list name placeholder"><source>client-src\app\admin\user\user-list\user-list.component.ts:17</source>name</msg>
+  <msg id="userlistDeleteAllButton" desc="User list delete all users button text"><source>client-src\app\admin\user\user-list\user-list.component.ts:24</source>Delete All Users</msg>
+  <msg id="teamgridNameCol" desc="Grid-Name col"><source>client-src\app\admin\team\team-list\team-list.component.ts:7</source>Name</msg>
+  <msg id="teamgridActiveCol" desc="Grid-Active col"><source>client-src\app\admin\team\team-list\team-list.component.ts:8</source>Active</msg>
+  <msg id="teamlistName" desc="Name label"><source>client-src\app\admin\team\team-list\team-list.component.ts:17</source>Name</msg>
+  <msg id="teamlistNamePlaceholder" desc="Name placeholder for team name"><source>client-src\app\admin\team\team-list\team-list.component.ts:18</source>name</msg>
+  <msg id="teameditName" desc="Name"><source>client-src\app\admin\team\team-edit\team-edit.component.ts:3</source>Name</msg>
+  <msg id="teameditActive" desc="Active"><source>client-src\app\admin\team\team-edit\team-edit.component.ts:4</source>Active</msg>
+  <msg id="reconReconciliation"><source>client-src\app\reconciliation\reconciliation-form\reconciliation-form.component.ts:5</source>Reconciliation</msg>
+  <msg id="reconSelectMatchCodes" desc="Breadcrumb for reconciliation: select match codes"><source>client-src\app\reconciliation\reconciliation-form\reconciliation-form.component.ts:12</source>Select Match Codes</msg>
+  <msg id="reconSelectAllocationField" desc="Select for reconcilation: select allocation field">Select Allocation Field</translation>
+  <msg id="hintSelectAnAllocationField" desc="Reconciliation select hint: select match codes">Select an Allocation Field</translation>
+  <msg id="reconReconcileData" desc="Breadcrumb for reconciliation: reconcile data"><source>client-src\app\reconciliation\reconciliation-form\reconciliation-form.component.ts:13</source>Reconcile Data</msg>
+  <msg id="reconDefineLayout" desc="Breadcrumb for reconciliation: define layout"><source>client-src\app\reconciliation\reconciliation-form\reconciliation-form.component.ts:14</source>Define Layout</msg>
+  <msg id="reconMapMatchCodes" desc="Breadcrumb for reconciliation: map match codes"><source>client-src\app\reconciliation\reconciliation-form\reconciliation-form.component.ts:15</source>Map Match Codes</msg>
+  <msg id="reconFinalizeData" desc="Breadcrumb for reconciliation: finilize data"><source>client-src\app\reconciliation\reconciliation-form\reconciliation-form.component.ts:16</source>Finalize Data</msg>
+  <msg id="reconSelectMatchCodes2" desc="Reconciliation heading: select match codes"><source>client-src\app\reconciliation\reconciliation-form\reconciliation-form.component.ts:21</source>Select Match Codes</msg>
+  <msg id="reconCancel" desc="Cancel button text"><source>client-src\app\reconciliation\reconciliation-form\reconciliation-form.component.ts:31</source>Cancel</msg>
+  <msg id="reconContinue" desc="Continue button text"><source>client-src\app\reconciliation\reconciliation-form\reconciliation-form.component.ts:32</source>Continue</msg>
+  <msg id="groupsearchCopyFromExistingProject" desc="Copy from existing project label"><source>client-src\app\reconciliation\group-search\group-search.component.ts:1</source>Copy from Existing Project</msg>
+  <msg id="reconGroupNamePlaceholder" desc="Placeholder for group search"><source>client-src\app\reconciliation\group-search\group-search.component.ts:15</source>Group Name</msg>
+  <msg id="4467784268438010275" desc="The title for the **Increment** button in the NumericTextBox" meaning="kendo.numerictextbox.increment"><source>node_modules\@progress\kendo-angular-inputs\dist\es\numerictextbox\numerictextbox.component.d.ts:4</source>Increase value</msg>
+  <msg id="3960022057994897997" desc="The title for the **Decrement** button in the NumericTextBox" meaning="kendo.numerictextbox.decrement"><source>node_modules\@progress\kendo-angular-inputs\dist\es\numerictextbox\numerictextbox.component.d.ts:6</source>Decrease value</msg>
+  <msg id="589112377451589685" desc="The label for the **Increment** button in the DateInput" meaning="kendo.dateinput.increment"><source>node_modules\@progress\kendo-angular-dateinputs\dist\es\dateinput\dateinput.component.d.ts:4</source>Increase value</msg>
+  <msg id="6980524091606682769" desc="The label for the **Decrement** button in the DateInput" meaning="kendo.dateinput.decrement"><source>node_modules\@progress\kendo-angular-dateinputs\dist\es\dateinput\dateinput.component.d.ts:7</source>Decrease value</msg>
+  <msg id="826701167553276328" desc="The label for the today button in the calendar header" meaning="kendo.calendar.today"><source>node_modules\@progress\kendo-angular-dateinputs\dist\es\calendar\calendar.component.d.ts:4</source>TODAY</msg>
+  <msg id="1910980355989755624" desc="The label for the today button in the calendar header" meaning="kendo.datepicker.today"><source>node_modules\@progress\kendo-angular-dateinputs\dist\es\datepicker\datepicker.component.d.ts:4</source>TODAY</msg>
+  <msg id="4817467473728423164" desc="The label for the toggle button in the datepicker component" meaning="kendo.datepicker.toggle"><source>node_modules\@progress\kendo-angular-dateinputs\dist\es\datepicker\datepicker.component.d.ts:7</source>Toggle calendar</msg>
+  <msg id="8302125540024939132" desc="The title of the **Increase** button of the Slider." meaning="kendo.slider.increment"><source>node_modules\@progress\kendo-angular-inputs\dist\es\slider\slider.component.d.ts:4</source>increment</msg>
+  <msg id="652458644240352212" desc="The title of the **Decrease** button of the Slider." meaning="kendo.slider.decrement"><source>node_modules\@progress\kendo-angular-inputs\dist\es\slider\slider.component.d.ts:6</source>decrement</msg>
+  <msg id="9117416417579607469" desc="The title of the drag handle of the Slider." meaning="kendo.slider.dragHandle"><source>node_modules\@progress\kendo-angular-inputs\dist\es\slider\slider.component.d.ts:8</source>Drag</msg>
+  <msg id="818154782831456441" desc="The **On** label of the Switch." meaning="kendo.switch.on"><source>node_modules\@progress\kendo-angular-inputs\dist\es\switch\switch.component.d.ts:4</source>ON</msg>
+  <msg id="759820891948194060" desc="The **Off** label of the Switch." meaning="kendo.switch.off"><source>node_modules\@progress\kendo-angular-inputs\dist\es\switch\switch.component.d.ts:6</source>OFF</msg>
+</messagebundle>

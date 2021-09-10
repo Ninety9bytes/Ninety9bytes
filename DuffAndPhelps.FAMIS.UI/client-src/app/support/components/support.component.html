@@ -1,0 +1,56 @@
+
+<div id="support" class="form-group">
+  <div class="row">
+      <div class="col-md-8">
+          <h1>{{i18n.common + 'Support' | dynamicTranslate}}</h1>
+      </div>
+      <div class="col-md-4">
+          <!-- <portal-image [groupId]="groupId"></portal-image> -->
+      </div>
+  </div>
+<div class="row">
+    <div class="col-md-6">
+        
+      <label>{{i18n.support + 'Send us a note along with your information and we will get back to you' | dynamicTranslate}} </label>
+      
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+      <label>{{i18n.support + 'Name' | dynamicTranslate}}</label>
+      <input type="text" class="form-control" [(ngModel)]="contactName" (ngModelChange)="updateEmail()" />
+    </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <label>{{i18n.support + 'Email Address' | dynamicTranslate}}</label>
+    <input type="text" class="form-control" [(ngModel)]="contactEmail" (ngModelChange)="updateEmail()" />
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <label>{{i18n.support + 'Subject' | dynamicTranslate}}</label>
+    <input type="text" class="form-control" [(ngModel)]="contactSubject" (ngModelChange)="updateEmail()" />
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-8">
+    <label>{{i18n.support + 'Message' | dynamicTranslate}}</label>
+    <textarea [(ngModel)]="contactMessage" class="form-control" (ngModelChange)="updateEmail()"></textarea>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+<br>
+                  <a [href]="emailHref" *ngIf="contactSubject">
+                      <button type="button" class="btn btn-primary">{{i18n.support + 'Send' | dynamicTranslate}}</button>
+                  </a>
+                  <a *ngIf="contactSubject==null || contactSubject==''" >
+                      <button type="button" class="btn btn-default">{{i18n.support + 'Send' | dynamicTranslate}}</button>
+                  </a>
+  </div>
+</div>
+
+</div>

@@ -1,0 +1,31 @@
+﻿<div class="row">
+  <div class="col col-lg-6">
+    <kendo-grid [resizable]="true" [data]="users" [selectable]="true" [rowSelected]="isRowSelected" (selectionChange)="selectRow($event)">
+      <kendo-grid-column field="Username" i18n-title="User list Username col@@userlistUsernameCol" title="Username" [width]="100"></kendo-grid-column>
+      <kendo-grid-column field="Name" i18n-title="User list Name col@@userlistNameCol" title="Name" [width]="150"></kendo-grid-column>
+      <kendo-grid-column field="Active" i18n-title="User list Active col@@userlistActiveCol" title="Active" [width]="40">
+        <ng-template kendoGridCellTemplate let-user>
+
+          <div class="checkbox k-form-field">
+            <input type="checkbox" class="k-checkbox" id="userActive" [checked]="user.Active" disabled>
+            <label class="k-checkbox-label" for="userActive"></label>
+          </div>
+    
+
+        </ng-template>
+      </kendo-grid-column>
+    </kendo-grid>
+    <div *ngIf="selectedUser">
+      <h2>{{selectedUser.Name}} </h2>
+      <div><label><ng-container i18n="User list username label@@userlistUsername"></ng-container>{{i18n.common + 'Username:' | dynamicTranslate}}&nbsp; </label>{{selectedUser.Username}}</div>
+      <div>
+        <label><ng-container i18n="User list name label@@userlistName">{{i18n.common + 'Name' | dynamicTranslate}}</ng-container>: </label>
+        <input [(ngModel)]="selectedUser.Name" i18n-placeholder="User list name placeholder@@userlistinputNamePlaceholder" placeholder="name" />
+      </div>
+    </div>
+  </div>
+  <div class="col col-lg-6">
+    <user-edit [user]="selectedUser"></user-edit>
+  </div>
+  <button (click)="delete()" i18n="User list delete all users button text@@userlistDeleteAllButton">{{i18n.admin + 'Delete All Users' | dynamicTranslate}}</button>
+</div>

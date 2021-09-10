@@ -1,0 +1,38 @@
+<div class="form-group row pb-1">
+
+    <div class="col-md-3">
+        <label>{{i18n.common + 'Contract' | dynamicTranslate}}</label>
+        <contract-search (selectContract)="contractChanged($event)" [model]="selectedContract"></contract-search>
+    </div>
+    
+    <div class="col-md-3">
+        <label>{{i18n.common + 'Group' | dynamicTranslate}}</label>
+        <select class="form-control form-control" id="selectGroup" [(ngModel)]="selectedGroup" (ngModelChange)="groupChanged($event)" required>
+          <option *ngIf="!selectedGroup || selectedGroup == null" [ngValue]="selectedGroup" disabled>{{i18n.common + 'Select Group' | dynamicTranslate}}</option>
+          <option *ngFor="let group of groups|orderBy:'groupName'" [ngValue]="group">{{group.groupName}}</option>
+        </select>
+    </div>
+    
+    <div class="col-md-2" *ngIf="selectedGroup">
+        <label>{{i18n.common + 'Member' | dynamicTranslate}}</label>
+        <select class="form-control form-control" id="selectMember" [(ngModel)]="selectedMember" (ngModelChange)="memberChanged($event)">
+          <option *ngIf="!selectedMember || selectedMember == null" [ngValue]="selectedMember" disabled>{{i18n.common + 'Select Member' | dynamicTranslate}}</option>
+          <option *ngFor="let member of members|orderBy:'name'" [ngValue]="member">{{member.name}}</option>
+        </select>
+    </div>
+    
+    <div class="col-md-2" *ngIf="selectedMember">
+        <label>{{i18n.common + 'Site' | dynamicTranslate}}</label>
+        <select class="form-control form-control" id="selectSite" [(ngModel)]="selectedSite">
+          <option *ngIf="!selectedSite || selectedSite == null" [ngValue]="selectedSite" disabled>{{i18n.common + 'Select Site' | dynamicTranslate}}</option>
+          <option *ngFor="let site of sites|orderBy:'name'" [ngValue]="site">{{site.name}}</option>
+        </select>
+    </div>
+
+    <div class="col-md-2 mt-4">
+        <button (click)="remove()" type="button" class="btn btn-action btn-small">
+            <i class="fa fa-minus"></i>
+        </button>
+        <strong>{{i18n.common + 'Remove' | dynamicTranslate}}</strong>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+
+
+<div class="groups-detail sub-grid">
+  <kendo-grid [resizable]="true" [data]="gridDataResult" [pageSize]="state.take" [sortable]="false" [pageable]="true"
+    [reorderable]="true" [pageSize]="state.take" [skip]="state.skip" (dataStateChange)="dataStateChange($event)">
+
+    <ng-container *ngFor="let column of columns">
+      
+      <kendo-grid-column [reorderable]="true" field="{{column.name}}" [title]="getColumnTitle(column)">
+        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+          {{dataItem[column.name]}}
+        </ng-template>
+      </kendo-grid-column>
+
+    </ng-container>
+
+  </kendo-grid>
+</div>

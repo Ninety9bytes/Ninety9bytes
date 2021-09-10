@@ -1,0 +1,77 @@
+<div class="filter-list" #filterList>
+  <div class="famis-grid-filter" *ngFor="let f of filters; let i = index" class="row">
+    <div class="col-md-12">
+      <button (click)="remove($event, i)" class="remove-filter btn btn-small  pull-right" *ngIf="i >= 1">
+        <i class="fa fa-minus filter-element"></i>
+      </button>
+
+      <select
+        [name]="formFieldNames.selectedFilterType"
+        [(ngModel)]="f.operator"
+        name="filterOperation"
+        class="form-control"
+        (change)="onChange($event)"
+      >
+        <option disabled value="">{{ i18n.common + 'Select Filter' | dynamicTranslate }} </option>
+        <option *ngFor="let item of operationsForSelectedTerm" [value]="item.name"> {{ i18n.asset + item.displayName | dynamicTranslate }}</option>
+      </select>
+
+      <div *ngIf="f.operator !== 'in' && f.operator !== 'nin'" #filter>
+        <div [ngSwitch]="fieldType">
+          <ng-template [ngSwitchCase]="fieldTypes.String">
+            <input type="text" (change)="onChange($event)" [(ngModel)]="f.value" name="filterValue" class="form-control" />
+          </ng-template>
+          <ng-template [ngSwitchCase]="fieldTypes.DateTime">
+            <kendo-datepicker
+              class="form-control"
+              (valueChange)="onChange($event)"
+              [(ngModel)]="f.value"
+              name="filterValue"
+            ></kendo-datepicker>
+          </ng-template>
+          <ng-template [ngSwitchCase]="fieldTypes.Date">
+            <kendo-datepicker
+              class="form-control"
+              (valueChange)="onChange($event)"
+              [(ngModel)]="f.value"
+              name="filterValue"
+            ></kendo-datepicker>
+          </ng-template>
+          <ng-template [ngSwitchCase]="fieldTypes.Double">
+            <input type="number" (change)="onChange($event)" [(ngModel)]="f.value" name="filterValue" class="form-control" />
+          </ng-template>
+          <ng-template [ngSwitchCase]="fieldTypes.Integer">
+            <input type="number" (change)="onChange($event)" [(ngModel)]="f.value" name="filterValue" class="form-control" />
+          </ng-template>
+          <ng-template [ngSwitchCase]="fieldTypes.DropDown">
+            <select
+              *ngIf="enumOptions"
+              [(ngModel)]="f.value"
+              name="filterValue"
+              class="form-control"
+              (change)="onChange($event)"              
+            >
+              <option disabled value="">{{ i18n.common + 'Select Value' | dynamicTranslate }} </option>
+              <option *ngFor="let item of enumOptions" [value]="item.name"> {{ i18n.asset + item.displayName | dynamicTranslate }}</option>
+            </select>
+            <input *ngIf="!enumOptions" type="text" (change)="onChange($event)" [(ngModel)]="f.value" name="filterValue" class="form-control" />
+          </ng-template>
+          <ng-template *ngSwitchDefault>
+            <input
+              type="text"
+              *ngIf="fieldType === fieldTypes.String"
+              (change)="onChange($event)"
+              [(ngModel)]="f.value"
+              name="filterValue"
+              class="form-control"
+            />
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button type="button" (click)="addFilter($event)" class="btn btn-action btn-small"><i class="fa fa-plus"></i></button>
+
+  <strong>&nbsp;{{ i18n.common + 'Add Filter Criteria' | dynamicTranslate }}</strong>
+</div>

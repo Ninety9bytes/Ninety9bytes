@@ -1,0 +1,294 @@
+<div class="famis-grid">
+  <div class="row">
+    <div class="col-md-4">
+      <h2 *ngIf="!famisGrid.hideTitle && famisGrid.name && famisGrid.name.length > 0">{{ i18n.common + famisGrid.name | dynamicTranslate }}</h2>
+    </div>
+    <div class="col-md-8">
+
+
+      <grid-column-selector-modal class="pull-right"
+        *ngIf="selectedHeaders.length > 0 && canSelectColumns"
+        [sourceTranslationKey]="famisGrid.translationBaseKey"
+        [selectedColumns]="famisGrid.selectedHeaders"
+        [headersAvailable]="famisGrid.columnHeaders"
+        (columnSelectionEvent)="onColumnSelection($event)"
+        [showAddCustomColumn]="showAddCustomColumn"
+        [groupId]="famisGrid.groupId"
+        [assetFileId]="famisGrid.fileId"
+        [dataSource]="famisGrid.dataSource">
+      </grid-column-selector-modal>
+
+      
+      <button *ngIf="canInGridEditCells" type="button" class="btn btn-sm btn-primary mb-2 pull-right save-in-grid-button" (click)="inGridSave()" [ladda]="isSaving" [disabled]="editedRecords.length === 0">
+        {{ i18n.common + 'Save Edits' | dynamicTranslate }}</button>
+
+        <span *ngIf="canInGridEditCells && editedRecordsWithErrors.length > 0" class="edit-record-errors pull-right pr-3 pb-1" (click)="viewInGridSaveErrors()" >
+          {{ i18n.common + 'Edited records with errors: ' | dynamicTranslate }} {{editedRecordsWithErrors.length}}</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div>
+        <kendo-grid
+          *ngIf="gridSettingsLoaded"
+          [data]="view | async"
+          [rowHeight]="famisGrid.scrollingMode == 'virtual' ? 24 : null"
+          [height]="famisGrid.height"
+          [scrollable]="famisGrid.scrollingMode"
+          [skip]="state.skip"
+          [pageSize]="state.take"
+          [reorderable]="true"
+          [detailRowHeight]="famisGrid.scrollingMode == 'virtual' ? 24 : null"
+          [rowClass]="rowCallback"
+          
+          [sortable]="canSort"
+          [sort]="sort"
+          [filter]="state.filter"
+          [filterable]="canFilter"
+          [resizable]="true"
+          (filterChange)="filterChange($event)"
+          (sortChange)="sortChange($event)"
+          [selectable]="canSelect"
+          [kendoGridSelectBy]="famisGrid.columnToSelectBy"
+          [selectedKeys]="selectedRows"
+          (selectionChange)="gridSelectionChange($event)"
+          (cellClick)="cellClick($event)"
+          (cellClose)="cellClose($event)"
+          (columnReorder)="onColumnReorder($event)"
+          (columnResize)="onColumnResize($event)"
+          [navigable]="true"
+          (pageChange)="pageChange($event)"
+          [loading]="dataLoading"
+        >
+          <kendo-grid-checkbox-column *ngIf="canSelect" [reorderable]="false" [width]="25"></kendo-grid-checkbox-column>
+
+          <ng-container *ngIf="showDashboarGroupSubGrid">
+              <div *kendoGridDetailTemplate="let dataItem"><dashboard-groups [id]="dataItem.id"></dashboard-groups></div>
+          </ng-container>
+          
+          <div *ngIf="!showDashboarGroupSubGrid">
+            <kendo-grid-column
+              [reorderable]="false"
+              [width]="225"
+              title="{{i18n.common + 'Actions' | dynamicTranslate }}"
+              class="grid-actions"
+              *ngIf="famisGrid.actions && famisGrid.actions.length > 0"
+            >
+              <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                <div style="max-height: 19px">
+                  <span class="grid-action-item" *ngFor="let action of famisGrid.actions">
+                    <a *ngIf="action !== 'Map' && action !== 'Image'" (click)="actionClicked(rowIndex, dataItem, action)">
+                      {{ i18n.common + action | dynamicTranslate }}
+                    </a>
+                  </span>
+
+                  <span class="grid-action-item" *ngFor="let action of famisGrid.actions">
+                    <a
+                      *ngIf="action === 'Map' && dataItem.latitude !== null && dataItem.longitude !== null"
+                      (click)="actionClicked(rowIndex, dataItem, action)"
+                    >
+                      {{ i18n.common + action | dynamicTranslate }}
+                    </a>
+
+                    <a class="disabled-action" *ngIf="action === 'Map' && dataItem.latitude == null && dataItem.longitude == null">
+                      {{ i18n.common + action | dynamicTranslate }}
+                    </a>
+
+                    <a *ngIf="action === 'Image'"> <view-image [imageCollection]="dataItem.imageCollection"></view-image> </a>
+                  </span>
+                </div>
+              </ng-template>
+            </kendo-grid-column>
+          </div>
+          
+          <ng-container *ngFor="let column of selectedHeaders">
+            <kendo-grid-column
+              [reorderable]="true"
+              [width]="225"
+              *ngIf="column.fieldType === 'count'"
+              field="{{column.name}}"
+              format="{{column.format}}"
+              title="{{getColumnTitle(column)}}"
+              editable="{{column.isEditable}}"
+            >
+              <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                <ng-template kendoGridFilterMenuTemplate let-filter let-column="column" let-filterService="filterService">
+                  <kendo-grid-numeric-filter-menu [column]="column" [filter]="filter" [filterService]="filterService">
+                    <kendo-filter-eq-operator></kendo-filter-eq-operator>
+                    <kendo-filter-gt-operator></kendo-filter-gt-operator>
+                    <kendo-filter-lt-operator></kendo-filter-lt-operator>
+                    <kendo-filter-gte-operator></kendo-filter-gte-operator>
+                    <kendo-filter-lte-operator></kendo-filter-lte-operator>
+                    <kendo-filter-neq-operator></kendo-filter-neq-operator>
+                    <kendo-filter-isnull-operator></kendo-filter-isnull-operator>
+                    <kendo-filter-isnotnull-operator></kendo-filter-isnotnull-operator>
+                  </kendo-grid-numeric-filter-menu>
+                </ng-template>
+                
+                <div class="btn-circle">{{ dataItem[column.name] }}</div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column
+              [editor]="column.fieldType"
+              [reorderable]="true"
+              *ngIf="column.fieldType !== 'template' && column.fieldType !== 'buildingAttribute' && column.fieldType !== 'count'"
+              field="{{column.name}}"
+              [width]="column.width"
+              format="{{column.format}}"
+              title="{{getColumnTitle(column)}}"
+              editable="{{column.isEditable}}"
+            >
+              <ng-template kendoGridFilterMenuTemplate let-filter let-filterService="filterService">
+                <grid-filter
+                  [fieldType]="column.fieldType"
+                  [filter]="filter"
+                  [textField]="column.name"
+                  [valueField]="column.name"
+                  [filterService]="filterService"
+                  [enumOptions]="column.enumOptions"
+                  [isNullable]="column.isNullable"
+                >
+                </grid-filter>
+              </ng-template>
+
+              <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                <div style="max-height: 19px">
+                  <ng-container *ngIf="column.fieldType === fieldTypes.String || column.fieldType === fieldTypes.DropDown"> {{ dataItem[column.name] }} </ng-container>
+                  <div style="text-align:center">
+                    <ng-container *ngIf="(column.fieldType === fieldTypes.Integer || column.fieldType === fieldTypes.Double) && (column.name==='displayId')" >
+                      {{ dataItem[column.name] | localizedNumber }}
+                    </ng-container>
+                  </div>
+                  <div style="text-align:right">
+                    <ng-container *ngIf="(column.fieldType === fieldTypes.Integer || column.fieldType === fieldTypes.Double) && (column.name!='displayId')" >
+                      {{ dataItem[column.name] | localizedNumber }}
+                    </ng-container>
+                  </div>
+                  <ng-container *ngIf="column.fieldType === fieldTypes.DateTime"> {{ dataItem[column.name] | localizedDate }} </ng-container>
+                  <ng-container *ngIf="column.fieldType === fieldTypes.DateWithTimeStamp"> {{ dataItem[column.name] | localTime }} </ng-container>
+                  <ng-container *ngIf="column.fieldType === fieldTypes.Percent"> {{ dataItem[column.name] | localizedPercent }} </ng-container>
+                </div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <!-- TODO: Support passing template to shared grid component -->
+            <kendo-grid-column
+              [editor]="column.fieldType"
+              [reorderable]="true"
+              *ngIf="column.fieldType === 'template'"
+              field="{{column.name}}"
+              format="{{column.format}}"
+              title="{{getColumnTitle(column)}}"
+              [filter]="column.fieldType"
+              editable="{{column.isEditable}}"
+            >
+              <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                <div style="width:100%; margin: auto;  height:100%; white-space:normal;">
+                  <div style="padding:20px; float:left; width:25%; height:100%;">
+                    {{ i18n.building + dataItem[column.name].groupDescription | dynamicTranslate }} /
+                    {{ i18n.building + dataItem[column.name].categoryDescription | dynamicTranslate }} ({{ dataItem[column.name].categoryCode }})
+                    
+                  </div>
+                  
+                  <div style="float: left; width:75%; padding:20px;">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <h4>Criteria</h4>
+                          <span *ngFor="let criteria of dataItem[column.name].criteriaSummary">
+                            <span>
+                              <strong>{{ i18n.building + criteria.description | dynamicTranslate }}</strong> <span *ngIf="criteria.value">:</span>
+                              {{ criteria.value }}</span>
+                              <br />
+                            </span>
+                            <span *ngIf="dataItem[column.name].quantity">
+                            <strong>{{i18n.building + 'Quantity' | dynamicTranslate }}</strong>: 
+                            {{dataItem[column.name].quantity}}
+                          </span>
+                          </div>
+                      <div class="col-md-6">
+                        <ng-container *ngIf="dataItem[column.name].adjustmentSummary && dataItem[column.name].adjustmentSummary.length > 0">
+                          <h4>Adjustments</h4>
+                          <span *ngFor="let criteria of dataItem[column.name].adjustmentSummary">
+                            <span *ngIf="criteria.value">
+                              <strong>{{ i18n.building + criteria.description | dynamicTranslate }}</strong> 
+                              <span *ngIf="criteria.value">:</span>
+                              {{ criteria.value }}</span> 
+                              <br />
+                            </span>
+                                  <span *ngIf="dataItem[column.name].adjustmentSummary">
+                                    <strong>{{ i18n.building + 'Total Cost' | dynamicTranslate }}</strong>
+                                    <span *ngIf="dataItem[column.name].adjustmentSummary">: </span>{{ dataItem[column.name].totalCost }}
+                          </span>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column
+              [editor]="column.fieldType"
+              [reorderable]="true"
+              *ngIf="column.fieldType === 'buildingAttribute'"
+              field="{{column.name}}"
+              format="{{column.format}}"
+              title="{{getColumnTitle(column)}}"
+              [filter]="column.fieldType"
+              editable="{{column.isEditable}}"
+            >
+              <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                <div class="building-attribute-values">
+                  <div class="value-item" *ngFor="let item of (dataItem['valueSummary'] | orderBy: 'description')">
+                    <div class="value-item">
+                      <span class="label">{{ item.description }}</span> <span class="label">Percent:</span> <span>{{ item.value }}</span>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </kendo-grid-column>
+          </ng-container>
+
+          <div *ngIf="showDashboarGroupSubGrid">
+            <kendo-grid-column
+              [reorderable]="false"
+              [width]="225"
+              title="{{i18n.common + 'Actions' | dynamicTranslate }}"
+              class="grid-actions"
+              *ngIf="famisGrid.actions && famisGrid.actions.length > 0"
+            >
+              <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                <span class="grid-action-item" *ngFor="let action of famisGrid.actions">
+                  <a *ngIf="action === 'View Project' && action !== 'Map' && action !== 'Image'" (click)="actionClicked(rowIndex, dataItem, action)">
+                    {{ i18n.common + action | dynamicTranslate }}
+                  </a>
+                </span>
+              </ng-template>
+            </kendo-grid-column>
+          </div>
+          
+          <ng-container *ngIf="famisGrid.gridSubGridData && famisGrid.gridSubGridData.subGridData.length">
+            <div *kendoGridDetailTemplate="let dataItem">
+              <famis-sub-grid
+                [translationBaseKey]="famisGrid.translationBaseKey"
+                [dataItem]="dataItem"
+                [data]="famisGrid.gridSubGridData"
+              ></famis-sub-grid>
+            </div>
+          </ng-container>
+
+          
+          <kendo-grid-translation> </kendo-grid-translation>
+        </kendo-grid>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col text-right" *ngIf="!hideTableCounts">
+      {{ i18n.common + 'Total Items' | dynamicTranslate }}: {{ famisGrid.totalRecordCount }}
+
+    </div>
+  </div>
+</div>

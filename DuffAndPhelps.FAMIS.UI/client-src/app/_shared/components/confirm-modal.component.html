@@ -1,0 +1,13 @@
+<div>
+    <div class="modal-title">
+      <br />
+      <h1 class="text-center">{{options.heading.key}}</h1>
+    </div>
+    <div class="modal-body">
+        <h4 class="text-center">{{options.body.key}}</h4>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="activeModal.dismiss('false')" *ngIf="!!options.dismissText">{{options.dismissText.key}}</button>
+        <button type="button" class="btn btn-action" (click)="activeModal.close('true')" *ngIf="!!options.successText">{{options.successText.key}}</button>
+    </div>
+</div>

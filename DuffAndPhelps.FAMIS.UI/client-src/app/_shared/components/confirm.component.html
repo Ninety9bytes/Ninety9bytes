@@ -1,0 +1,13 @@
+<div>
+    <div class="modal-title">
+      <br />
+      <h1 class="text-center">{{i18n.common + confirmHeading | dynamicTranslate}}</h1>
+    </div>
+    <div class="modal-body">
+        <h4 class="text-center">{{i18n.common + confirmationMessage | dynamicTranslate}}</h4>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="onCancel()">{{i18n.common + 'Cancel' | dynamicTranslate}}</button>
+        <button type="button" class="btn btn-action" (click)="onConfirmed()">{{i18n.common + 'Continue' | dynamicTranslate}}</button>
+    </div>
+</div>

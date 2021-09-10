@@ -1,0 +1,123 @@
+<form [class.isModal]="isModal" [formGroup]="formGroup" #assetForm="ngForm">
+
+  <div class="row form-body">
+    <div class="col-md-12">
+
+      <div class="row" *ngIf="generalFormFields.length > 0">
+        <div class="col-md-12">
+          <h4 class="modal-title pb-3">{{i18n.common + 'General Information' | dynamicTranslate }}</h4>
+        </div>
+      </div>
+      <div class="row" *ngIf="generalFormFields.length > 0">
+
+        <ng-container
+          *ngFor="let field of defaultFormFields | orderBy: 'order'; let i=index; let odd=odd; let even=even;">
+          <div class="col-md-6" *ngIf="even">
+
+            <dynamic-field [sourceTranslationKey]="getTranslationKey(field.translationKey)" [field]="field" [form]="formGroup"
+              [key]='field.displayName' [imageEntityType]="imageEntityType" [entityId]="assetDto.id"></dynamic-field>
+
+          </div>
+
+          <div class="col-md-6" *ngIf="odd">
+
+            <dynamic-field [sourceTranslationKey]="getTranslationKey(field.translationKey)" [field]="field" [form]="formGroup"
+              [key]='field.displayName' [imageEntityType]="imageEntityType" [entityId]="assetDto.id"></dynamic-field>
+
+          </div>
+
+        </ng-container>
+
+        <ng-container
+          *ngFor="let field of generalFormFields | orderBy: 'displayName'; let i=index; let odd=odd; let even=even;">
+          <div class="col-md-6" *ngIf="even">
+
+            <dynamic-field [sourceTranslationKey]="getTranslationKey(field.translationKey)" [field]="field" [form]="formGroup"
+              [key]='field.displayName' [imageEntityType]="imageEntityType" [entityId]="assetDto.id"></dynamic-field>
+
+          </div>
+
+          <div class="col-md-6" *ngIf="odd">
+
+            <dynamic-field [sourceTranslationKey]="getTranslationKey(field.translationKey)" [field]="field" [form]="formGroup"
+              [key]='field.displayName' [imageEntityType]="imageEntityType" [entityId]="assetDto.id"></dynamic-field>
+
+          </div>
+
+        </ng-container>
+
+
+      </div>
+
+      <div class="row" *ngIf="generalFormFields.length > 0">
+        <div class="col-md-12">
+          <h4 class="modal-title pb-3">{{i18n.common + 'Depreciation' | dynamicTranslate }}</h4>
+        </div>
+      </div>
+
+
+      <div class="row" *ngIf="depreciationFields.length > 0">
+        <ng-container
+          *ngFor="let field of depreciationFields | orderBy: 'displayName'; let i=index; let odd=odd; let even=even;">
+          <div class="col-md-6" *ngIf="even">
+            <dynamic-field [sourceTranslationKey]="getTranslationKey(field.translationKey)" [field]="field" [form]="formGroup"
+              [key]='field.displayName' [imageEntityType]="imageEntityType" [entityId]="assetDto.id"></dynamic-field>
+          </div>
+          <div class="col-md-6" *ngIf="odd">
+            <dynamic-field [sourceTranslationKey]="getTranslationKey(field.translationKey)" [field]="field" [form]="formGroup"
+              [key]='field.displayName' [imageEntityType]="imageEntityType" [entityId]="assetDto.id"></dynamic-field>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="row" *ngIf="customFormFields.length > 0">
+        <div class="col-md-12">
+          <h4 class="modal-title pb-3">{{i18n.common + 'Custom Fields' | dynamicTranslate }}</h4>
+        </div>
+      </div>
+
+
+
+
+      <div class="row" *ngIf="customFormFields.length > 0">
+
+        <ng-container
+          *ngFor="let field of customFormFields | orderBy: 'displayName'; let i=index; let odd=odd; let even=even;">
+          <div class="col-md-6" *ngIf="even">
+
+            <dynamic-field [sourceTranslationKey]="i18n.customField" [field]="field" [form]="formGroup"
+              [key]='field.displayName' [imageEntityType]="imageEntityType" [entityId]="assetDto.id" 
+              (customFieldLabelChange)="handleCustomFieldLabelChange($event)"></dynamic-field>
+
+          </div>
+
+          <div class="col-md-6" *ngIf="odd">
+
+            <dynamic-field [sourceTranslationKey]="i18n.customField" [field]="field" [form]="formGroup"
+              [key]='field.displayName' [imageEntityType]="imageEntityType" [entityId]="assetDto.id"
+              (customFieldLabelChange)="handleCustomFieldLabelChange($event)"></dynamic-field>
+
+          </div>
+
+        </ng-container>
+      </div>
+
+
+    </div>
+  </div>
+
+  <div class="footer">
+    <ng-container *ngIf="isReadOnly === false">
+      <button type="button" class="btn btn btn-default"
+        (click)="cancel()">{{i18n.common + 'Cancel' | dynamicTranslate }} </button>
+      <button *ngIf="isModal === false" type="button" class="btn btn-primary" (click)="keepFormOpen()"
+        [ladda]="isSaving">{{i18n.common + 'Save' | dynamicTranslate }} </button>
+      <button type="submit" class="btn btn-primary" (click)="saveAndClose()"
+        [ladda]="isSaving">{{i18n.common + 'Save And Close' | dynamicTranslate}}</button>
+    </ng-container>
+    <ng-container *ngIf="isReadOnly === true">
+      <button type="submit" class="btn btn btn-default" (click)="cancel()">{{i18n.common + 'Close' | dynamicTranslate }}
+      </button>
+    </ng-container>
+  </div>
+</form>

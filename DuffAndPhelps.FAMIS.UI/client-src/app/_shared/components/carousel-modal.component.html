@@ -1,0 +1,11 @@
+<modal-form [modalTitle]="modalTitle" [hideSubmit]="hideSubmit" (modalEvent)="handleModalEvent($event)">
+    <div class="row">
+        <div class="col-md-12">
+            <ngb-carousel *ngIf="imageUrlCollection" [interval]="10000000">
+                <ng-template ngbSlide *ngFor="let image of imageUrlCollection">
+                    <img [src]="image" alt="Image alt" class="carousel-image" />
+                </ng-template>
+            </ngb-carousel>
+        </div>
+    </div>
+</modal-form>

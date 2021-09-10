@@ -1,0 +1,25 @@
+.edit-image-row {
+  width: 730px;
+  max-width: 730px;
+  max-height: 500px;
+  overflow: scroll;
+  position: relative;
+  z-index: 1;
+  
+  & .edit-image-thumbnail {
+    display: flex;
+    align-items: center;
+    width: 350px;
+    height: 250px;
+    max-width: 350px;
+  }
+
+  & .edit-image-inputs {
+    margin: 1rem;
+
+    & > input {
+      width: 100%;
+      margin-top: 1rem;
+    }
+  }
+}

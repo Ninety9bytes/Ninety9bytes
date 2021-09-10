@@ -1,0 +1,110 @@
+<modal-form [modalTitle]="i18n.asset + modalTitle | dynamicTranslate" (modalEvent)="handleModalEvent($event)">
+    <form (ngSubmit)="retireAssets(assetRetirementForm)" #assetRetirementForm="ngForm">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+                    <label>{{i18n.common + 'Type' | dynamicTranslate}}</label>
+                    <select class="form-control" [(ngModel)]="assetRetirement.transactionApplicability" name="transactionApplicability" id="transactionApplicability" #replaceSourceField="ngModel" required>
+                        <option value="" disabled>
+                            <span>{{i18n.common + 'Select a Type' | dynamicTranslate}}</span>
+                        </option>
+                        <option [value]="applicability.Partial" [disabled]="disablePartial">{{i18n.asset + 'Partial' | dynamicTranslate}}</option>
+                        <option [value]="applicability.Full">{{i18n.asset + 'Full' | dynamicTranslate}}</option>
+                    </select>
+                    <div *ngIf="checkForTypeUndefined(assetRetirement.transactionApplicability) && !assetRetirementForm.valid && submitted" class="alert alert-danger">
+                        <div>
+                             {{i18n.common + 'Please enter a type.' | dynamicTranslate}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" *ngIf="assetRetirement.transactionApplicability != applicability.Full">
+            <div class="row">
+                <div class="col-md-6">
+                    <label>{{i18n.asset + 'Cost' | dynamicTranslate}}</label>
+                    <input type="number" min="0" class="form-control" [(ngModel)]="assetRetirement.costChange" name="costChange" #costChange="ngModel" 
+                        [disabled]="assetRetirement.quantityChange || assetRetirement.quantityChange === 0" (change)="formHasErrors = false"/>
+                </div>
+                <div class="col-md-6">
+                    <label>{{i18n.asset + 'Quantity' | dynamicTranslate}}</label>
+                    <input type="number" min="0" class="form-control" [(ngModel)]="assetRetirement.quantityChange" name="quantityChange" #quantityChange="ngModel" 
+                        [disabled]="assetRetirement.costChange || assetRetirement.costChange === 0" (change)="formHasErrors = false" />
+                </div>
+            </div>
+            <div class="row" *ngIf="((!assetRetirement.costChange && assetRetirement.quantityChange !== 0) && (!assetRetirement.quantityChange && assetRetirement.costChange !== 0)) && submitted">
+                <div class="col-md-12">
+                    <div  class="alert alert-danger">
+                        <div>
+                             {{i18n.qualityControl + 'Please enter cost or quantity, one must be entered' | dynamicTranslate}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+                    <label>{{i18n.asset + 'Disposal Code' | dynamicTranslate}}</label>
+                    <select class="form-control" [(ngModel)]="assetRetirement.disposalCode" name="disposalCode" id="disposalCode" required>
+                        <option value="" disabled>
+                            <span>{{i18n.qualityControl + 'Select a Display Code' | dynamicTranslate}}</span>
+                        </option>
+                        <option [value]="disposalCodes.Scrapped">{{i18n.asset + 'Scrapped' | dynamicTranslate}}</option>
+                        <option [value]="disposalCodes.Sold">{{i18n.asset + 'Sold' | dynamicTranslate}}</option>
+                        <option [value]="disposalCodes.TradedIn">{{i18n.asset + 'Traded In' | dynamicTranslate}}</option>
+                        <option [value]="disposalCodes.PostAudit">{{i18n.asset + 'Post Audit' | dynamicTranslate}}</option>
+                    </select>
+                    <div *ngIf="!assetRetirement.disposalCode && !assetRetirementForm.valid && submitted" class="alert alert-danger">
+                        <div>
+                            {{i18n.qualityControl + 'Please enter a disposal code.' | dynamicTranslate}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label>{{i18n.asset + 'Disposal Date' | dynamicTranslate}}</label>
+                    <kendo-datepicker [(value)]="assetRetirement.asOf" required></kendo-datepicker>
+                    <div *ngIf="!assetRetirement.asOf && submitted" class="alert alert-danger">
+                        <div>
+                             {{i18n.qualityControl + 'Please enter a disposal date.' | dynamicTranslate}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" *ngIf="equalityCheck(assetRetirement.costChange, assetsCollection[0].historicalCost)">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-warning">
+                        <div>
+                             {{i18n.qualityControl + 'Retirement cost entered equals historial cost, this will be processed as a full retirement.' | dynamicTranslate}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" *ngIf="equalityCheck(assetRetirement.quantityChange, this.assetsCollection[0]['quantity'])">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-warning">
+                        <div>
+                             {{i18n.qualityControl + 'Retirement quantity entered equals original quantity, this will be processed as a full retirement.' | dynamicTranslate}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" *ngIf="formHasErrors">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-danger">
+                        <div>
+                             {{i18n.qualityControl + formErrorText | dynamicTranslate}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</modal-form>

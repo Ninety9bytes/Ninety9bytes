@@ -1,0 +1,14 @@
+<ol class="breadcrumb">
+  <li *ngFor="let breadCrumb of breadCrumbs" class="breadcrumb-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+    <a [class.disabled]="!!breadCrumb.isDisabled && breadCrumb.isDisabled" [routerLink]="breadCrumb.routerLink" [queryParams]="breadCrumb.queryParams">{{i18n.qualityControl + breadCrumb.name | dynamicTranslate}}</a>
+  </li>
+</ol>
+
+<mass-update-criteria 
+  *ngIf="filterMetaData" 
+  [defaultFilterTerm]="defaultFilterTerm" 
+  [filterMetaData]="filterMetaData"
+  [translatedBaseKey]="i18n.building"
+  [replaceMetaData]="replaceMetaData"
+>
+</mass-update-criteria>

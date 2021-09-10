@@ -1,0 +1,37 @@
+<div class="row pb-3">
+  <div class="col-md-2">
+    <label>Client File Field</label>
+
+    <select class="form-control form-control" id="selectMatchCode" [(ngModel)]="fieldMatch.leftTerm.field" [name]="formFieldNames.leftTerm"
+      (change)="fieldMatchChange()" required>
+      <option *ngIf="!fieldMatch.leftTerm.field" [value]="fieldMatch.leftTerm.field" disabled>Select Field</option>
+      <option *ngFor="let item of inventoryMetadata[dataTargetNames.client]|orderBy:'displayName'" [value]="item.name">{{item.displayName}}</option>
+    </select>
+  </div>
+  <div class="col-md-1">
+    <p class="text-center">
+      <span class="criteria-operation" style="position:relative; top:40px;">Equals</span>
+    </p>
+  </div>
+  <div class="col-md-2">
+    <label>Actual Inventory Field</label>
+
+    <select class="form-control form-control" id="selectMatchCode" [(ngModel)]="fieldMatch.rightTerm.field" [name]="formFieldNames.rightTerm"
+      (change)="fieldMatchChange()" required>
+      <option *ngIf="!fieldMatch.rightTerm.field" [value]="fieldMatch.rightTerm.field" disabled>Select Field</option>
+      <option *ngFor="let item of inventoryMetadata[dataTargetNames.inventory]|orderBy:'displayName'" [value]="item.name">{{item.displayName}}</option>
+    </select>
+  </div>
+  <div class="col-md-2 align-self-center mt-3">
+
+
+    <button (click)="remove()" type="button" class="btn btn-action btn-small">
+      <i class="fa fa-minus"></i>
+    </button>
+    <strong>&nbsp;Remove Filter</strong>
+
+
+  </div>
+  <div class="col-md-5">
+  </div>
+</div>

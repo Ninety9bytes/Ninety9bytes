@@ -1,0 +1,80 @@
+<div id="DashboardModule">
+  <div class="row">
+    <br />
+    <div class="col-md-10 pull-left">
+      <h1>{{ i18n.common + 'All Projects' | dynamicTranslate }}</h1>
+    </div>
+  </div>
+  <br />
+
+  <div class="row">
+    <div class="col-md-12 actions pb-2">
+      <button *ngIf="headers.length > 0 && !defaultFilterSet" class="btn btn-sm btn-secondary float-right" type="button" (click)="saveDefaultFilter()">{{i18n.common + 'Save Default Filter' | dynamicTranslate}}</button>
+      <button *ngIf="headers.length > 0 && defaultFilterSet" class="btn btn-sm btn-primary float-right" type="button" (click)="clearDefaultFilter()">{{i18n.common + 'Clear Default Filter' | dynamicTranslate}}</button>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div>
+        <kendo-grid
+          *ngIf="headers.length > 0"
+          [selectable]="true"
+          [data]="gridViewData"
+          [filter]="state.filter"
+          [filterable]="true"
+          [pageSize]="state.take"
+          [reorderable]="true"
+          [sortable]="true"
+          [sort]="state.sort"
+          [pageable]="true"
+          [pageSize]="state.take"
+          [skip]="state.skip"
+          (sortChange)="sortChange($event)"
+          (filterChange)="filterChange($event)"
+          (dataStateChange)="dataStateChange($event)" (columnReorder)="onColumnReorder($event)"
+        >
+          <ng-container *ngFor="let column of headers | orderBy: 'order'">
+            <kendo-grid-column #grid
+              [reorderable]="true"
+              field="{{column.name}}"
+              format="{{column.format}}"
+              title="{{getColumnTitle(column)}}"
+              editable="{{column.isEditable}}"
+            >
+              <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                <ng-template kendoGridFilterMenuTemplate let-filter let-column="column" let-filterService="filterService">
+                  <kendo-grid-string-filter-cell [column]="column" [filter]="filter">
+                    <kendo-filter-eq-operator></kendo-filter-eq-operator>
+                    <kendo-filter-neq-operator></kendo-filter-neq-operator>
+                    <kendo-filter-startswith-operator></kendo-filter-startswith-operator>
+                    <kendo-filter-contains-operator></kendo-filter-contains-operator>
+                    <kendo-filter-not-contains-operator></kendo-filter-not-contains-operator>
+                    <kendo-filter-isnull-operator></kendo-filter-isnull-operator>
+                    <kendo-filter-isnotnull-operator></kendo-filter-isnotnull-operator>
+                  </kendo-grid-string-filter-cell>
+                </ng-template>
+
+                <div class="btn-circle">{{ dataItem[column.name] }}</div>
+              </ng-template>
+            </kendo-grid-column>
+          </ng-container>
+
+        
+
+          <kendo-grid-column [reorderable]="false" [title]="i18n.common + 'Actions' | dynamicTranslate" width="100">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+              <a class="clickable-link" (click)="navigateToProject(dataItem.primaryGroupId, $event)">{{
+                i18n.dashboard + 'View Project' | dynamicTranslate
+              }}</a>
+            </ng-template>
+          </kendo-grid-column>
+
+          <div *kendoGridDetailTemplate="let dataItem"><dashboard-groups [id]="dataItem.id"></dashboard-groups></div>
+
+        </kendo-grid>
+      </div>
+    </div>
+  </div>
+</div>

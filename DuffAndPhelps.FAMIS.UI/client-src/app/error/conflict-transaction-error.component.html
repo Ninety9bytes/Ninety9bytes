@@ -1,0 +1,19 @@
+<div class="container error-pages">
+  <div class="jumbotron">
+    <h1>
+      <span class="glyphicon glyphicon-fire "></span> {{i18n.common + 'Conflict' | dynamicTranslate}}
+    </h1>
+    <p class="lead">{{i18n.common + 'The web server is returning a 409 conflict.' | dynamicTranslate}}</p>
+    <p class="lead">{{i18n.common + 'To Resolve: Revert the latest transaction with identical displayId.' | dynamicTranslate}}</p>
+    <p>
+      <a (click)="backToPrevious()">
+        <u>{{i18n.common + 'Go back to previous page.' | dynamicTranslate}}</u>
+      </a>
+    </p>
+    <p>
+      <a [routerLink]="['/dashboard']">
+        <u>{{i18n.common + 'Take me to the Dashboard' | dynamicTranslate}}</u>
+      </a>
+    </p>
+  </div>
+</div>

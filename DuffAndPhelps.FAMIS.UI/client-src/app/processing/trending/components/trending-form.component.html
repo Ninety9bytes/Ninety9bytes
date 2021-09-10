@@ -1,0 +1,21 @@
+<h1>{{i18n.common + 'Trending' | dynamicTranslate }}</h1>
+
+<div class="row buffer-row" *ngIf="!isReadyForProcessing && !isLoading">
+  <div class="col-md-8">
+    <div class="action-link ">
+      {{ i18n.common + 'No data loaded - ' | dynamicTranslate }}&nbsp;
+      <a href="" (click)="navigateToImportData($event)">{{ i18n.common + 'Import Data' | dynamicTranslate }}</a>
+    </div>
+  </div>
+</div>
+
+
+<ng-container *ngIf="isReadyForProcessing && !isLoading">
+  <ol class="breadcrumb">
+    <li *ngFor="let breadCrumb of breadCrumbs" class="breadcrumb-item" routerLinkActive="active">
+      <a [class.disabled]="!!breadCrumb.isDisabled && breadCrumb.isDisabled" [routerLink]="breadCrumb.routerLink" >{{i18n.common + breadCrumb.name | dynamicTranslate }}</a>
+    </li>
+  </ol>
+
+  <router-outlet></router-outlet>
+</ng-container>

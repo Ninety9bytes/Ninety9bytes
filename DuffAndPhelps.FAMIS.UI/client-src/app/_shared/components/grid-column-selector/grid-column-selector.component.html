@@ -1,0 +1,23 @@
+<kendo-grid [resizable]="true" [data]="gridView" [height]="350" [selectable]="{
+  checkboxOnly: true
+}" [kendoGridSelectBy]="'name'"
+  [selectedKeys]="selectedColumns" [sortable]="true" [sort]="sort" (sortChange)="sortChange($event)" #grid>
+  <kendo-grid-checkbox-column [width]="40">
+
+  </kendo-grid-checkbox-column>
+
+  <kendo-grid-column [width]="200" field="name" title="{{i18n.common + 'Column Name' | dynamicTranslate }}">
+
+
+      <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+        <ng-container *ngIf="!dataItem.isCustom">
+        {{sourceTranslationKey + dataItem.displayName | dynamicTranslate }}
+        </ng-container>  
+        <ng-container *ngIf="dataItem.isCustom">
+            {{dataItem.name}}
+            </ng-container> 
+        </ng-template>
+
+  </kendo-grid-column>
+
+</kendo-grid>

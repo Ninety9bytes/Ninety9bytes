@@ -1,0 +1,40 @@
+<h2>{{portalLabel}}</h2>
+<div class="row pt-4 pl-2 btn-group">
+  <button (click)="toggleSetupMode(setupModes.SetupAccess)" type="button" 
+    [class.btn-default]="this.setupMode!==setupModes.SetupAccess" [class.btn-primary]="this.setupMode===setupModes.SetupAccess" 
+    class="btn btn-primary">{{i18n.common + 'Portal Access' | dynamicTranslate}}</button>
+  
+   <button (click)="toggleSetupMode(setupModes.SetupData)" type="button"
+   [class.btn-default]="this.setupMode !== setupModes.SetupData" [class.btn-primary]="this.setupMode === setupModes.SetupData"
+   class="btn btn-default">{{i18n.common + 'Portal Data' | dynamicTranslate}}</button>
+
+   <button (click)="toggleSetupMode(setupModes.SetupImage)" type="button"
+   [class.btn-default]="this.setupMode !== setupModes.SetupImage" [class.btn-primary]="this.setupMode === setupModes.SetupImage"
+   class="btn btn-default">{{i18n.common + 'Portal Image' | dynamicTranslate}}</button>
+
+   <button (click)="toggleSetupMode(setupModes.SetupMetadata)" type="button"
+   [class.btn-default]="this.setupMode !== setupModes.SetupMetadata" [class.btn-primary]="this.setupMode === setupModes.SetupMetadata"
+   class="btn btn-default">{{i18n.common + 'Portal Report Filters' | dynamicTranslate}}</button>
+
+</div>
+<div class="row" *ngIf="this.setupMode===setupModes.SetupAccess">
+  <div class="col-md-12">
+      <setup-access [group]="group"></setup-access>
+  </div>
+  
+</div>
+<div class="row" *ngIf="this.setupMode===setupModes.SetupData">
+  <div class="col-md-12">
+    <setup-data [group]="group"></setup-data>
+  </div>
+</div>
+<div class="row" *ngIf="this.setupMode===setupModes.SetupImage">
+  <div class="col-md-12">
+    <setup-image [group]="group"></setup-image>
+  </div>
+</div>
+<div class="row" *ngIf="this.setupMode===setupModes.SetupMetadata">
+  <div class="col-md-12">
+    <setup-metadata [group]="group"></setup-metadata>
+  </div>
+</div>

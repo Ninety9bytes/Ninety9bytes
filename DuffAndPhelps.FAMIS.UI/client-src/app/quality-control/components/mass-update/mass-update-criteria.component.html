@@ -1,0 +1,25 @@
+<form (ngSubmit)="onSubmit(massUpdateForm)" #massUpdateForm="ngForm">
+    
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>{{i18n.common + 'Filter Criteria' | dynamicTranslate}}</h3>
+                <div #filterCriteria></div>
+
+                <button type="button" (click)="addFilter()" class="btn btn-action btn-small">
+                    <i class="fa fa-plus"></i>
+                </button><strong>&nbsp;{{i18n.common + 'Add Filter Criteria' | dynamicTranslate}}</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group pt-4">
+        <replace-field [translatedBaseKey]="translatedBaseKey" [form]="massUpdateForm" [supportsAdvancedReplace]="true" [isAdvanced]='isAdvanced'></replace-field>
+    </div>
+
+    <div class="form-group pt-4">
+        <button [ladda]="isProcessing" class="btn btn-default" type="button" (click)="cancel()">{{i18n.common + 'Cancel' | dynamicTranslate}}</button>
+        <button [ladda]="isProcessing" class="btn btn-primary" type="submit">{{i18n.common + 'Continue' | dynamicTranslate}}</button>
+    </div>
+
+</form>

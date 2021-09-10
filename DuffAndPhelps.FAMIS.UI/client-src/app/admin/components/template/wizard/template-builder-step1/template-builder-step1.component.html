@@ -1,0 +1,88 @@
+﻿<form (ngSubmit)="onSubmit(dataImportForm)" #dataImportForm="ngForm" (keydown)="handleKeyDown($event)">
+
+  <div class="form-group row">
+    <div *ngIf="!templateWizard.isEditingForGroup" class="col-6">
+      <label for="inputTemplateName">{{i18n.templateManagement + 'Template Name' | dynamicTranslate }}</label>
+      <input type="text" class="form-control" id="inputTemplateName" aria-describedby="inputTemplateName" [(ngModel)]="template.name"
+        name="Name" required #inputTemplateName="ngModel" (input)="onInputChange($event.target.value)">
+
+      <div *ngIf="isDuplicate" class="alert alert-danger">
+         {{i18n.templateManagement + 'This name is already in use.' | dynamicTranslate }}
+      </div>
+
+      <div *ngIf="inputTemplateName.errors && (inputTemplateName.dirty || inputTemplateName.touched || dataImportForm.submitted)"
+        class="alert alert-danger">
+        <div [hidden]="!inputTemplateName.errors.required">
+           {{i18n.templateManagement + 'Please create a template name.' | dynamicTranslate }}
+        </div>
+      </div>
+
+    </div>
+    <div *ngIf="templateWizard.isEditingForGroup" class="col-6">
+      <label for="inputTemplateName">{{i18n.templateManagement + 'Template Name' | dynamicTranslate }}</label>
+      <input readonly type="text" class="form-control" id="inputTemplateName" aria-describedby="inputTemplateName" [(ngModel)]="template.name"
+        name="Name" #inputTemplateName="ngModel">
+    </div>
+
+
+  </div>
+
+  <div class="form-group row">
+    <div class="col-6">
+      <label for="selectOffice">{{i18n.projectProfile + 'Office' | dynamicTranslate }}</label>
+      <select class="form-control" [(ngModel)]="template.officeId" name="Office" id="selectOffice" required #selectOffice="ngModel">
+        <option disabled>{{i18n.templateManagement + 'Select an office' | dynamicTranslate }}</option>
+        <option *ngFor="let opt of offices | orderBy: 'name'" [value]="opt.id">{{i18n.projectProfile + 'Office_' + opt.name | dynamicTranslate }}</option>
+      </select>
+
+      <div *ngIf="selectOffice.errors && (selectOffice.dirty || selectOffice.touched || dataImportForm.submitted)" class="alert alert-danger">
+        <div [hidden]="!selectOffice.errors.required">
+           {{i18n.templateManagement + 'Please select an office.' | dynamicTranslate }}
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-6">
+
+      <label for="multiSelectModule">{{i18n.templateManagement + 'Module Selection' | dynamicTranslate }}</label>
+      <select multiple class="form-control" id="multiSelectModule" [(ngModel)]="selectedModuleIds" name="Module" required #multiSelectModule="ngModel">
+        <option selected [disabled]="opt.isRequired" *ngFor="let opt of modules | orderBy: 'order'" [value]="opt.id">{{i18n.common + opt.name | dynamicTranslate }}</option>
+
+      </select>
+      <small class="text-muted">
+        {{i18n.templateManagement + 'Ctrl + click to select all fields that apply' | dynamicTranslate }}
+      </small>
+
+      <div *ngIf="multiSelectModule.errors && (multiSelectModule.dirty || multiSelectModule.touched || dataImportForm.submitted)"
+        class="alert alert-danger">
+        <div [hidden]="!multiSelectModule.errors.required">
+           {{i18n.templateManagement + 'Please select at least one module.' | dynamicTranslate }}
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div *ngIf="!templateWizard.isEditingForGroup" class="form-check">
+
+
+    <input type="checkbox" class="k-checkbox" id="isMasterTemplate" [(ngModel)]="template.isMasterTemplate" name="isMasterTemplate">
+    <label class="k-checkbox-label" for="isMasterTemplate">{{i18n.templateManagement + 'Save as Master Template' | dynamicTranslate }}</label>
+
+
+
+  </div>
+
+  <div class="wizard-actions">
+
+
+    <button class="btn btn-default" (click)='onCancel($event)'>{{i18n.common + 'Cancel' | dynamicTranslate }}</button>
+    <button type="submit" class="btn btn-primary">{{i18n.common + 'Continue' | dynamicTranslate }}</button>
+
+
+  </div>
+
+</form>

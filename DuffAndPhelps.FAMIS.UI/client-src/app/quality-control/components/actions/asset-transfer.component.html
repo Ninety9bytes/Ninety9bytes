@@ -1,0 +1,81 @@
+<modal-form [modalTitle]="i18n.asset + modalTitle | dynamicTranslate" (modalEvent)="handleModalEvent($event)">
+    <form (ngSubmit)="transferAssets(assetTransferForm)" #assetTransferForm="ngForm">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+                    <label>{{i18n.common + 'Type' | dynamicTranslate}}</label>
+                    <select class="form-control" name="type" required (change)="checkDisablePartial($event)" [(ngModel)]="assetTransfer.transactionApplicability" id="type">
+                        <option value="" disabled>
+                            <span>{{i18n.common + 'Select a Type' | dynamicTranslate}}</span>
+                        </option>
+                        <option [ngValue]="applicability.Full">{{i18n.asset + 'Full' | dynamicTranslate}}</option>
+                        <option [ngValue]="applicability.Partial" [disabled]="disablePartial">{{i18n.asset + 'Partial' | dynamicTranslate}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div clas="form-group">
+            <div class="row">
+                <div class="col-md-12">
+                    <label>{{i18n.asset + 'Member' | dynamicTranslate}}</label>
+                    <br />
+                    <cascading-combo-box [(ngModel)]="memberSiteBuilding" name="memberSiteBuilding"
+                    [valuesToSelect]="groupHierarchySelectValues"
+                    [options]="groupHierarchy"></cascading-combo-box>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" >
+            <div class="row" *ngIf="!hidePartialFields">
+                <div class="col-md-6">
+                    <label>{{i18n.asset + 'Cost' | dynamicTranslate}}</label>
+                    <input type="number" class="form-control" name="cost" [(ngModel)]="assetTransfer.costChange" />
+                </div>
+                <div class="col-md-6">
+                    <label>{{i18n.asset + 'Quantity' | dynamicTranslate}}</label>
+                    <input type="number" class="form-control" name="quantity" [(ngModel)]="assetTransfer.quantityChange" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+                    <label>{{i18n.asset + 'Floor' | dynamicTranslate}}</label>
+                    <input type="text" class="form-control" name="floor" [(ngModel)]="floorValue" />
+                </div>
+                <div class="col-md-6">
+                    <label>{{i18n.asset + 'Room' | dynamicTranslate}}</label>
+                    <input type="text" class="form-control" name="room" [(ngModel)]="roomValue" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+                    <label>{{i18n.asset + 'Department Name' | dynamicTranslate}}</label>
+                    <select class="form-control" id="DepartmentSelection" [(ngModel)]="selectedDepartmentId" name="accountSelection">
+                        <option *ngFor="let opt of departmentOptions" [value]="opt.id">{{opt.departmentNumber}}</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label>{{i18n.asset + 'Account Description' | dynamicTranslate}}</label>
+                    <select class="form-control" id="AccountSelection" [(ngModel)]="selectedAccountId" name="accountSelection">
+                        <option *ngFor="let opt of accountOptions" [value]="opt.id">{{opt.accountDescription}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="hasErrors() && submitted">
+            <div class="col-md-12">
+                <div class="alert alert-danger">
+                    <div>
+                        {{i18n.qualityControl + errorMessage | dynamicTranslate}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</modal-form>

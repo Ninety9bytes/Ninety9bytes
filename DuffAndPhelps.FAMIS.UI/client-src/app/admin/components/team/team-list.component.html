@@ -1,0 +1,22 @@
+<kendo-grid [resizable]="true" [data]="teams" [selectable]="true" [rowSelected]="isRowSelected" (selectionChange)="selectRow($event)">
+  <kendo-grid-column field="Name" i18n-title="Grid-Name col@@teamgridNameCol" title="Name" [width]="150"></kendo-grid-column>
+  <kendo-grid-column field="Active" i18n-title="Grid-Active col@@teamgridActiveCol" title="Active" [width]="40">
+    <ng-template kendoGridCellTemplate let-user>
+
+      <div class="checkbox k-form-field">
+        <input type="checkbox" class="k-checkbox" id="userActive" [checked]="user.Active" disabled>
+        <label class="k-checkbox-label" for="userActive"></label>
+      </div>
+
+    </ng-template>
+  </kendo-grid-column>
+</kendo-grid>
+<div *ngIf="selectedTeam">
+  <h2>{{selectedTeam.Name}} </h2>
+  <div>
+    <label>
+      <ng-container i18n="Name label@@teamlistName">Name</ng-container>: </label>
+    <input [(ngModel)]="selectedTeam.Name" i18n-placeholder="Name placeholder for team name@@teamlistNamePlaceholder" placeholder="name"
+    />
+  </div>
+</div>

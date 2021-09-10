@@ -1,0 +1,63 @@
+<div class="row">
+    <div class="col-md-12">
+        <h3>{{i18n.common + 'Replace' | dynamicTranslate}}</h3>
+    </div>
+</div>
+<div *ngIf="supportsAdvancedReplace" class="row actions pt-2">
+    <div class="col-md-3 btn-group">
+        <button type="button" [class.btn-default]="mode != replaceFieldModes.Text" [class.btn-primary]="mode === replaceFieldModes.Text" class="btn btn-primary"
+            (click)="toggleAdvancedMode(replaceFieldModes.Text)">{{i18n.common + 'Text' | dynamicTranslate}}</button>
+        <button type="button" [class.btn-default]="mode != replaceFieldModes.Advanced" [class.btn-primary]="mode === replaceFieldModes.Advanced" class="btn btn-primary"
+            (click)="toggleAdvancedMode(replaceFieldModes.Advanced)">{{i18n.common + 'Advanced' | dynamicTranslate}}</button>
+    </div>
+</div>
+<div class="row pt-2">
+    <div class="col-md-4">
+        <label>{{i18n.common + 'Field' | dynamicTranslate}}</label>
+        <select class="form-control" [(ngModel)]="state.replacementField" name="replaceFieldSelect" id="replaceFieldSelect" #replaceSourceField="ngModel" (change)="updateModel()" required>
+            <option value="" disabled>
+                <span>{{i18n.common + 'Select a Field' | dynamicTranslate}}</span>
+            </option>
+            <option *ngFor="let field of state.collection" [value]="field.name">{{ translatedBaseKey + field.displayName | dynamicTranslate}}</option>
+        </select>
+        <div *ngIf="replaceSourceField.errors && form.submitted" class="alert alert-danger">
+            <div>
+                 {{i18n.common + 'Please select a replacement field.' | dynamicTranslate}}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+      <label>{{i18n.common + 'New Value' | dynamicTranslate}}</label>
+
+      <input *ngIf="mode === replaceFieldModes.Text && !state.replacementField" type="text" disabled="true" [name]="replacementValue" class="form-control">
+
+      <input type="text" *ngIf="mode === replaceFieldModes.Text && state.replacementField && !checkFieldIsDate(state.replacementField)" [(ngModel)]="state.replacementValue" [name]="replacementValue"
+             class="form-control" (change)="updateModel()" (blur)="updateModel()">
+
+      <kendo-datepicker class="form-control" *ngIf="mode === replaceFieldModes.Text && state.replacementField && checkFieldIsDate(state.replacementField) && !checkFieldIsSelection(state.replacementField)" [(ngModel)]="state.replacementValue"
+                        [name]="replacementValue" (change)="updateModel()"></kendo-datepicker>
+      
+      <select class="form-control" *ngIf="mode === replaceFieldModes.Text && state.replacementField && checkFieldIsSelection(state.replacementField)" 
+        [(ngModel)]="state.replacementValue" (change)="updateModel()">
+        <option value="">
+            <span></span>
+        </option>
+        <option *ngFor="let opt of currentSelectionOptions" [value]="opt.value">{{opt.name}}</option>
+      </select>
+
+      <div #replaceValue contenteditable="true" class="form-control" style="overflow-x: hidden" (input)="state.replacementValue=$event.target.textContent" *ngIf="mode === replaceFieldModes.Advanced"
+           (blur)="updateModel()" (keydown)="validateAdvancedReplacement($event)" name="replaceValue"></div>
+    </div>
+    <div class="col-md-4 actions" *ngIf="mode === replaceFieldModes.Advanced">
+        <label>&nbsp;</label><br/>
+        <div ngbDropdown class="d-inline-block">
+            <button type="button"  class="btn btn-primary" id="Advanced" ngbDropdownToggle>{{i18n.common + 'Insert Field' | dynamicTranslate}}</button>
+            <div class="dropdown-menu bottom-right" ngbDropdownMenu aria-labelledby="SelectField">
+                <ng-container *ngFor="let field of state.collection">
+                    <button type="button" class="dropdown-item"  *ngIf="field.fieldType === fieldTypes.Integer || field.fieldType === fieldTypes.Double" 
+                        (click)="insertAdvancedField(field.name)">{{translatedBaseKey + field.displayName | dynamicTranslate}}</button>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

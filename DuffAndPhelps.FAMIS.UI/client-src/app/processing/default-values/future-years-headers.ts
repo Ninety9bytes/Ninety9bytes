@@ -1,0 +1,57 @@
+import { GridColumnHeader } from '../../_models/grid-column-header.model';
+import { FieldType } from '../../_enums/field-type';
+
+export const futureYearsMetaData: Array<GridColumnHeader> = [
+  {
+    name: 'depreciationBasis',
+    order: 1,
+    displayName: 'Depreciation Basis',
+    fieldType: FieldType.Double,
+    isSearchable: false,
+    isFilterable: false,
+    isSortable: false,
+    isFacetable: false,
+    isKey: false,
+    isCustom: false,
+    isEditable: false,
+  },
+  {
+    name: 'depreciationAsOfDate',
+    order: 2,
+    displayName: 'Depreciation As Of Date',
+    fieldType: FieldType.DateTime,
+    isSearchable: false,
+    isFilterable: false,
+    isSortable: false,
+    isFacetable: false,
+    isKey: false,
+    isCustom: false,
+    isEditable: false,
+  },
+  {
+    name: 'accumulatedDepreciation',
+    order: 3,
+    displayName: 'Accumulated Depreciation',
+    fieldType: FieldType.Double,
+    isSearchable: false,
+    isFilterable: false,
+    isSortable: false,
+    isFacetable: false,
+    isKey: false,
+    isCustom: false,
+    isEditable: false,
+  },
+  {
+    name: 'periodDepreciation',
+    order: 4,
+    displayName: 'Period Depreciation',
+    fieldType: FieldType.Double,
+    isSearchable: false,
+    isFilterable: false,
+    isSortable: false,
+    isFacetable: false,
+    isKey: false,
+    isCustom: false,
+    isEditable: false,
+  }
+];

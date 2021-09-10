@@ -1,0 +1,44 @@
+<button type="button" (click)="open()" class="btn btn-action btn-small">
+        <i class="fa fa-plus"></i>
+    </button>
+    <strong> &nbsp; {{i18n.headerManagement + 'Add Account' | dynamicTranslate}}</strong>
+    
+    <ng-template #content>
+        <form (ngSubmit)="onSubmit(accountUpsertForm)" #accountUpsertForm="ngForm">
+            <div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="nameInput">{{i18n.projectProfile + 'Account Description' | dynamicTranslate}}</label>
+                                <input type="text" class="form-control" [(ngModel)]="request.accountDescription" name="description" #description="ngModel" required />
+    
+                                <div *ngIf="description.errors && accountUpsertForm.submitted" class="alert alert-danger">
+                                    <div>
+                                        {{i18n.headerManagement + 'Please enter a account description.' | dynamicTranslate}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="nameInput">{{i18n.projectProfile + 'Account Number' | dynamicTranslate}}</label>
+                                <input type="text" class="form-control" [(ngModel)]="request.accountNumber" name="accountNumber" #accountNumber="ngModel" required />
+    
+                                <div *ngIf="accountNumber.errors && accountUpsertForm.submitted" class="alert alert-danger">
+                                    <div>
+                                        {{i18n.headerManagement + 'Please enter a account number.' | dynamicTranslate}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" (click)="windowManager.close()">{{i18n.common + 'Cancel' | dynamicTranslate}}</button>
+                    <button type="submit" class="btn btn-primary">{{i18n.common + 'Save' | dynamicTranslate}}</button>
+                </div>
+            </div>
+    
+        </form>
+    </ng-template>

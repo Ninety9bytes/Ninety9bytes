@@ -1,0 +1,89 @@
+﻿<div class="form-group" [formGroup]="form">
+
+  <div class="row">
+    <div class="col-md-8">
+
+
+      <label *ngIf="sourceTranslationKey !== i18n.customField" [attr.for]="field.id">{{sourceTranslationKey + field.displayName | dynamicTranslate }}</label>
+      <ng-container *ngIf="sourceTranslationKey === i18n.customField">
+        <label [attr.for]="field.id" contentEditable="true" style="cursor: text;" (blur)="customLabelChange($event, field)">{{field.displayName}}</label>&nbsp;<i class="fa fa-pencil" aria-hidden="true"></i>
+      </ng-container>
+
+      <div [ngSwitch]="field.type">
+
+        <input type="hidden" class="form-control"  [formControlName]="field.id" *ngSwitchCase="fieldTypes.Hidden">
+
+
+        <div *ngSwitchCase="fieldTypes.Boolean" [attr.disabled]="field.isReadOnly" class="checkbox k-form-field">
+          <input type="checkbox" [attr.disabled]="field.isReadOnly" [formControlName]="field.id" [id]="field.id"
+            [tabindex]="field.order" [id]="field.id" class="k-checkbox">
+          <label class="k-checkbox-label" [for]="field.id"></label>
+        </div>
+
+        <image-upload-field [attr.disabled]="field.isReadOnly" *ngSwitchCase="fieldTypes.Image" [imageEntityType]="imageEntityType"
+          [entityId]="entityId"></image-upload-field>
+
+        <input class="form-control" [attr.disabled]="field.isReadOnly" *ngSwitchCase="fieldTypes.ReadOnly"
+          [formControlName]="field.id" [tabindex]="field.order" [type]="field.type" disabled="true">
+
+        <input class="form-control" [attr.disabled]="field.isReadOnly" *ngSwitchCase="fieldTypes.String"
+          [formControlName]="field.id" [tabindex]="field.order" [type]="field.type">
+
+        <span *ngSwitchCase="fieldTypes.Integer" class="hide-increment-controls">
+          <kendo-numerictextbox [attr.disabled]="field.isReadOnly" [formControlName]="field.id"
+          [decimals]="0" [format]="'G'" [tabindex]="field.order" [min]="field.min"></kendo-numerictextbox>
+        </span>
+
+        <span *ngSwitchCase="fieldTypes.Double" class="hide-increment-controls">
+          <kendo-numerictextbox [attr.disabled]="field.isReadOnly" [formControlName]="field.id"
+          [decimals]="field.decimalLength" [format]="field.format" [style.width]="'250px'"
+          [tabindex]="field.order" [min]="field.min"></kendo-numerictextbox>
+        </span>
+
+        <span *ngSwitchCase="fieldTypes.Percent" class="hide-increment-controls">
+          <kendo-numerictextbox [attr.disabled]="field.isReadOnly" [formControlName]="field.id"
+          [decimals]="field.decimalLength" [format]="field.format" [style.width]="'250px'" [step]="1" 
+          [tabindex]="field.order" [min]="field.min"></kendo-numerictextbox>
+        </span>
+
+       <!--  <kendo-numerictextbox [attr.disabled]="field.isReadOnly" *ngSwitchCase="fieldTypes.Percent" [formControlName]="field.id"
+         [decimals]="field.decimalLength" [format]="field.format" [style.width]="'250px'"
+         [tabindex]="field.order"></kendo-numerictextbox> -->
+
+
+        <div *ngSwitchCase="fieldTypes.DateTime">
+           <kendo-datepicker *ngIf="!field.format" [attr.disabled]="field.isReadOnly" [formControlName]="field.id" [tabindex]="field.order" (valueChange)="onChange($event)" [(ngModel)]="dateValue"></kendo-datepicker>
+           <kendo-datepicker *ngIf="field.format" [format]="field.format" [attr.disabled]="field.isReadOnly" [formControlName]="field.id" [tabindex]="field.order" (valueChange)="onChange($event)" [(ngModel)]="dateValue"></kendo-datepicker>
+        </div>
+
+        <cascading-combo-box *ngSwitchCase="fieldTypes.CascadingComboBox" [attr.disabled]="field.isReadOnly"
+          [formControlName]="field.id" [valuesToSelect]="field.cascadedValues" [options]="field.cascadedValueOptions" [required]="field.required"></cascading-combo-box>
+
+        <div *ngSwitchCase="fieldTypes.DropDown">
+          <select [attr.disabled]="field.isReadOnly" class="form-control" [formControlName]="field.id">
+            <option *ngFor="let option of field.options" [value]="option.key">{{sourceTranslationKey +
+              option.displayName | dynamicTranslate}}</option>
+          </select>
+        </div>
+
+
+        <div *ngSwitchCase="fieldTypes.EmptySpace">
+          &nbsp;
+       </div>
+
+      </div>
+
+
+      <div class="errorMessage" *ngIf="!isValid && field.required && field.type !== fieldTypes.CascadingComboBox">{{sourceTranslationKey + field.displayName + '
+        is required.' | dynamicTranslate}}</div>
+      <div class="errorMessage" *ngIf="!isValid && hasMinProperty">
+        {{sourceTranslationKey + 'Field must have a minimum value of ' | dynamicTranslate}}{{field.min + '.'}}
+      </div>
+    </div>
+    <div class="col-md-2">
+      <button *ngIf="canRemove" (click)="remove()" type="button" class="btn btn-action btn-small">
+        <i class="fa fa-minus"></i>
+      </button>
+    </div>
+  </div>
+</div>

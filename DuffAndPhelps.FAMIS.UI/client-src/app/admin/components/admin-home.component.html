@@ -1,0 +1,24 @@
+<div class="container pull-left">
+  <div class="row">
+    <div class="col-md-2">
+      <div class="sidebar">
+        <ul class="menu list-unstyled">
+          <li>
+            <a class="nav-link" href="#" routerLink="users" routerLinkActive="menu-active" i18n="Admin menu Users@@sidenavUsers">Users</a>
+          </li>
+          <li>
+            <a class="nav-link" href="#" routerLink="teams" routerLinkActive="menu-active" i18n="Admin menu Teams@@sidenavTeams">Teams</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-10">
+      <div class="form-layout">
+
+        <router-outlet></router-outlet>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<famis-grid *ngIf="!!buildingGrid.loading && !!buildingGrid.selectedHeaders" 
+    [famisGrid]="buildingGrid"
+    [InGridEditableNonNegativeColumns]="nonNegativeFields"
+    (selectionChanged)="handleSelectionChanged($event)"
+    (actionEvent)="handleActionEvent($event)"
+    (updateCacheEvent)="updateCache($event)"
+    (sortChanged)="handleSortChanged($event)"
+    (cellValueChanged)="handleCellValueChanged($event)"
+    [showAddCustomColumn]="true">
+</famis-grid>

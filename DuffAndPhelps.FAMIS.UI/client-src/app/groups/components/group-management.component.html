@@ -1,0 +1,65 @@
+<h1>{{i18n.common + 'Group Management' | dynamicTranslate}}</h1>
+
+<div class="row buffer-row">
+    <div class="col-md-12">
+        <!-- Add loading indicator -->
+        <div id="group-management-grid">
+            <kendo-grid [data]="gridData" [pageSize]="state.take" [skip]="state.skip" [sort]="state.sort"
+                [filter]="state.filter" [sortable]="true" [pageable]="true" [filterable]="true" (filterChange)="handleFilterChange($event)"
+                (dataStateChange)="dataStateChange($event)" filterable="menu">
+                <kendo-grid-column class="grid-actions" field="Actions" [filterable]="false"
+                    title="{{i18n.dashboard + 'actions' | dynamicTranslate}}" width="20%">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        <a (click)="handleActionEvent(dataItem, 'Edit')">{{i18n.common + 'Edit' | dynamicTranslate}}</a>
+                        <a (click)="handleActionEvent(dataItem, 'Delete')">{{i18n.common + 'Delete' | dynamicTranslate}}</a>
+                    </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column field="groupName" title="{{i18n.dashboard + 'groupname' |dynamicTranslate}}" width="40%">
+                    <ng-template kendoGridFilterMenuTemplate let-filter let-column="column">
+                        <kendo-grid-string-filter-menu [column]="column" [filter]="filter">
+                            <kendo-filter-eq-operator></kendo-filter-eq-operator>
+                            <kendo-filter-neq-operator></kendo-filter-neq-operator>
+                            <kendo-filter-startswith-operator></kendo-filter-startswith-operator>
+                            <kendo-filter-contains-operator></kendo-filter-contains-operator>
+                            <kendo-filter-not-contains-operator></kendo-filter-not-contains-operator>
+                            <kendo-filter-isnull-operator></kendo-filter-isnull-operator>
+                            <kendo-filter-isnotnull-operator></kendo-filter-isnotnull-operator>
+                        </kendo-grid-string-filter-menu>
+                    </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column field="templateName" title="{{i18n.dashboard+'templatename' | dynamicTranslate}}" width="40%">
+                    <ng-template kendoGridFilterMenuTemplate let-filter let-column="column">
+                        <kendo-grid-string-filter-menu [column]="column" [filter]="filter">
+                            <kendo-filter-eq-operator></kendo-filter-eq-operator>
+                            <kendo-filter-neq-operator></kendo-filter-neq-operator>
+                            <kendo-filter-startswith-operator></kendo-filter-startswith-operator>
+                            <kendo-filter-contains-operator></kendo-filter-contains-operator>
+                            <kendo-filter-not-contains-operator></kendo-filter-not-contains-operator>
+                            <kendo-filter-isnull-operator></kendo-filter-isnull-operator>
+                            <kendo-filter-isnotnull-operator></kendo-filter-isnotnull-operator>
+                        </kendo-grid-string-filter-menu>
+                    </ng-template>
+                </kendo-grid-column>
+            </kendo-grid>
+        </div>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <group-management-modal [contractId]="contractId" [groupNames]="groupNames"
+            (onAddorUpdateGroup)="handleCreateorModifiedGroup($event)" (onAction)="handleAction($event)">
+        </group-management-modal>
+    </div>
+</div>
+
+<div class="row pt-5">
+    <div class="col-md-12">
+        <div class="wizard-actions">
+            <button class="btn btn-default" type="button"
+                (click)="back()">{{i18n.common + 'Back to Main Profile' | dynamicTranslate}}</button>
+        </div>
+    </div>
+</div>

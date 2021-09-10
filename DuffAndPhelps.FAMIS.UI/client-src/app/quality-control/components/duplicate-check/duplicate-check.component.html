@@ -1,0 +1,62 @@
+<ol class="breadcrumb">
+    <li *ngFor="let breadCrumb of breadCrumbs" class="breadcrumb-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+          true}">
+        <a [class.disabled]="!!breadCrumb.isDisabled && breadCrumb.isDisabled" [routerLink]="breadCrumb.routerLink">{{i18n.qualityControl + breadCrumb.name | dynamicTranslate}}</a>
+    </li>
+</ol>
+
+<form (ngSubmit)="onSubmit(duplicateCheckForm)" #duplicateCheckForm="ngForm">
+
+    <div class="row">
+        <div class="col-md-4">
+            <label>{{i18n.common + 'Field' | dynamicTranslate}}</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6" id="SelectField">
+            <select class="form-control col-9 d-inline" [(ngModel)]="selectedField" name="duplicateFieldSelect" id="duplicateFieldSelect"
+                #duplicateSourceField="ngModel" required>
+                <option value="" disabled>
+                    <span>{{i18n.common + 'Select a Field' | dynamicTranslate}}</span>
+                </option>
+                <option *ngFor="let field of inventoryMetadata" [value]="field.name">{{i18n.asset + field.displayName | dynamicTranslate}}</option>
+            </select>
+            
+            <button (click)="runDuplicateCheck()" class="btn btn-primary btn-sm d-inline" type="button">{{i18n.common + 'Run' | dynamicTranslate}}</button>
+
+            <div *ngIf="duplicateSourceField.errors && duplicateCheckForm.submitted" class="alert alert-danger pt-1">
+                <div>
+                     {{i18n.qualityControl + 'Please select a duplicate field.' | dynamicTranslate}}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-group pt-4">
+        <div class="row">
+            <div class="col-md-4">
+                <famis-grid id="DuplicatesGrid" [famisGrid]="duplicateGrid" (selectionChanged)="handleDuplicateSelectionChanged($event)"></famis-grid>
+                <div class="alert alert-danger" *ngIf="request.filterTerms.length === 0 && duplicateCheckForm.submitted">
+                     {{i18n.qualityControl + 'Please select a duplicate value.' | dynamicTranslate}}
+                </div>
+            </div>
+            <div class="col-md-8">
+                <famis-grid id="SummaryGrid" *ngIf="!!summaryGrid.selectedHeaders" [famisGrid]="summaryGrid" ></famis-grid>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-12">
+                <replace-field [translatedBaseKey]="i18n.asset" [form]="duplicateCheckForm" [state]="replaceFieldState"></replace-field>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group pt-4">
+        <button [ladda]="isProcessing" class="btn btn-default" type="button" (click)="cancel()">{{i18n.common + 'Cancel' | dynamicTranslate}}</button>
+        <button [ladda]="isProcessing" class="btn btn-primary" type="button" type="submit">{{i18n.common + 'Apply' | dynamicTranslate}}</button>
+    </div>
+
+</form>

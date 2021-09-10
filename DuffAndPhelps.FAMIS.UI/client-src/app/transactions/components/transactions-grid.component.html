@@ -1,0 +1,13 @@
+<h1>{{i18n.transactions + 'Transactions' | dynamicTranslate}}</h1>
+
+<ol class="breadcrumb">
+  <li *ngFor="let breadCrumb of breadCrumbs" class="breadcrumb-item" routerLinkActive="active">
+    <a [class.disabled]="breadCrumb.isDisabled" [routerLink]="breadCrumb.routerLink">{{i18n.common + breadCrumb.name | dynamicTranslate}}</a>
+  </li>
+</ol>
+  <famis-grid *ngIf="!!transactionsGrid.loading && !!transactionsGrid.selectedHeaders"
+    [famisGrid]="transactionsGrid" 
+    (updateCacheEvent)="updateCache($event)"
+    (actionEvent)="handleActionEvent($event)"
+    (selectionChanged)="handleSelectionChanged($event)">
+  </famis-grid>
